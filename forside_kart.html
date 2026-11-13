@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fagløpet – kart</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="components.css">
+</head>
+<body class="side-app">
+
+  <div class="app">
+
+    <!-- Sidemeny (står fast) -->
+    <nav class="sidemeny" aria-label="Hovedmeny">
+      <a class="arbeidsomraade" href="#" aria-label="Fagløp arbeidsområde">0</a>
+
+      <a class="sidemeny-knapp er-aktiv" href="forside_kart.html" aria-current="page">
+        <img class="sidemeny-ikon" src="bilder/ikoner/hjem.svg" width="27" height="27" alt="">
+        <span>Hjem</span>
+      </a>
+      <a class="sidemeny-knapp" href="#">
+        <img class="sidemeny-ikon" src="bilder/ikoner/meldinger.svg" width="27" height="27" alt="">
+        <span>Meldinger</span>
+      </a>
+      <a class="sidemeny-knapp" href="#">
+        <img class="sidemeny-ikon" src="bilder/ikoner/aktivitet.svg" width="27" height="27" alt="">
+        <span>Aktivitet</span>
+      </a>
+      <a class="sidemeny-knapp" href="bibliotek.html">
+        <img class="sidemeny-ikon" src="bilder/ikoner/filer.svg" width="27" height="27" alt="">
+        <span>Filer</span>
+      </a>
+      <a class="sidemeny-knapp" href="#">
+        <img class="sidemeny-ikon" src="bilder/ikoner/verktoy.svg" width="27" height="27" alt="">
+        <span>Verktøy</span>
+      </a>
+      <a class="sidemeny-knapp" href="#">
+        <img class="sidemeny-ikon" src="bilder/ikoner/admin.svg" width="27" height="27" alt="">
+        <span>Admin</span>
+      </a>
+
+      <button class="avatar" type="button" aria-label="Din profil">
+        <img src="bilder/anden.png" alt="">
+      </button>
+    </nav>
+
+    <!-- Header (står fast) -->
+    <header class="topplinje">
+      <div class="topplinje-navigasjon">
+        <button class="topplinje-knapp" type="button" aria-label="Tilbake">←</button>
+        <button class="topplinje-knapp" type="button" aria-label="Fram">→</button>
+        <button class="topplinje-knapp" type="button" aria-label="Historikk">◷</button>
+      </div>
+      <label class="sokefelt">
+        <img src="bilder/ikoner/sok.svg" width="16" height="16" alt="">
+        <input type="search" placeholder="Søk i Fagløp">
+      </label>
+    </header>
+
+    <!-- Kartet (kan dras rundt) -->
+    <main class="kart-visning" tabindex="0" aria-label="Kart over Fagløpet. Dra med musen eller bruk piltastene for å se deg rundt.">
+      <img class="kart-bilde" src="bilder/kart.png" alt="Fargerikt kart over Bergen med en svingete sti opp til huset på toppen av fjellet" draggable="false">
+    </main>
+
+  </div>
+
+  <script src="javascript.js"></script>
+</body>
+</html>
