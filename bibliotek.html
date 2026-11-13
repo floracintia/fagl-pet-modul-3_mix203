@@ -1,9 +1,236 @@
-**Fagløpet** er en Slack-basert tjeneste som gjør kunnskapsdeling på tvers av avdelinger mer sosialt, engasjerende og motiverende.
-Her kan konsulenter dele faglig kunnskap, delta i quiz og meningsmålinger, og samle poeng gjennom aktivitet og bidrag. 
-Spillefisering-elementene gjør det enkelt å følge egen bidrag, 
-samtidig som man konkurrerer på lag med kolleger på tvers av avdelinger.
-Hver måned nullstilles konkurransen, og ved månedsskiftet annonseres månedens vinnerlag. 
-På denne måten skaper Fagløpet en kontinuerlig rytme rundt læring, 
-deling og vennskapelig konkurranse.
-**Målet er å bygge en sterkere kunnskapskultur på tvers av 
-organisasjone,en quiz, meningsmåling og kunnskapsdeling om gangen.**
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#39113D">
+  <title>Fagløpets bibliotek</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+    :root {
+      --plum: #39113D;
+      --purple: #7A3881;
+      --cream: #FFFAE5;
+      --ink: #111111;
+      --white: #fffefa;
+      --muted: #655b53;
+      --line: 2px solid var(--plum);
+      --round: 18px;
+      --heading: 'Bricolage Grotesque', 'Arial Rounded MT Bold', sans-serif;
+      --body: 'DM Sans', 'Trebuchet MS', sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); background: var(--plum); font-family: var(--body); }
+    button, input { font: inherit; }
+    button { color: inherit; }
+    .app { min-height: 100vh; display: grid; grid-template: 58px 1fr / 88px minmax(0, 1fr); grid-template-areas: 'side top' 'side main'; }
+
+    .sidebar { grid-area: side; position: sticky; top: 0; height: 100vh; padding: 20px 8px 14px; display: flex; align-items: center; flex-direction: column; gap: 8px; color: white; background: var(--plum); }
+    .logo { display: grid; place-items: center; flex: 0 0 48px; width: 48px; margin-bottom: 10px; border-radius: 14px; background: var(--cream); color: var(--plum); text-decoration: none; font: 800 27px var(--heading); }
+    .nav-link { width: 68px; min-height: 60px; padding: 8px 3px 6px; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #fff; text-decoration: none; font-size: 10px; line-height: 1.1; text-align: center; }
+    .nav-link:hover, .nav-link.active { background: rgb(255 255 255 / 14%); }
+    .nav-link img { width: 23px; height: 23px; object-fit: contain; }
+    .avatar { width: 55px; height: 55px; margin-top: 0; border: 3px solid #fff; border-radius: 50%; display: grid; place-items: center; background: #ffe783; overflow: hidden; }
+    .avatar img { width: 45px; height: 47px; object-fit: contain; }
+
+    .topbar { grid-area: top; min-width: 0; display: flex; align-items: center; gap: 24px; padding: 0 30px; color: white; background: var(--plum); border-bottom: 1px solid rgb(255 255 255 / 15%); }
+    .history { display: flex; gap: 14px; }
+    .history button { border: 0; padding: 2px; background: none; color: white; font-size: 21px; cursor: pointer; }
+    .top-search { width: min(460px, 60vw); height: 34px; padding: 0 12px; display: flex; align-items: center; gap: 9px; border: 1px solid rgb(255 255 255 / 35%); border-radius: 20px; background: rgb(255 255 255 / 12%); }
+    .top-search img { width: 15px; height: 15px; }
+    .top-search input { width: 100%; border: 0; outline: 0; color: white; background: transparent; font-size: 13px; }
+    .top-search input::placeholder { color: rgb(255 255 255 / 85%); }
+
+    main { grid-area: main; min-width: 0; margin: 0 12px 12px 0; padding: clamp(24px, 4vw, 52px) clamp(22px, 5vw, 72px) 64px; background: var(--cream); border: 4px solid var(--plum); border-top: 0; border-radius: 0 0 22px 22px; }
+    .content { width: min(1060px, 100%); margin: auto; }
+    .back-link { color: var(--plum); font-size: 14px; font-weight: 700; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .hero { min-height: 245px; padding: 20px 0 17px; display: grid; grid-template-columns: 130px minmax(310px, 1fr) minmax(245px, 300px); align-items: center; gap: clamp(24px, 4vw, 48px); }
+    .shelf { width: 108px; height: 205px; justify-self: center; display: block; object-fit: fill; filter: drop-shadow(3px 3px 0 rgb(57 17 61 / 10%)); }
+    .hero-copy h1 { margin: 0 0 8px; color: var(--ink); font: 800 clamp(31px, 3.5vw, 42px)/1.04 var(--heading); letter-spacing: -1.2px; white-space: nowrap; }
+    .hero-copy p { max-width: 440px; margin: 0 0 16px; font-size: 13px; line-height: 1.5; }
+    .share-button { width: 171px; height: 38px; padding: 0 11px; display: inline-flex; align-items: center; justify-content: center; flex-direction: row; gap: 5px; border: 0; border-radius: 13px; color: white; background: var(--purple); font-weight: 600; font-size: 11px; cursor: pointer; box-shadow: none; }
+    .share-button:hover { transform: translateY(-1px); }
+    .share-button .points { padding: 0; border-radius: 0; color: #ffed59; background: transparent; font-size: 11px; white-space: nowrap; }
+    .duck-note { min-height: 205px; position: relative; display: flex; align-items: end; justify-content: center; gap: 0; }
+    .duck-note img { width: 142px; height: 178px; object-fit: contain; object-position: center bottom; }
+    .bubble { position: absolute; z-index: 1; top: 3px; left: 3px; width: 145px; min-height: 86px; padding: 16px 17px; display: grid; align-content: center; border: 1.5px solid var(--ink); border-radius: 55% 48% 50% 45%; background: #fff; font-weight: 500; font-size: 11px; line-height: 1.3; text-align: center; transform: rotate(-10deg); }
+    .bubble::before { content: ''; position: absolute; right: 28px; bottom: -8px; width: 15px; height: 15px; background: #fff; border-right: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); transform: rotate(28deg) skew(10deg, 10deg); }
+    .bubble small { display: block; margin-top: 1px; color: var(--ink); font-size: 11px; font-weight: 700; }
+
+    .library-search { height: 50px; padding: 0 16px; display: flex; align-items: center; gap: 11px; border: var(--line); border-radius: 15px; background: var(--white); }
+    .library-search span { color: var(--plum); font-size: 20px; }
+    .library-search input { min-width: 0; width: 100%; border: 0; outline: 0; background: transparent; font-size: 14px; }
+    .filters { margin: 17px 0 22px; display: flex; flex-wrap: wrap; gap: 9px; }
+    .filter { padding: 8px 15px; border: var(--line); border-radius: 999px; background: var(--white); color: var(--plum); font-size: 13px; font-weight: 700; cursor: pointer; transition: background .15s, color .15s; }
+    .filter:hover { background: #f1e5ef; }
+    .filter.selected { color: white; background: var(--purple); }
+
+    .articles { display: grid; gap: 15px; }
+    .article-card { min-height: 190px; padding: 14px; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 21px; border: var(--line); border-radius: var(--round); background: var(--white); box-shadow: 3px 4px 0 rgb(57 17 61 / 9%); }
+    .article-art { min-height: 158px; position: relative; overflow: hidden; display: grid; place-items: center; border: 1.5px solid var(--plum); border-radius: 12px; background: linear-gradient(145deg, #d7e6db, #a5c5b1 52%, #e9d6aa); }
+    .article-art::before { content: ''; position: absolute; inset: 50% -10% -30%; border-radius: 50% 50% 0 0; background: #72937d; }
+    .article-art::after { content: ''; position: absolute; width: 94px; height: 94px; top: 19px; right: 24px; border: 3px solid rgb(255 255 255 / 68%); border-radius: 50%; }
+    .art-label { z-index: 1; margin-top: 78px; padding: 6px 10px; border-radius: 7px; color: var(--plum); background: #fffefaeb; font: 700 12px var(--heading); }
+    .article-info { min-width: 0; padding: 1px 1px 0 0; display: flex; flex-direction: column; align-items: flex-start; }
+    .article-info h2 { margin: 0 0 5px; color: var(--plum); font: 700 23px/1.2 var(--heading); }
+    .description { margin: 0 0 9px; color: #39342e; font-size: 13px; line-height: 1.45; }
+    .meta { margin: 0 0 10px; color: var(--muted); font-size: 12px; }
+    .meta strong { color: var(--plum); }
+    .card-bottom { width: 100%; margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .open-link { color: var(--purple); font-size: 13px; font-weight: 700; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .read-toggle { display: inline-flex; align-items: center; gap: 7px; color: #39342e; font-size: 12px; font-weight: 600; cursor: pointer; }
+    .read-toggle input { width: 17px; height: 17px; margin: 0; accent-color: var(--purple); cursor: pointer; }
+    .empty-state { display: none; padding: 25px; border: var(--line); border-radius: var(--round); background: var(--white); text-align: center; }
+    .empty-state.visible { display: block; }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 100px minmax(230px, 1fr) 190px; gap: 18px; }
+      .shelf { width: 88px; height: 170px; }
+      .duck-note img { width: 120px; height: 155px; }
+      .bubble { width: 125px; min-height: 76px; }
+      .article-card { grid-template-columns: 180px minmax(0, 1fr); gap: 16px; }
+    }
+    @media (max-width: 680px) {
+      .app { min-height: 100vh; grid-template: 56px 1fr / 1fr; grid-template-areas: 'top' 'main'; }
+      .sidebar { display: none; }
+      .topbar { padding: 0 15px; gap: 14px; }
+      .history { gap: 8px; }
+      .top-search { width: 100%; }
+      main { margin: 0 7px 7px; padding: 24px 17px 42px; border-width: 3px; border-top: 0; }
+      .hero { padding: 22px 0 20px; grid-template-columns: 70px minmax(0, 1fr); gap: 12px; }
+      .shelf { width: 64px; height: 125px; }
+      .hero-copy h1 { font-size: clamp(25px, 7vw, 34px); white-space: normal; }
+      .hero-copy p { font-size: 12px; }
+      .duck-note { grid-column: 2; justify-content: flex-end; min-height: 120px; margin-top: 1px; }
+      .duck-note img { width: 105px; height: 126px; }
+      .bubble { top: 0; left: auto; right: 80px; width: 118px; min-height: 72px; padding: 12px; font-size: 10px; }
+      .bubble small { font-size: 11px; }
+      .article-card { grid-template-columns: 1fr; gap: 13px; }
+      .article-art { min-height: 150px; }
+      .article-info h2 { font-size: 21px; }
+      .share-button { width: 171px; height: 38px; max-width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <nav class="sidebar" aria-label="Hovedmeny">
+      <a class="logo" href="forside_kart.html" aria-label="Fagløpet, hjem">F</a>
+      <a class="nav-link active" href="forside_kart.html" aria-current="page"><img src="bilder/ikoner/hjem.svg" alt=""><span>Hjem</span></a>
+      <a class="nav-link" href="#"><img src="bilder/ikoner/meldinger.svg" alt=""><span>Meldinger</span></a>
+      <a class="nav-link" href="#"><img src="bilder/ikoner/aktivitet.svg" alt=""><span>Aktivitet</span></a>
+      <a class="nav-link" href="bibliotek.html"><img src="bilder/ikoner/filer.svg" alt=""><span>Filer</span></a>
+      <a class="nav-link" href="#"><img src="bilder/ikoner/verktoy.svg" alt=""><span>Verktøy</span></a>
+      <a class="nav-link" href="#"><img src="bilder/ikoner/admin.svg" alt=""><span>Admin</span></a>
+      <div class="avatar" aria-label="Maskot"><img src="bilder/anden.png" alt=""></div>
+    </nav>
+
+    <header class="topbar">
+      <div class="history" aria-label="Sidehistorikk">
+        <button type="button" aria-label="Tilbake" onclick="history.back()">←</button>
+        <button type="button" aria-label="Framover" onclick="history.forward()">→</button>
+      </div>
+      <label class="top-search"><img src="bilder/ikoner/sok.svg" alt=""><input type="search" placeholder="Søk i Fagløp" aria-label="Søk i Fagløp"></label>
+    </header>
+
+    <main>
+      <div class="content">
+        <a class="back-link" href="forside_kart.html">← Tilbake til kartet</a>
+
+        <section class="hero" aria-labelledby="page-title">
+          <img class="shelf" src="bilder/bokhylle.png" alt="Bokhylle full av fargerike bøker">
+          <div class="hero-copy">
+            <h1 id="page-title">Fagløpets bibliotek</h1>
+            <p>Gode ideer er til for å deles. Finn inspirasjon fra kolleger, eller legg til en artikkel du tror andre vil like.</p>
+            <button class="share-button" type="button"><span>+ Del en artikkel</span><span class="points">5 poeng</span></button>
+          </div>
+          <div class="duck-note">
+            <img src="bilder/anden.png" alt="Fagløpets andemaskot">
+            <div class="bubble">Eller les en artikkel!<small>1 poeng</small></div>
+          </div>
+        </section>
+
+        <label class="library-search"><span aria-hidden="true">⌕</span><input id="article-search" type="search" placeholder="Søk etter artikler, tema eller kanal..." aria-label="Søk etter artikler, tema eller kanal"></label>
+        <div class="filters" role="group" aria-label="Filtrer artikler etter tema">
+          <button class="filter selected" type="button" aria-pressed="true" data-filter="alle">Alle</button>
+          <button class="filter" type="button" aria-pressed="false" data-filter="lest">Lest</button>
+          <button class="filter" type="button" aria-pressed="false" data-filter="ux-norge">#UX-Norge</button>
+          <button class="filter" type="button" aria-pressed="false" data-filter="ux-bergen">#ux-Bergen</button>
+          <button class="filter" type="button" aria-pressed="false" data-filter="it">#IT</button>
+          <button class="filter" type="button" aria-pressed="false" data-filter="nylig">#Nylig</button>
+          <button class="filter" type="button" aria-pressed="false" data-filter="annet">Annet</button>
+        </div>
+
+        <section class="articles" aria-label="Artikler">
+          <article class="article-card" data-tags="ux-norge ux-bergen nylig" data-title="Slik lager vi digitale tjenester folk faktisk liker">
+            <div class="article-art" role="img" aria-label="Illustrasjon av en grønn ås og solen"><span class="art-label">DESIGN · UX</span></div>
+            <div class="article-info">
+              <h2>Slik lager vi digitale tjenester folk faktisk liker</h2>
+              <p class="description">Små grep i brukerreisen kan gjøre en stor forskjell. Her er noen av erfaringene vi tar med oss fra de siste prosjektene.</p>
+              <p class="meta">Delt av <strong>Anne</strong> · «Denne var bra!»</p>
+              <div class="card-bottom"><a class="open-link" href="#artikkel-ux">Åpne →</a><label class="read-toggle"><input class="read-check" type="checkbox"><span>Lest</span></label></div>
+            </div>
+          </article>
+          <article class="article-card" data-tags="it nylig" data-title="Smarte snarveier som sparer deg tid hver dag">
+            <div class="article-art" role="img" aria-label="Illustrasjon av myke former i blått og grønt" style="background:linear-gradient(145deg,#c5d9eb,#85b3c6 55%,#d8cda8)"><span class="art-label">TEKNOLOGI · IT</span></div>
+            <div class="article-info">
+              <h2>Smarte snarveier som sparer deg tid hver dag</h2>
+              <p class="description">En liten samling nyttige tips og verktøy som gjør de digitale arbeidsdagene både enklere og litt mer effektive.</p>
+              <p class="meta">Delt av <strong>Jonas</strong> · #IT</p>
+              <div class="card-bottom"><a class="open-link" href="#artikkel-it">Åpne →</a><label class="read-toggle"><input class="read-check" type="checkbox"><span>Lest</span></label></div>
+            </div>
+          </article>
+          <article class="article-card" data-tags="ux-bergen annet" data-title="Bli bedre på å fortelle historien med data">
+            <div class="article-art" role="img" aria-label="Illustrasjon av abstrakte, varme former" style="background:linear-gradient(145deg,#f0dbad,#d8a579 55%,#aec4ac)"><span class="art-label">FAGLIG PÅFYLL</span></div>
+            <div class="article-info">
+              <h2>Bli bedre på å fortelle historien med data</h2>
+              <p class="description">Hvordan gjør vi tall og innsikt forståelige? Denne artikkelen viser hvordan gode visualiseringer kan sette kunnskapen i arbeid.</p>
+              <p class="meta">Delt av <strong>Maja</strong> · #ux-Bergen</p>
+              <div class="card-bottom"><a class="open-link" href="#artikkel-data">Åpne →</a><label class="read-toggle"><input class="read-check" type="checkbox"><span>Lest</span></label></div>
+            </div>
+          </article>
+        </section>
+        <p class="empty-state" id="empty-state">Ingen artikler funnet. Prøv et annet søk eller filter.</p>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const searchInput = document.querySelector('#article-search');
+    const filters = [...document.querySelectorAll('.filter')];
+    const cards = [...document.querySelectorAll('.article-card')];
+    const emptyState = document.querySelector('#empty-state');
+    let activeFilter = 'alle';
+
+    function updateArticles() {
+      const query = searchInput.value.trim().toLocaleLowerCase('nb');
+      let visibleCount = 0;
+      cards.forEach((card) => {
+        const text = `${card.dataset.title} ${card.textContent} ${card.dataset.tags}`.toLocaleLowerCase('nb');
+        const matchesQuery = !query || text.includes(query);
+        const matchesFilter = activeFilter === 'alle' ||
+          (activeFilter === 'lest' ? card.querySelector('.read-check').checked : card.dataset.tags.split(' ').includes(activeFilter));
+        const visible = matchesQuery && matchesFilter;
+        card.hidden = !visible;
+        if (visible) visibleCount++;
+      });
+      emptyState.classList.toggle('visible', visibleCount === 0);
+    }
+
+    filters.forEach((button) => button.addEventListener('click', () => {
+      activeFilter = button.dataset.filter;
+      filters.forEach((item) => {
+        const selected = item === button;
+        item.classList.toggle('selected', selected);
+        item.setAttribute('aria-pressed', String(selected));
+      });
+      updateArticles();
+    }));
+    searchInput.addEventListener('input', updateArticles);
+    document.querySelectorAll('.read-check').forEach((checkbox) => checkbox.addEventListener('change', updateArticles));
+  </script>
+</body>
+</html>
