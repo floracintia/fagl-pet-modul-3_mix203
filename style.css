@@ -1,0 +1,112 @@
+/*ROOT*/
+
+
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+/* =========================
+    FAGLØPET - DESIGN SYSTEM
+   ========================= */
+
+:root {
+  /* Typography */
+    --font-heading: 'Bricolage Grotesque', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+
+  /* Primary colors */
+    --color-primary: #39113D;
+    --color-primary-light: #7A3881;
+    --color-primary-hover: #59225F;
+
+  /* Backgrounds */
+    --color-background: #FFFAE5;
+    --color-surface: #FFFEFC;
+    --color-border: #D0CBB2;
+
+  /* Text */
+    --color-text: #39113D;
+    --color-text-secondary: #5B5846;
+
+  /* Game colors */
+    --color-blue: #0392E8;
+    --color-blue-light: #ADE0FF;
+    --color-yellow: #FEF131;
+
+  /* Feedback */
+    --color-success: #497431;
+    --color-error: #D13838;
+
+  /* Border radius */
+    --radius-small: 8px;
+    --radius-medium: 16px;
+    --radius-large: 24px;
+}
+
+
+/* =========================
+    GLOBAL STYLES
+   ========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: var(--color-background);
+    color: var(--color-text);
+
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+}
+
+
+/* =========================
+    HEADINGS
+   ========================= */
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-top: 0;
+}
+
+h1 { font-size: 48px; }
+h2 { font-size: 40px; }
+h3 { font-size: 33px; }
+h4 { font-size: 28px; }
+h5 { font-size: 23px; }
+h6 { font-size: 19px; }
+
+
+/* =========================
+    BODY TEXT
+   ========================= */
+
+p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.text-small {
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.text-xs {
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+.label {
+    font-size: 13px;
+    font-weight: 600;
+}
+
