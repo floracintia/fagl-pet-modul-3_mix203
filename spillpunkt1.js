@@ -205,23 +205,42 @@ quizAction.addEventListener('click', event => {
   }
 });
 
-// 9. LUKKING – stopp klokken og la forhåndsvisningen åpnes på nytt.
-document.querySelector('.quiz-card .game-card-close').addEventListener('click', () => quizCard.close());
-quizCard.addEventListener('close', () => {
-  clearInterval(quizClock);
-  quizReopen.hidden = false;
-  quizReopen.focus();
-  quizCard.dispatchEvent(new CustomEvent('quiz:close', { bubbles: true }));
-});
-quizReopen.addEventListener('click', () => {
-  quizReopen.hidden = true;
+// 9. ÅPNE OG LUKKE
+// Åpner kortet fra starten (ukevalget).
+function openQuiz() {
   quizIntro.hidden = false;
   quizPlay.hidden = true;
   quizResult.hidden = true;
   quizCourse.hidden = true;
   quizAction.hidden = true;
   quizCard.showModal();
+}
+
+document.querySelector('.quiz-card .game-card-close').addEventListener('click', () => quizCard.close());
+quizCard.addEventListener('close', () => {
+  clearInterval(quizClock);
+  // Forhåndsvisningen (Spillpunkt1.html) har en knapp for å åpne kortet igjen.
+  if (quizReopen) {
+    quizReopen.hidden = false;
+    quizReopen.focus();
+  }
+  quizCard.dispatchEvent(new CustomEvent('quiz:close', { bubbles: true }));
 });
 
-// 10. OPPSTART – viser overlayet direkte i denne separate forhåndsvisningen.
-quizCard.showModal();
+if (quizReopen) {
+  quizReopen.addEventListener('click', () => {
+    quizReopen.hidden = true;
+    openQuiz();
+  });
+}
+
+// På kartet: «Spill nå» (#quiz-open) og lenker til #quiz-game åpner quizen.
+document.querySelectorAll('#quiz-open, a[href="#quiz-game"]').forEach(opener => {
+  opener.addEventListener('click', event => {
+    event.preventDefault(); // hindrer at lenken hopper/endrer adressen
+    openQuiz();
+  });
+});
+
+// 10. OPPSTART – i forhåndsvisningen vises kortet med en gang. På kartet venter det på «Spill nå».
+if (document.body.classList.contains('quiz-preview')) quizCard.showModal();

@@ -1,6 +1,6 @@
 /* =========================
     APP-OPPSETT
-    Sidemeny og header står fast, kartet fyller resten
+    Sidemeny og header står fast. Bare innholdet (main) kan scrolle.
    ========================= */
 
 .side-app {
@@ -10,13 +10,21 @@
 }
 
 .app {
+    position: fixed; /* hele rammen ligger låst til vinduet */
+    inset: 0;
     display: grid;
-    grid-template-columns: 92px 1fr;
-    grid-template-rows: 45px 1fr;
+    grid-template-columns: 65px minmax(0, 1fr);
+    grid-template-rows: 45px minmax(0, 1fr);
     grid-template-areas:
         "meny topp"
-        "meny kart";
-    height: 100vh;
+        "meny innhold";
+}
+
+/* Innholdet på hver side scroller inni sin egen boks, ikke hele siden */
+.app > main {
+    grid-area: innhold;
+    min-height: 0;
+    overflow-y: auto;
 }
 
 :focus-visible {
@@ -34,8 +42,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
-    padding: 53px 3px 12px;
+    /* Avstandene krymper når vinduet er lavt, så hele menyen får plass.
+       clamp(minst, ønsket etter vindushøyde, størst).
+       Full størrelse fra ca. 780px vindushøyde, krymper gradvis under det. */
+    gap: clamp(6px, calc((100vh - 600px) / 10), 18px);
+    padding: clamp(12px, calc((100vh - 600px) / 2), 37px) 0 12px;
     background-color: var(--color-primary);
     border-right: 1px solid rgb(255 255 255 / 0.08);
     overflow-y: auto;
@@ -45,34 +56,43 @@
     display: grid;
     place-items: center;
     flex-shrink: 0;
-    width: 48px;
-    height: 48px;
-    border-radius: 13px;
+    width: 36px;
+    height: 36px;
+    margin-bottom: clamp(0px, calc((100vh - 660px) / 10), 12px);
+    border-radius: 8px;
     background-color: #F8F5EB;
     color: #24102A;
     font-family: var(--font-heading);
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 700;
     text-decoration: none;
 }
 
+/* Mål fra Figma: ikon 20x20, knapp 36x36, gap 18 */
 .sidemeny-knapp {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     gap: 4px;
     flex-shrink: 0;
-    width: 66px;
-    height: 66px;
-    border-radius: 9px;
+    width: 100%;
     color: #FBF8FC;
-    font-size: 10px;
-    line-height: 15px;
+    font-size: 11px; /* xs, samme som .text-xs i style.css */
+    font-weight: 700;
+    line-height: 1.4;
+    text-align: center;
     text-decoration: none;
 }
 
-.sidemeny-knapp:hover {
+.sidemeny-ikon-boks {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+}
+
+.sidemeny-knapp:hover .sidemeny-ikon-boks {
     background-color: rgb(255 255 255 / 0.13);
 }
 
@@ -81,24 +101,92 @@
 }
 
 .avatar {
+    display: block;
     flex-shrink: 0;
-    width: 63px;
-    height: 63px;
+    width: 48px;
+    height: 48px;
     padding: 0;
-    border: 4px solid rgb(255 255 255 / 0.76);
+    border: 4px solid transparent; /* usynlig kant, så anden ikke hopper når sirkelen vises */
     border-radius: 50%;
-    background-color: #FFE783;
-    box-shadow: 0 4.5px 6.7px rgb(127 90 12 / 0.12);
+    background-color: transparent;
     overflow: hidden;
     cursor: pointer;
 }
 
+/* Gul sirkel bare når man er på kartet (anden er "klikket på") */
+.avatar[aria-current="page"] {
+    border-color: rgb(255 255 255 / 0.76);
+    background-color: #FFE783;
+    box-shadow: 0 4.5px 6.7px rgb(127 90 12 / 0.12);
+}
+
 .avatar img {
     display: block;
-    width: 43px;
-    height: 47px;
-    margin: 2px 0 0 6px;
+    width: 33px;
+    height: 36px;
+    margin: 2px 0 0 4px;
     object-fit: cover;
+}
+
+/* Knappene nederst: pluss, måne og profil */
+.sidemeny-bunn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(6px, calc((100vh - 600px) / 12), 14px);
+    margin-top: auto; /* skyver gruppen helt ned */
+}
+
+.sidemeny-rund {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: rgb(255 255 255 / 0.2);
+    cursor: pointer;
+}
+
+.sidemeny-rund:hover {
+    background-color: rgb(255 255 255 / 0.3);
+}
+
+.profil {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    background-color: #ffffff;
+    overflow: visible;
+    cursor: pointer;
+}
+
+.profil img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+.profil-status {
+    position: absolute;
+    right: -5px;
+    bottom: -5px;
+    display: grid;
+    place-items: center;
+    width: 15px;
+    height: 15px;
+    border: 2px solid var(--color-primary);
+    border-radius: 50%;
+    background-color: #2BAC76;
+    color: #ffffff;
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1;
 }
 
 
@@ -175,10 +263,9 @@
     KART
    ========================= */
 
-.kart-visning {
-    grid-area: kart;
+.app > .kart-visning {
     position: relative;
-    overflow: hidden;
+    overflow: hidden; /* kartet dras, det scrolles ikke */
     background-color: var(--color-blue-light);
     cursor: grab;
     touch-action: none;
@@ -189,13 +276,1076 @@
     cursor: grabbing;
 }
 
-.kart-bilde {
+/* Laget som flyttes når kartet dras: kartbildet + stoppene oppå */
+.kart-lag {
     position: absolute;
     top: 0;
     left: 0;
-    max-width: none;
-    transform-origin: 0 0;
     pointer-events: none;
+}
+
+.kart-bilde {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+}
+
+
+/* =========================
+    TOPPLISTE
+    Ligger fast i høyre hjørne av kartet, uansett hvor kartet dras.
+    Mål og farger fra Figma ("Dialog", 419 x 303).
+   ========================= */
+
+.toppliste {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 3;
+    width: 419px;
+    max-width: calc(100% - 32px);
+    padding: 18.56px 21.56px 21px;
+    border: 0.442px solid rgb(255 255 255 / 0.9);
+    border-radius: 18.583px;
+    background-color: var(--color-background); /* #FFFAE5 */
+    box-shadow:
+        inset 0 0.885px 0 rgb(255 255 255 / 0.8),
+        0 15.486px 35.396px rgb(44 19 50 / 0.28);
+    color: #25132E;
+    cursor: default;
+    /* Skalerer hele topplisten ned fra høyre hjørne. 1 = Figma-størrelse */
+    transform: scale(0.8);
+    transform-origin: top right;
+}
+
+.toppliste-topp {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 30px;
+    margin-bottom: 5px;
+    padding: 0 8px;
+}
+
+.toppliste-tittel {
+    display: flex;
+    align-items: center;
+    gap: 6.194px;
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.4793px;
+}
+
+.toppliste-trofe {
+    width: 22.123px;
+    height: 22.123px;
+    transform: rotate(-3deg);
+}
+
+.toppliste-knapp {
+    min-width: 48.35px;
+    height: 100%;
+    padding: 0 8px;
+    border: 0;
+    border-radius: 999px;
+    background-color: #7A3881; /* Lilla nyanser/80 */
+    filter: drop-shadow(0 2.015px 2.82px rgb(180 130 26 / 0.2));
+    color: #FFFEFC;
+    font-family: var(--font-heading);
+    font-size: 11.1px;
+    font-weight: 600;
+    letter-spacing: 0.4793px;
+    cursor: pointer;
+}
+
+.toppliste-knapp:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.toppliste-liste {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.toppliste-rad {
+    display: grid;
+    grid-template-columns: 28.32px 44.25px minmax(0, 1fr) 38.94px;
+    align-items: center;
+    column-gap: 7.964px;
+    height: 42.475px;
+    padding: 3.54px 10.619px;
+    border: 0.442px solid #E8DFD8;
+    border-radius: 10.619px;
+    background-color: hsla(0, 0%, 100%, 0.72);
+    box-shadow: 0 2.655px 6.637px rgb(69 46 67 / 0.04);
+}
+
+/* Førsteplass: gul rad */
+.toppliste-rad--forst {
+    border-color: #D5C91B;  /* Gul nyanser/50 */
+    background-color: #FFFAAD; /* Gul nyanser/20 */
+}
+
+/* Rundt merke med plasseringen */
+.toppliste-plass {
+    display: grid;
+    place-items: center;
+    width: 22.123px;
+    height: 22.123px;
+    border: 0.442px solid #DFD4CF;
+    border-radius: 50%;
+    background: #F1ECE8;
+    filter: drop-shadow(0 1.327px 0 #DED5D1);
+    color: #5D5254;
+    font-family: var(--font-heading);
+    font-size: 9.291px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.toppliste-plass--1 {
+    border-color: #DCA61B;
+    background: linear-gradient(145deg, #FFE771 6.17%, #EAB530 93.83%);
+    filter: drop-shadow(0 1.327px 0 #C78B13);
+    color: #4C3711;
+}
+
+.toppliste-plass--2 {
+    border-color: #B5BDC2;
+    background: linear-gradient(145deg, #F2F5F7 6.17%, #C5CCD1 93.83%);
+}
+
+.toppliste-plass--3 {
+    border-color: #BF7653;
+    background: linear-gradient(145deg, #F4D1BD 6.17%, #C88966 93.83%);
+    color: #69402C;
+}
+
+/* Andebildet: størrelse og plassering per and står i HTML (fra Figma) */
+.toppliste-and {
+    position: relative;
+    justify-self: center;
+    width: 26.106px;
+    height: 35.398px;
+}
+
+.toppliste-and img {
+    position: absolute;
+    max-width: none;
+    object-fit: cover;
+}
+
+.toppliste-navn {
+    overflow: hidden;
+    font-size: 13.33px;
+    letter-spacing: 0.4793px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.toppliste-poeng {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-end;
+    padding-left: 9.734px;
+    border-left: 0.442px solid #E2D8D0;
+}
+
+.toppliste-poeng b {
+    font-family: var(--font-heading);
+    font-size: 12.389px;
+    font-weight: 800;
+    line-height: 12.389px;
+}
+
+.toppliste-poeng small {
+    padding-left: 0.442px;
+    font-size: 7.079px;
+    font-weight: 700;
+}
+
+
+/* =========================
+    STOR TOPPLISTE (statistikk-dialog)
+    Mål og farger fra Figma ("overlay", 1060 x 720).
+    Åpnes med «Se statistikk». Tre faner: Månedens, Ditt team, Årsoversikt.
+   ========================= */
+
+.toppliste-dialog {
+    position: fixed;
+    width: 1060px;
+    max-width: calc(100% - 32px);
+    height: 720px;
+    max-height: calc(100svh - 32px);
+    margin: auto;
+    padding: 42px 48px 24px;
+    overflow-y: auto;
+    border: 1px solid rgb(255 255 255 / 0.9);
+    border-radius: 42px;
+    background-color: var(--color-background); /* #FFFAE5 */
+    box-shadow:
+        inset 0 2px 0 rgb(255 255 255 / 0.8),
+        0 35px 80px rgb(44 19 50 / 0.28);
+    color: #25132E;
+    font-family: var(--font-body);
+}
+
+/* Kartet, menyen og headeren bak blir uskarpe */
+.toppliste-dialog::backdrop {
+    background: rgb(57 17 61 / 0.25);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+}
+
+.toppliste-dialog [hidden] {
+    display: none;
+}
+
+/* ---------- Topp: tittel og faner ---------- */
+
+.stor-topp {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    width: 962px;
+    max-width: 100%;
+    padding-right: 52px;
+}
+
+.stor-tittel {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 42px;
+    letter-spacing: -1.68px;
+    white-space: nowrap;
+}
+
+.stor-trofe {
+    width: 54px;
+    height: 54px;
+    padding: 2px;
+    transform: rotate(-3deg);
+}
+
+.stor-faner {
+    display: flex;
+    flex-shrink: 0;
+    padding: 3px;
+    border: 1px solid #D9D0CA;
+    border-radius: 999px;
+    background-color: rgb(255 255 255 / 0.65);
+    box-shadow: inset 0 2px 6px rgb(65 45 67 / 0.05);
+}
+
+.stor-fane {
+    min-width: 120px;
+    padding: 12px 19px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #392C3C;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 21px;
+    cursor: pointer;
+}
+
+.stor-fane:hover {
+    background-color: rgb(122 56 129 / 0.08);
+}
+
+/* Valgt fane (klassen «aktiv» settes i toppliste.js) og mens man trykker */
+.stor-fane.aktiv,
+.stor-fane:active {
+    background-color: #7A3881; /* Lilla nyanser/80 */
+    filter: drop-shadow(0 5px 7px rgb(180 130 26 / 0.2));
+    color: #FFFEFC;
+}
+
+.stor-lukk {
+    position: absolute;
+    top: 22px;
+    right: 26px;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+}
+
+.stor-lukk:hover {
+    background-color: rgb(0 0 0 / 0.06);
+}
+
+.stor-panel {
+    width: 962px;
+    max-width: 100%;
+    margin-top: 26px;
+}
+
+/* Felles: andebilde i en 59 x 80-boks (størrelse per and står i HTML) */
+.stor-and {
+    position: relative;
+    justify-self: center;
+    width: 59px;
+    height: 80px;
+}
+
+.stor-and img {
+    position: absolute;
+    max-width: none;
+    object-fit: cover;
+}
+
+/* ---------- 1. Månedens ---------- */
+
+.stor-liste {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.stor-rad {
+    display: grid;
+    grid-template-columns: 64px 100px minmax(0, 483px) 88px;
+    align-items: center;
+    column-gap: 18px;
+    min-height: 96px;
+    padding: 8px 24px;
+    border: 1px solid #E8DFD8;
+    border-radius: 24px;
+    background-color: rgb(255 255 255 / 0.72);
+    box-shadow: 0 6px 15px rgb(69 46 67 / 0.04);
+}
+
+.stor-rad--forst {
+    border-color: #D5C91B;
+    background-color: #FFFAAD;
+}
+
+/* Plassmerket gjenbruker fargene fra den lille topplisten, men er større */
+.stor-plass {
+    width: 50px;
+    height: 50px;
+    border-width: 1px;
+    filter: drop-shadow(0 3px 0 #DED5D1);
+    font-size: 21px;
+}
+
+.stor-plass.toppliste-plass--1 {
+    filter: drop-shadow(0 3px 0 #C78B13);
+}
+
+.stor-navn {
+    overflow: hidden;
+    font-family: var(--font-heading);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 36px;
+    letter-spacing: -0.6px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.stor-poeng {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-end;
+    padding-left: 22px;
+    border-left: 1px solid #E2D8D0;
+}
+
+.stor-poeng b {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 28px;
+}
+
+.stor-poeng small {
+    padding-left: 1px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* ---------- 2. Ditt team ---------- */
+
+.team-banner {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr) 190px;
+    align-items: center;
+    column-gap: 20px;
+    height: 190px;
+    padding: 18px 34px;
+    border: 1px solid #D0CBB2; /* Beige nyanser/40 */
+    border-radius: 28px;
+    background: linear-gradient(to right, #FFFAAD, #FFFAE5);
+}
+
+/* Tre ender i julegenser som står litt over hverandre */
+.team-ender {
+    position: relative;
+    width: 185.6px;
+    height: 89.6px;
+}
+
+.team-and {
+    position: absolute;
+    max-width: none;
+    object-fit: cover;
+}
+
+.team-and--bak   { left: 97.6px; top: 11.4px; width: 57px; height: 69px; }
+.team-and--midt  { left: 46.2px; top: 3.6px;  width: 67px; height: 82px; z-index: 1; }
+.team-and--foran { left: 13.7px; top: 19.4px; width: 50px; height: 61px; }
+
+.team-info p,
+.team-total p {
+    margin: 0;
+}
+
+.team-etikett {
+    color: #756278;
+    font-size: 13.33px;
+    font-weight: 500;
+    letter-spacing: 0.4793px;
+}
+
+.team-navn {
+    margin-top: 6px !important;
+    font-family: var(--font-heading);
+    font-size: 39.81px;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.4793px;
+    white-space: nowrap;
+}
+
+.team-knapp {
+    margin-top: 10px;
+    padding: 10px 17px;
+    border: 1.5px solid #4F2659;
+    border-radius: 999px;
+    background-color: #ffffff;
+    color: #3C1747;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.4793px;
+    cursor: pointer;
+}
+
+.team-knapp:hover {
+    background-color: #F7F1F8;
+}
+
+.team-total {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    height: 100px;
+    padding-left: 30px;
+    border-left: 1px solid #DFD1C2;
+}
+
+.team-sum {
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 999px;
+    background-color: rgb(254 241 49 / 0.5);
+    box-shadow: 0 4px 4px rgb(0 0 0 / 0.25);
+    font-family: var(--font-heading);
+    font-size: 39.81px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.4793px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.team-maaneder {
+    margin-top: 18px;
+    padding: 24px 34px;
+    border: 1px solid #E3DADE;
+    border-radius: 28px;
+    background-color: rgb(255 255 255 / 0.8);
+}
+
+.team-maaneder-tittel {
+    margin: 0;
+    color: #896E8D;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 18px;
+    letter-spacing: 1.56px;
+}
+
+.team-kolonner {
+    display: flex;
+    justify-content: space-between;
+    width: 740px;
+    max-width: 100%;
+    margin: 18px auto 0;
+}
+
+.team-kolonne {
+    width: 260px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.team-kolonne li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 47px;
+    border-bottom: 1px solid #ECE5DF;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 22.5px;
+}
+
+.team-kolonne li:last-child {
+    border-bottom: 0;
+}
+
+/* ---------- 3. Årsoversikt ---------- */
+
+.aar-intro {
+    height: 24px;
+    margin: -9px 0 0;
+    padding: 0 3px;
+    color: #625764;
+    font-size: 13.33px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.4793px;
+}
+
+.aar-liste {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 22px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.aar-rad {
+    display: grid;
+    grid-template-columns: 210px 110px minmax(0, 440px) 120px;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 8px;
+    min-height: 92px;
+    padding: 6px 28px;
+    border: 1px solid #E4DCDF;
+    border-radius: 22px;
+    background-color: rgb(255 255 255 / 0.78);
+}
+
+.aar-rad--forst {
+    border-color: #E8C356;
+    background: linear-gradient(to right, #FFFAAD, #FFFAE5);
+}
+
+.aar-maaned {
+    font-family: var(--font-heading);
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 31.5px;
+}
+
+.aar-lag {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 33px;
+}
+
+.aar-poeng {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background-color: #F4EDE4;
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 20px;
+    white-space: nowrap;
+}
+
+.aar-rad--forst .aar-poeng {
+    border: 1px solid #D5C91B;
+    background-color: rgb(254 241 49 / 0.5);
+}
+
+
+/* =========================
+    KONTORBYGG PÅ KARTET
+    Mål fra Figma: 276 x 199, og 308 x 223 ved hover (Variant2).
+    Midten av bygget ligger på --x / --y, så det vokser likt til alle sider.
+   ========================= */
+
+.kart-bygg {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: 276px;
+    height: 199px;
+    transform: translate(-50%, -50%);
+    pointer-events: auto;
+    transition: width 0.2s, height 0.2s;
+}
+
+.kart-bygg:hover {
+    width: 308px;
+    height: 223px;
+}
+
+.kart-bygg:hover,
+.kart-bygg:focus-within {
+    z-index: 2; /* infoboksen legger seg over spillknappene */
+}
+
+.kart-bygg:focus-within {
+    width: 308px;
+    height: 223px;
+}
+
+.kart-bygg-lenke {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.kart-bygg-lenke img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Infoboks til venstre for bygget ("liten card til spillkarte" i Figma) */
+.bygg-kort {
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    padding-right: 12px; /* usynlig bro, så musen kan flyttes over i boksen */
+    transform: translateY(-50%);
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.15s, visibility 0.15s;
+    cursor: default;
+}
+
+.kart-bygg:hover .bygg-kort,
+.kart-bygg:focus-within .bygg-kort {
+    visibility: visible;
+    opacity: 1;
+}
+
+.kort--bygg {
+    padding-top: 9px;
+}
+
+.kort-and {
+    display: block;
+    width: 92px;
+    height: 100.671px;
+    object-fit: cover;
+}
+
+.kort--bygg .kort-etikett {
+    margin-top: 7px;
+}
+
+.kort--bygg .kort-tittel {
+    min-height: 29px; /* 33px i Figma minus 4px luft over */
+}
+
+.kort--bygg .kort-tekst {
+    margin-top: 0;
+    min-height: 37px;
+}
+
+
+/* =========================
+    GAMESTOP (knapp på kartet)
+    Mål fra Figma: 104 x 122. Plasseres med --x og --y
+    i prosent av kartbildet, og midten av den røde knappen
+    havner nøyaktig på det punktet.
+   ========================= */
+
+/* Beholder for knappen + infoboksen, plassert på kartet */
+.gamestop-stopp {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: 104px;
+    height: 122px;
+    transform: translate(-52px, -57px);
+    pointer-events: auto;
+}
+
+.gamestop-stopp:hover,
+.gamestop-stopp:focus-within {
+    z-index: 2; /* ligger over andre stopp når den er åpen */
+}
+
+.gamestop {
+    position: relative;
+    display: block;
+    width: 104px;
+    height: 122px;
+    cursor: pointer;
+}
+
+/* Ring rundt, vises bare ved tastaturfokus */
+.gamestop-ring {
+    position: absolute;
+    left: -10.49px;
+    top: -5.16px;
+    width: 124.976px;
+    height: 124.976px;
+    border: 5.101px solid rgb(255 255 255 / 0.72);
+    border-radius: 50%;
+    opacity: 0;
+}
+
+.gamestop:focus-visible {
+    outline: none;
+}
+
+.gamestop:focus-visible .gamestop-ring {
+    opacity: 1;
+}
+
+/* Skygge på bakken */
+.gamestop-skygge {
+    position: absolute;
+    left: 20px;
+    top: 83.33px;
+    width: 64px;
+    height: 24px;
+    border-radius: 19.596px;
+    background-color: rgb(31 79 69 / 0.32);
+    filter: blur(3px);
+}
+
+/* Den røde knappen */
+.gamestop-knapp {
+    position: absolute;
+    left: 13px;
+    top: 18.33px;
+    display: grid;
+    place-items: center;
+    width: 78px;
+    height: 78px;
+    border: 4px solid #ffffff;
+    border-radius: 39px;
+    background-color: #FA5757; /* Røde nyanser/40 */
+    box-shadow:
+        inset 0 4px 0 rgb(255 255 255 / 0.32),
+        0 8px 0 #AD4147,
+        0 10px 0 rgb(255 255 255 / 0.7);
+    transition: width 0.15s, height 0.15s, border-radius 0.15s, top 0.15s;
+}
+
+.gamestop-indre {
+    display: grid;
+    place-items: center;
+    width: 53px;
+    height: 53px;
+    border: 2px solid rgb(255 255 255 / 0.42);
+    border-radius: 26.5px;
+    background-color: rgb(255 255 255 / 0.12);
+    transition: width 0.15s, height 0.15s;
+}
+
+.gamestop-ikon-stor {
+    display: none;
+}
+
+/* Variant 2 i Figma: større knapp når man holder over / fokuserer */
+.gamestop:hover .gamestop-knapp,
+.gamestop:focus-visible .gamestop-knapp {
+    top: 18px;
+    width: 99px;
+    height: 99px;
+    border-radius: 45px;
+}
+
+.gamestop:hover .gamestop-indre,
+.gamestop:focus-visible .gamestop-indre {
+    width: 75px;
+    height: 75px;
+    border-radius: 45px;
+}
+
+.gamestop:hover .gamestop-ikon-liten,
+.gamestop:focus-visible .gamestop-ikon-liten {
+    display: none;
+}
+
+.gamestop:hover .gamestop-ikon-stor,
+.gamestop:focus-visible .gamestop-ikon-stor {
+    display: block;
+}
+
+
+
+/* =========================
+    GAMESTOP – QUIZ (lilla variant)
+    Samme oppbygning som den røde, men egne farger,
+    "?" i midten.
+   ========================= */
+
+.gamestop--quiz .gamestop-knapp {
+    background-color: #8B78D5;
+    box-shadow:
+        inset 0 4px 0 rgb(255 255 255 / 0.32),
+        0 8px 0 #59479E,
+        0 10px 0 rgb(255 255 255 / 0.7);
+    transition: width 0.15s, height 0.15s, border-radius 0.15s, top 0.15s, left 0.15s;
+}
+
+.gamestop-tegn {
+    color: #ffffff;
+    font-family: 'Nunito', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 36px;
+    transition: font-size 0.15s;
+}
+
+/* Variant 2: knappen vokser fra midten og "?" blir større */
+.gamestop--quiz:hover .gamestop-knapp,
+.gamestop--quiz:focus-visible .gamestop-knapp {
+    left: 2.37px;
+    top: 7.7px;
+    width: 99.258px;
+    height: 99.258px;
+    border-radius: 45px;
+}
+
+.gamestop--quiz:hover .gamestop-indre,
+.gamestop--quiz:focus-visible .gamestop-indre {
+    width: 75.375px;
+    height: 75.375px;
+}
+
+.gamestop--quiz:hover .gamestop-tegn,
+.gamestop--quiz:focus-visible .gamestop-tegn {
+    font-size: 40px;
+}
+
+
+
+/* =========================
+    INFOBOKS VED GAMESTOP
+    ("Liten card til spillkart" i Figma)
+    Vises til høyre for knappen ved hover / tastaturfokus.
+   ========================= */
+
+.gamestop-kort {
+    position: absolute;
+    left: 104px;
+    top: 57px; /* midt på den røde knappen */
+    padding-left: 12px; /* usynlig bro, så musen kan flyttes over i boksen */
+    transform: translateY(-50%);
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.15s, visibility 0.15s;
+    cursor: default;
+}
+
+.gamestop-stopp:hover .gamestop-kort,
+.gamestop-stopp:focus-within .gamestop-kort {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Ikke plass til høyre (satt av kartet.js): vis boksen til venstre i stedet */
+.gamestop-stopp.til-venstre .gamestop-kort {
+    left: auto;
+    right: 104px;
+    padding-left: 0;
+    padding-right: 12px;
+}
+
+/* Ikke plass under / over (satt av kartet.js): flytt boksen opp eller ned */
+.gamestop-stopp.til-topp .gamestop-kort {
+    top: auto;
+    bottom: 0;
+    transform: none;
+}
+
+.gamestop-stopp.til-bunn .gamestop-kort {
+    top: 0;
+    transform: none;
+}
+
+/* Lukket med krysset: skjult til musen har forlatt stoppet */
+.gamestop-stopp.lukket .gamestop-kort {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.kort {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 420px;
+    padding: 32px;
+    border: 4px solid #ffffff;
+    border-radius: 30px;
+    background-color: var(--color-background); /* #FFFAE5 */
+    filter: drop-shadow(0 28px 40px rgb(46 49 42 / 0.34));
+    letter-spacing: 0.4793px;
+    line-height: normal;
+    text-align: center;
+}
+
+.kort-ikon {
+    display: grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    border: 4px solid #ffffff;
+    border-radius: 36px;
+    background-color: #FA5757;
+    box-shadow: 0 7px 0 #A23E3E, 0 9px 0 #E5E3D9;
+}
+
+.kort-etikett {
+    margin: 18px 0 0;
+    color: #78847D;
+    font-family: var(--font-body);
+    font-size: 13.33px;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.kort-tittel {
+    margin: 4px 0 0;
+    color: #313D37;
+    font-family: var(--font-heading);
+    font-size: 27.65px;
+    font-weight: 600;
+    line-height: normal;
+    white-space: nowrap;
+}
+
+.kort-tekst {
+    width: 320px;
+    margin: 8px 0 0;
+    color: #6F7B74;
+    font-size: 16px;
+    line-height: normal;
+}
+
+.kort-knapp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    height: 53px;
+    margin-top: 20px;
+    padding: 15px 20px;
+    border-radius: 17px;
+    background-color: #FA5757;
+    filter: drop-shadow(0 6px 0 #A23F40);
+    border: 0;
+    color: #ffffff;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.kort-knapp:hover {
+    background-color: #ff6b6b;
+}
+
+.kort-lukk {
+    position: absolute;
+    top: 16.06px;
+    left: 358px;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border: none;
+    border-radius: 19px;
+    background: none;
+    cursor: pointer;
+}
+
+.kort-lukk:hover {
+    background-color: rgb(0 0 0 / 0.06);
+}
+
+/* Quiz-varianten av infoboksen (lilla, "Liten card til spillkarte" i Figma) */
+.kort--quiz .kort-ikon {
+    background-color: #8B78D5;
+    box-shadow: 0 7px 0 #59479E, 0 9px 0 #E5E3D9;
+}
+
+.kort-ikon-tegn {
+    color: #ffffff;
+    font-family: 'Nunito', sans-serif;
+    font-size: 38px;
+    font-weight: 900;
+    line-height: 57px;
+}
+
+.kort--quiz .kort-tittel {
+    min-height: 41px; /* 45px i Figma minus 4px luft over */
+}
+
+.kort--quiz .kort-tekst {
+    min-height: 36px; /* 44px i Figma minus 8px luft over */
+}
+
+.kort--quiz .kort-knapp {
+    background-color: #8B78D5;
+    filter: drop-shadow(0 6px 0 #59479E);
+}
+
+.kort--quiz .kort-knapp:hover {
+    background-color: #9A89DC;
 }
 
 
@@ -203,21 +1353,18 @@
     SMÅ SKJERMER
    ========================= */
 
+/* Veldig lave vinduer: skjul teksten under ikonene så alt fortsatt får plass */
+@media (max-height: 660px) {
+    .sidemeny-tekst {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+    }
+}
+
 @media (max-width: 700px) {
-    .app {
-        grid-template-columns: 72px 1fr;
-    }
-
-    .sidemeny-knapp {
-        width: 60px;
-        height: 60px;
-    }
-
-    .avatar {
-        width: 54px;
-        height: 54px;
-    }
-
     .topplinje {
         grid-template-columns: minmax(0, 1fr);
         padding: 0 12px;
@@ -255,6 +1402,13 @@
 /* Dialogen ligger over siden. Vertssiden kan endre bakgrunnen senere. */
 .game-card::backdrop {
     background: transparent;
+}
+
+/* På kartsiden: kartet, menyen og headeren bak blir uskarpe */
+.side-app .game-card::backdrop {
+    background: rgb(57 17 61 / 0.25);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
 }
 
 .game-card [hidden] {
