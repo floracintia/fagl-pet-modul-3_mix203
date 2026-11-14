@@ -22,6 +22,24 @@
       <div class="kart-lag">
         <img class="kart-bilde" src="bilder/kart.png" alt="Fargerikt kart over Bergen med en svingete sti opp til huset på toppen av fjellet" draggable="false">
 
+        <!-- Kontorbygg på den store sirkelen der stien slutter (nederst til høyre).
+             --x/--y = midten av bygget i prosent av kartbildet. Blir større ved hover. -->
+        <div class="kart-bygg" style="--x: 85.3%; --y: 76.1%;">
+          <a class="kart-bygg-lenke" href="bibliotek.html" aria-label="Fagbiblioteket – les og del artikler" draggable="false">
+            <img src="bilder/kontorbygg.png" alt="" draggable="false">
+          </a>
+
+          <!-- Infoboks som vises til venstre for bygget ved hover -->
+          <div class="bygg-kort">
+            <div class="kort kort--bygg">
+              <img class="kort-and" src="bilder/anden.png" width="92" height="101" alt="">
+              <p class="kort-etikett">Les og del artikler i</p>
+              <h2 class="kort-tittel">Fagbiblioteket</h2>
+              <p class="kort-tekst">Her kan du oppdatere deg på faglig innhold</p>
+            </div>
+          </div>
+        </div>
+
         <!-- GameStop: Del artikkel i arkivet. --x/--y = plassering i prosent av kartbildet (i gresset ved Fløyen) -->
         <div class="gamestop-stopp" style="--x: 72.2%; --y: 32.1%;">
         <a class="gamestop" href="#poll-game" aria-label="meningsmåling spill" draggable="false">
