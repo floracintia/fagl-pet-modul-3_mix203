@@ -78,12 +78,20 @@ visning.addEventListener('keydown', hendelse => {
 // ---------- Infoboks ved GameStop ----------
 // Krysset skjuler boksen. Den kan vises igjen når musen har forlatt stoppet.
 
-document.querySelectorAll('.gamestop-stopp').forEach(stopp => {
+// Bare stopp som har en infoboks
+document.querySelectorAll('.gamestop-stopp:has(.gamestop-kort)').forEach(stopp => {
   // Boksen vises til høyre, men flyttes til venstre hvis den ville gått utenfor kartet
   function velgSide() {
     const kortBredde = stopp.querySelector('.gamestop-kort').offsetWidth;
     const plassTilHoyre = visning.getBoundingClientRect().right - stopp.getBoundingClientRect().right;
     stopp.classList.toggle('til-venstre', plassTilHoyre < kortBredde);
+
+    // Boksen står midt på knappen i høyden, men flyttes opp/ned hvis den ville gått utenfor
+    const kortHoyde = stopp.querySelector('.gamestop-kort').offsetHeight;
+    const midt = stopp.getBoundingClientRect().top + 57; // midten av den runde knappen
+    const ramme = visning.getBoundingClientRect();
+    stopp.classList.toggle('til-topp', ramme.bottom - midt < kortHoyde / 2);
+    stopp.classList.toggle('til-bunn', midt - ramme.top < kortHoyde / 2);
   }
   stopp.addEventListener('mouseenter', velgSide);
   stopp.addEventListener('focusin', velgSide);
