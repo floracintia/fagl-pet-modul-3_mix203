@@ -6,7 +6,7 @@
 // Plassholderne byttes ut med ferdig HTML når skriptet kjører.
 
 const menyvalg = [
-  { tekst: 'Hjem',      ikon: 'hjem',      lenke: 'forside_kart.html' },
+  { tekst: 'Hjem',      ikon: 'hjem',      lenke: '#' },
   { tekst: 'Meldinger', ikon: 'meldinger', lenke: '#' },
   { tekst: 'Aktivitet', ikon: 'aktivitet', lenke: '#' },
   { tekst: 'Filer',     ikon: 'filer',     lenke: 'bibliotek.html' },
@@ -33,9 +33,9 @@ function lagSidemeny() {
     <nav class="sidemeny" aria-label="Hovedmeny">
       <a class="arbeidsomraade" href="#" aria-label="Fagløp arbeidsområde">0</a>
       ${knapper}
-      <button class="avatar" type="button" aria-label="Din and">
+      <a class="avatar" href="forside_kart.html" aria-label="Til kartet"${gjeldendeSide === 'forside_kart.html' ? ' aria-current="page"' : ''}>
         <img src="bilder/anden.png" alt="">
-      </button>
+      </a>
       <div class="sidemeny-bunn">
         <button class="sidemeny-rund" type="button" aria-label="Opprett ny">
           <img src="bilder/ikoner/pluss.svg" width="20" height="20" alt="">
