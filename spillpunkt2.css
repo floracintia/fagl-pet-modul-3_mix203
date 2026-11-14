@@ -336,24 +336,9 @@
 }
 
 
-/* 8. STØRRE STARTKORT
-   Bare introduksjonen får ekstra høyde. De neste stegene beholder sin
-   innholdsstyrte størrelse. :not([hidden]) lar skjulte steg forbli skjult. */
-.poll-card[open]:has(.poll-intro:not([hidden])) {
-  display: flex;
-  flex-direction: column;
-  min-height: min(640px, calc(100svh - 32px));
-}
-
-.poll-intro:not([hidden]) {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.poll-intro > .poll-primary {
-  margin-top: auto;
-  flex-shrink: 0;
+/* 8. STARTKORTETS HØYDE – plasseringen av knappen ligger i components.css. */
+.poll-card:has(.poll-intro:not([hidden])) {
+  --game-card-height: 640px;
 }
 
 /* Ingen ramme rundt krysset. Understreking viser tastaturfokus i stedet. */
