@@ -389,22 +389,6 @@
     display: none;
 }
 
-/* Liten grå hake */
-.gamestop-hake {
-    position: absolute;
-    left: 65px;
-    top: 78px;
-    display: grid;
-    place-items: center;
-    width: 27px;
-    height: 27px;
-    border: 3px solid #ffffff;
-    border-radius: 13.5px;
-    background-color: #A8A8A8;
-    filter: drop-shadow(0 3px 0 #777373);
-    transition: left 0.15s, top 0.15s;
-}
-
 /* Variant 2 i Figma: større knapp når man holder over / fokuserer */
 .gamestop:hover .gamestop-knapp,
 .gamestop:focus-visible .gamestop-knapp {
@@ -431,11 +415,53 @@
     display: block;
 }
 
-.gamestop:hover .gamestop-hake,
-.gamestop:focus-visible .gamestop-hake {
-    left: 73px;
-    top: 83px;
+
+
+/* =========================
+    GAMESTOP – QUIZ (lilla variant)
+    Samme oppbygning som den røde, men egne farger,
+    "?" i midten.
+   ========================= */
+
+.gamestop--quiz .gamestop-knapp {
+    background-color: #8B78D5;
+    box-shadow:
+        inset 0 4px 0 rgb(255 255 255 / 0.32),
+        0 8px 0 #59479E,
+        0 10px 0 rgb(255 255 255 / 0.7);
+    transition: width 0.15s, height 0.15s, border-radius 0.15s, top 0.15s, left 0.15s;
 }
+
+.gamestop-tegn {
+    color: #ffffff;
+    font-family: 'Nunito', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 36px;
+    transition: font-size 0.15s;
+}
+
+/* Variant 2: knappen vokser fra midten og "?" blir større */
+.gamestop--quiz:hover .gamestop-knapp,
+.gamestop--quiz:focus-visible .gamestop-knapp {
+    left: 2.37px;
+    top: 7.7px;
+    width: 99.258px;
+    height: 99.258px;
+    border-radius: 45px;
+}
+
+.gamestop--quiz:hover .gamestop-indre,
+.gamestop--quiz:focus-visible .gamestop-indre {
+    width: 75.375px;
+    height: 75.375px;
+}
+
+.gamestop--quiz:hover .gamestop-tegn,
+.gamestop--quiz:focus-visible .gamestop-tegn {
+    font-size: 40px;
+}
+
 
 
 /* =========================
@@ -468,6 +494,18 @@
     right: 104px;
     padding-left: 0;
     padding-right: 12px;
+}
+
+/* Ikke plass under / over (satt av kartet.js): flytt boksen opp eller ned */
+.gamestop-stopp.til-topp .gamestop-kort {
+    top: auto;
+    bottom: 0;
+    transform: none;
+}
+
+.gamestop-stopp.til-bunn .gamestop-kort {
+    top: 0;
+    transform: none;
 }
 
 /* Lukket med krysset: skjult til musen har forlatt stoppet */
@@ -569,6 +607,37 @@
 
 .kort-lukk:hover {
     background-color: rgb(0 0 0 / 0.06);
+}
+
+/* Quiz-varianten av infoboksen (lilla, "Liten card til spillkarte" i Figma) */
+.kort--quiz .kort-ikon {
+    background-color: #8B78D5;
+    box-shadow: 0 7px 0 #59479E, 0 9px 0 #E5E3D9;
+}
+
+.kort-ikon-tegn {
+    color: #ffffff;
+    font-family: 'Nunito', sans-serif;
+    font-size: 38px;
+    font-weight: 900;
+    line-height: 57px;
+}
+
+.kort--quiz .kort-tittel {
+    min-height: 41px; /* 45px i Figma minus 4px luft over */
+}
+
+.kort--quiz .kort-tekst {
+    min-height: 36px; /* 44px i Figma minus 8px luft over */
+}
+
+.kort--quiz .kort-knapp {
+    background-color: #8B78D5;
+    filter: drop-shadow(0 6px 0 #59479E);
+}
+
+.kort--quiz .kort-knapp:hover {
+    background-color: #9A89DC;
 }
 
 
