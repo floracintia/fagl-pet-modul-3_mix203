@@ -209,9 +209,13 @@ if (reopen) {
   });
 }
 
-// På kartet: «Spill nå» i infoboksen åpner meningsmålingen.
-const openButton = document.querySelector('#poll-open');
-if (openButton) openButton.addEventListener('click', openPoll);
+// På kartet: «Spill nå» (#poll-open) og alle lenker til #poll-game åpner meningsmålingen.
+document.querySelectorAll('#poll-open, a[href="#poll-game"]').forEach(opener => {
+  opener.addEventListener('click', event => {
+    event.preventDefault(); // hindrer at lenken hopper/endrer adressen
+    openPoll();
+  });
+});
 
 // 9. OPPSTART – sett opp ukene.
 selectWeek(selectedWeek);
