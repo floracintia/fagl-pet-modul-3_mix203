@@ -17,7 +17,45 @@
 
     <!-- Kartet (kan dras rundt) -->
     <main class="kart-visning" tabindex="0" aria-label="Kart over Fagløpet. Dra med musen eller bruk piltastene for å se deg rundt.">
-      <img class="kart-bilde" src="bilder/kart.png" alt="Fargerikt kart over Bergen med en svingete sti opp til huset på toppen av fjellet" draggable="false">
+      <div class="kart-lag">
+        <img class="kart-bilde" src="bilder/kart.png" alt="Fargerikt kart over Bergen med en svingete sti opp til huset på toppen av fjellet" draggable="false">
+
+        <!-- GameStop: Del artikkel i arkivet. --x/--y = plassering i prosent av kartbildet (i gresset ved Fløyen) -->
+        <div class="gamestop-stopp" style="--x: 72.2%; --y: 32.1%;">
+        <a class="gamestop" href="bibliotek.html" aria-label="Del artikkel i arkivet" draggable="false">
+          <span class="gamestop-ring"></span>
+          <span class="gamestop-skygge"></span>
+          <span class="gamestop-knapp">
+            <span class="gamestop-indre">
+              <img class="gamestop-ikon-liten" src="bilder/ikoner/poll.svg" width="31" height="31" alt="">
+              <img class="gamestop-ikon-stor" src="bilder/ikoner/poll-stor.svg" width="31" height="31" alt="">
+            </span>
+          </span>
+          <span class="gamestop-hake">
+            <img src="bilder/ikoner/sjekk.svg" width="15" height="15" alt="">
+          </span>
+        </a>
+
+        <!-- Infoboks som vises til høyre ved hover -->
+        <div class="gamestop-kort">
+          <div class="kort">
+            <span class="kort-ikon">
+              <img src="bilder/ikoner/poll-kort.svg" width="36" height="36" alt="">
+            </span>
+            <p class="kort-etikett">Nytt spill</p>
+            <h2 class="kort-tittel">Hva mener du?</h2>
+            <p class="kort-tekst">Stem på ukens spørsmål og se hva resten av kontoret mener.</p>
+            <a class="kort-knapp" href="#" draggable="false">
+              Spill nå
+              <img src="bilder/ikoner/pil-hoyre.svg" width="20" height="20" alt="">
+            </a>
+            <button class="kort-lukk" type="button" aria-label="Lukk">
+              <img src="bilder/ikoner/lukk.svg" width="18" height="18" alt="">
+            </button>
+          </div>
+        </div>
+        </div>
+      </div>
     </main>
 
   </div>
