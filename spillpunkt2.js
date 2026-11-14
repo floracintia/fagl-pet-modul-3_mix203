@@ -20,7 +20,6 @@ const answerText = document.querySelector('#poll-answer');
 const countText = document.querySelector('#poll-count');
 const bars = document.querySelector('#poll-bars');
 const resultPanel = document.querySelector('#poll-result-panel');
-const insight = document.querySelector('#poll-insight');
 const resultTemplate = document.querySelector('#poll-result-template');
 
 // querySelectorAll finner alle fanene. [...] gjør samlingen til en liste.
@@ -113,8 +112,6 @@ function showResults(scope) {
 
   resultPanel.setAttribute('aria-labelledby', tabs[activeTabIndex].id);
 
-  // Denne eksempelmeldingen vises bare på teamfanen.
-  insight.hidden = scope !== 'team';
 }
 
 // 5. GÅ FRA INTRODUKSJON TIL SPØRSMÅL
