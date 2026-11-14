@@ -178,6 +178,9 @@ function finishQuiz() {
   updateQuizClock();
   clearInterval(quizClock);
   quizFinished = true;
+  // Deltakelse gir 2 poeng uansett antall riktige; samme ukespill telles bare én gang.
+  const week = document.querySelector('.quiz-weeks button[aria-pressed="true"]').dataset.week;
+  window.TeamPoints?.award('play', `quiz:demo-month:${week}`);
   quizPlay.hidden = true;
   quizResult.hidden = false;
   document.querySelector('#quiz-score-text').textContent = `${quizScore} av ${quizQuestions.length} riktig`;

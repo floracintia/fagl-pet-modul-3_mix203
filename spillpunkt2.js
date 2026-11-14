@@ -24,7 +24,7 @@ const resultPanel = document.querySelector('#poll-result-panel');
 const resultTemplate = document.querySelector('#poll-result-template');
 
 // querySelectorAll finner alle fanene. [...] gjør samlingen til en liste.
-const tabs = [...document.querySelectorAll('[role="tab"]')];
+const tabs = [...card.querySelectorAll('[role="tab"]')];
 const weekButtons = [...document.querySelectorAll('.poll-week')];
 
 // 2. DEMODATA OG VALGT SVAR
@@ -143,6 +143,8 @@ form.addEventListener('submit', event => {
   // FormData leser radioknappen med name="answer". Number gjør verdien til et tall.
   answer = Number(new FormData(form).get('answer'));
   answersByWeek.set(selectedWeek, answer);
+  // Registrer deltakelse når stemmen er sendt inn.
+  window.TeamPoints?.award('play', `poll:demo-month:${selectedWeek}`);
   answerText.textContent = labels[answer];
   form.hidden = true;
   results.hidden = false;

@@ -6,6 +6,8 @@
   <title>Fagløpet – kart</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="components.css">
+  <link rel="stylesheet" href="lagpoeng.css">
+  <script src="lagpoeng.js" defer></script>
   <link rel="stylesheet" href="spillpunkt2.css">
   <link rel="stylesheet" href="spillpunkt1.css">
   <script src="spillpunkt1.js" defer></script>
@@ -173,7 +175,7 @@
     </header>
 
     <!-- 2. INTRODUKSJON: tekst, andefigur, uker og startknapp -->
-    <section id="poll-intro" class="poll-intro" aria-labelledby="intro-title">
+    <section id="poll-intro" class="poll-intro game-card-content" aria-labelledby="intro-title">
       <h1 id="intro-title">Ukens avstemning: Hvilke meninger finst på kontoret ditt?</h1>
       <p class="poll-intro-copy">
         Delta i meningsmålingen og se ulike meninger blant dine kollegaer!
@@ -191,18 +193,18 @@
         <button class="poll-week" type="button" data-week="37" aria-pressed="false" disabled title="Ikke tilgjengelig ennå">37</button>
       </div>
 
-      <button class="game-card-button poll-primary" id="poll-start" type="button">
+      <button class="game-card-button game-card-action poll-primary" id="poll-start" type="button">
         Gå til ukens avstemming
         <span aria-hidden="true">→</span>
       </button>
     </section>
 
     <!-- 3. AVSTEMNING: skjult (hidden) til startknappen trykkes -->
-    <section id="poll-question" hidden aria-labelledby="question-title">
+    <section id="poll-question" class="game-card-content" hidden aria-labelledby="question-title">
       <h2 id="question-title" class="poll-question-title" tabindex="-1">Hva er viktigst for godt samarbeid mellom designere og utviklere?</h2>
 
       <!-- 3a. SKJEMA: samme name på radioknappene gjør at bare ett svar kan velges. required krever et valg -->
-      <form id="poll-form">
+      <form id="poll-form" class="game-card-content">
         <fieldset class="poll-options">
           <legend>Velg det alternativet som betyr mest for deg.</legend>
           <label class="poll-option">
@@ -227,14 +229,14 @@
           </label>
         </fieldset>
         <p class="poll-note">Ingen riktige eller gale svar. Stemmen din er anonym.</p>
-        <button class="game-card-button poll-primary" type="submit">
+        <button class="game-card-button game-card-action poll-primary" type="submit">
           Se resultater
           <span aria-hidden="true">→</span>
         </button>
       </form>
 
       <!-- 3b. RESULTATER: JavaScript skjuler skjemaet og viser denne delen etter innsending -->
-      <div id="poll-results" hidden>
+      <div id="poll-results" class="game-card-content" hidden>
         <p class="poll-confirmation">
           <span class="poll-check" aria-hidden="true">✓</span>
           <span>Takk! Du stemte på <strong id="poll-answer"></strong></span>
@@ -255,7 +257,7 @@
         </div>
 
         <p class="poll-note">Teamresultater vises bare når minst 8 personer har svart.</p>
-        <button class="game-card-button poll-primary poll-finish" type="button">
+        <button class="game-card-button game-card-action poll-primary poll-finish" type="button">
           Tilbake til kartet
           <span aria-hidden="true">→</span>
         </button>
@@ -487,6 +489,35 @@
       </ol>
     </section>
 
+  </dialog>
+
+  <!-- LAGKOMPONENT: ligger utenfor kartflaten, så den ikke flyttes når kartet dras. -->
+  <button class="team-level" id="team-level-button" type="button" aria-haspopup="dialog" aria-controls="team-stats">
+    <span class="team-level-heading"><img data-team-avatar src="assets/Property%201=Default%20level%201%20klovn.png" alt="Lagets nivåfigur"><strong data-team-level>Nivå 1</strong></span>
+    <progress class="team-progress" data-team-progress max="100" value="0" aria-label="Fremdrift i lagets nivå"></progress>
+    <span class="team-level-meta"><span><span data-team-points>0</span>/<span data-team-target>10</span> poeng</span><span data-team-remaining>10 poeng igjen</span></span>
+  </button>
+
+  <dialog class="team-stats" id="team-stats" aria-labelledby="team-name">
+    <button class="team-stats-close" id="team-stats-close" type="button" aria-label="Lukk lagstatistikk">×</button>
+    <header class="team-heading">
+      <img data-team-avatar src="assets/Property%201=Default%20level%201%20klovn.png" alt="Lagets nivåfigur">
+      <div><p>Ditt lag</p><h2 id="team-name">Team Hufflepuffs</h2><span class="team-badge" data-team-level>Nivå 1</span></div>
+    </header>
+    <section class="team-points-section" aria-label="Lagets poeng og nivå">
+      <div class="team-points-heading"><p><strong data-team-points>0</strong> av <span data-team-target>10</span> poeng</p><span class="team-remaining" data-team-remaining>10 poeng igjen</span></div>
+      <progress class="team-progress" data-team-progress max="100" value="0" aria-label="Fremdrift i lagets nivå"></progress>
+      <div class="team-progress-labels"><span data-team-level>Nivå 1</span><span data-team-next>Nivå 2</span></div>
+    </section>
+    <section aria-labelledby="team-activity-title">
+      <div class="team-activity-heading"><h3 id="team-activity-title">Lagaktivitet</h3><button class="team-refresh" id="team-stats-refresh" type="button">↻ Oppdater</button></div>
+      <dl class="team-activities">
+        <div class="team-activity team-shared"><dt>Delt</dt><dd data-team-count="share">0</dd><small>+3 poeng per artikkel</small></div>
+        <div class="team-activity team-read"><dt>Lest</dt><dd data-team-count="read">0</dd><small>+1 poeng per artikkel</small></div>
+        <div class="team-activity team-played"><dt>Spilt</dt><dd data-team-count="play">0</dd><small>+2 poeng per spill</small></div>
+      </dl>
+    </section>
+    <p class="team-local-note">Foreløpig vises aktivitet fra denne nettleseren.</p>
   </dialog>
 
   <script src="komponenter.js"></script>
