@@ -2,7 +2,8 @@
     HTML: innhold og struktur. CSS: utseende. JavaScript: klikk og data.
     Dette er en lokal prototype: svar sendes ikke til en server og lagres
     ikke etter at siden lastes på nytt. Tallene under er eksempeldata.
-   Skriptet lastes med defer i HTML, så elementene finnes før koden kjører. */
+   Skriptet lastes med defer i HTML (eller nederst i body), så elementene finnes før koden kjører.
+   Brukes både i Spillpunkt2.html (forhåndsvisning) og på forside_kart.html. */
 
 // 1. ELEMENTER FRA HTML
 // querySelector finner ett element. # betyr id, mens . betyr class.
@@ -180,25 +181,39 @@ tabs.forEach((tab, index) => {
 closeButton.addEventListener('click', () => card.close());
 finishButton.addEventListener('click', () => card.close());
 
-// close utløses også når brukeren trykker Escape i dialogen.
-card.addEventListener('close', () => {
-  reopen.hidden = false;
-  reopen.focus();
-
-  // Når kortet integreres i kartet, kan kartet lytte etter poll:close.
-  card.dispatchEvent(new CustomEvent('poll:close', { bubbles: true }));
-});
-
-// Tilbake til ukevalget når forhåndsvisningen åpnes igjen.
-reopen.addEventListener('click', () => {
-  reopen.hidden = true;
+// Åpne kortet fra starten (ukevalget).
+// showModal gir dialogen fokus og hindrer klikk på innhold bak kortet.
+function openPoll() {
   intro.hidden = false;
   question.hidden = true;
   selectWeek(selectedWeek);
   card.showModal();
+}
+
+// close utløses også når brukeren trykker Escape i dialogen.
+card.addEventListener('close', () => {
+  // Forhåndsvisningen (Spillpunkt2.html) har en knapp for å åpne kortet igjen.
+  if (reopen) {
+    reopen.hidden = false;
+    reopen.focus();
+  }
+
+  // Kartet kan lytte etter poll:close.
+  card.dispatchEvent(new CustomEvent('poll:close', { bubbles: true }));
 });
 
-// 9. OPPSTART – sett opp ukene og vis kortet når siden åpnes.
+if (reopen) {
+  reopen.addEventListener('click', () => {
+    reopen.hidden = true;
+    openPoll();
+  });
+}
+
+// På kartet: «Spill nå» i infoboksen åpner meningsmålingen.
+const openButton = document.querySelector('#poll-open');
+if (openButton) openButton.addEventListener('click', openPoll);
+
+// 9. OPPSTART – sett opp ukene.
 selectWeek(selectedWeek);
-// showModal gir dialogen fokus og hindrer klikk på innhold bak kortet.
-card.showModal();
+// I forhåndsvisningen vises kortet med en gang. På kartet venter det på «Spill nå».
+if (document.body.classList.contains('poll-preview')) card.showModal();

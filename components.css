@@ -580,10 +580,13 @@
     border-radius: 17px;
     background-color: #FA5757;
     filter: drop-shadow(0 6px 0 #A23F40);
+    border: 0;
     color: #ffffff;
+    font-family: var(--font-body);
     font-size: 16px;
     font-weight: 600;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .kort-knapp:hover {
@@ -694,6 +697,13 @@
 /* Dialogen ligger over siden. Vertssiden kan endre bakgrunnen senere. */
 .game-card::backdrop {
     background: transparent;
+}
+
+/* På kartsiden: kartet, menyen og headeren bak blir uskarpe */
+.side-app .game-card::backdrop {
+    background: rgb(57 17 61 / 0.25);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
 }
 
 .game-card [hidden] {
