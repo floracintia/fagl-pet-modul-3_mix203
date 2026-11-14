@@ -28,10 +28,12 @@
 .quiz-answer { position: relative; display: flex; align-items: center; gap: 12px; min-height: 58px; padding: 9px 12px; margin-bottom: 12px; border: 1px solid #6c858a; border-radius: 15px; background: var(--color-surface); font-size: 18px; font-weight: 600; cursor: pointer; }
 .quiz-answer input { position: absolute; opacity: 0; width: 1px; height: 1px; }
 .quiz-letter { display: grid; place-items: center; flex: 0 0 36px; height: 36px; border-radius: 8px; background: #ece8ce; font-size: 14px; }
-.quiz-answer:has(input:checked) { outline: 2px solid #003d5d; outline-offset: -2px; background: #e5f5ff; }
+/* Blå valgt-farge gjelder bare før svaret er sjekket, ellers overstyrer den rødt/grønt. */
+.quiz-answer:has(input:checked:not(:disabled)) { outline: 2px solid #003d5d; outline-offset: -2px; background: #e5f5ff; }
 .quiz-answer:has(input:focus-visible) { box-shadow: 0 0 0 3px var(--color-blue-light); }
 .quiz-answer.is-correct { background: #e9fbdc; border-color: var(--color-success); outline: none; }
-.quiz-answer.is-wrong { background: #ffe3e3; border-color: var(--color-error); outline: none; }
+.quiz-answer.is-wrong { background: #ffe3e3; border-color: #f91414; outline: none; }
+.quiz-answer.is-wrong .quiz-letter { background: #ff8a8a; border: 1px solid #f91414; }
 .quiz-answer-status { margin-left: auto; font-size: 11px; font-weight: 500; }
 .quiz-answer:has(input:disabled) { cursor: default; }
 .quiz-feedback { min-height: 24px; margin: 0; font-size: 14px; }
