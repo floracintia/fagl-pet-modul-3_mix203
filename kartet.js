@@ -42,7 +42,7 @@ let forrige = null;
 
 visning.addEventListener('pointerdown', hendelse => {
   // Klikk på en knapp på kartet skal ikke starte dra-bevegelsen
-  if (hendelse.target.closest('a, button, .kort')) return;
+  if (hendelse.target.closest('a, button, .kort, .toppliste')) return;
   forrige = { x: hendelse.clientX, y: hendelse.clientY };
   visning.setPointerCapture(hendelse.pointerId);
   visning.classList.add('drar');
