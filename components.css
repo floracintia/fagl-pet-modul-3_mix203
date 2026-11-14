@@ -666,3 +666,124 @@
         display: none;
     }
 }
+
+
+/* =========================
+   GJENBRUKBART SPILLKORT / OVERLAY
+   Last inn style.css først og components.css etterpå.
+   Bruk <dialog class="game-card"> i begge spillene.
+   Inni brukes game-card-header, game-card-close og game-card-button.
+   Spillspesifikt innhold og farger ligger i spillets egen CSS-fil.
+   ========================= */
+
+.game-card {
+    width: min(640px, calc(100% - 32px));
+    max-width: 640px;
+    max-height: calc(100svh - 32px);
+    margin: auto;
+    padding: 24px 32px;
+    border: 0;
+    border-radius: 28px;
+    background: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    /* Sikkerhetsnett ved sterk zoom eller svært liten skjerm: innhold kuttes ikke. */
+    overflow-y: auto;
+}
+
+/* Dialogen ligger over siden. Vertssiden kan endre bakgrunnen senere. */
+.game-card::backdrop {
+    background: transparent;
+}
+
+.game-card [hidden] {
+    display: none;
+}
+
+.game-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+    color: #222;
+}
+
+.game-card-close {
+    display: grid;
+    place-items: center;
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #222;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+/* Kun krysset endrer farge ved hover; ingen sirkel rundt knappen. */
+.game-card-close:hover {
+    background: transparent;
+    color: #555;
+}
+
+.game-card-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 16px;
+    border: 0;
+    border-radius: var(--radius-medium);
+    background: var(--game-button-color, #0079b8);
+    color: white;
+    text-align: left;
+    font: inherit;
+    font-size: 18px;
+    line-height: 1.3;
+    cursor: pointer;
+}
+
+.game-card-button > span {
+    flex-shrink: 0;
+    font-size: 28px;
+    line-height: 1;
+}
+
+.game-card-button:hover {
+    background: #00669c;
+}
+
+.game-card :focus-visible {
+    outline: 3px solid var(--color-primary-light);
+    outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+    .game-card {
+        width: calc(100% - 24px);
+        max-height: calc(100svh - 24px);
+        padding: 20px;
+        border-radius: var(--radius-large);
+    }
+
+    .game-card-button {
+        font-size: 16px;
+    }
+}
+
+@media (max-height: 740px) {
+    .game-card {
+        padding-top: 18px;
+        padding-bottom: 18px;
+    }
+
+    .game-card-header {
+        margin-bottom: 12px;
+    }
+}

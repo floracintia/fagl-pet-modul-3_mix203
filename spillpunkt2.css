@@ -1,0 +1,364 @@
+/* SPILLPUNKT – UTSEENDE
+    style.css inneholder felles designsystem (farger og skrifter).
+    Denne filen bestemmer utseendet til meningsmålingskortet.
+    .navn viser til class i HTML. #navn viser til id.
+    margin = luft utenfor, padding = luft inni, gap = luft mellom elementer.
+   Søk etter de nummererte seksjonene for å finne riktig del. */
+/* 1. SPILLETS FARGER OG FORHÅNDSVISNING
+   Selve rammen, toppen og hovedknappen ligger i components.css.
+   Spill nummer to kan bruke de samme game-card-klassene. */
+.poll-card {
+  --poll-ink: #1c3d30;
+  --poll-blue: #0079b8;
+  --poll-pale: #e5f5ff;
+  color: var(--poll-ink);
+}
+.poll-preview {
+  min-height: 100svh;
+  background: transparent;
+}
+
+/* hidden settes i HTML eller JavaScript og skal alltid skjule elementet. */
+.poll-card [hidden], .poll-preview > [hidden] {
+  display: none;
+}
+
+/* 2. TOPP – logo, navn og lukkeknapp */
+.poll-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.poll-logo {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  border: 2px solid #222;
+  border-radius: 50%;
+  background: var(--color-yellow);
+  font-size: 22px;
+  transform: rotate(-10deg);
+}
+
+/* 3. INTRODUKSJON – overskrifter, andefigur og ukeoversikt */
+.poll-card h1, .poll-question-title {
+  font-size: 28px;
+  line-height: 1.18;
+  letter-spacing: -.8px;
+  margin-bottom: 16px;
+}
+
+.poll-intro h1 {
+  color: #222;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.poll-intro-copy {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #222;
+  margin: 0;
+}
+
+.poll-mascot {
+  display: block;
+  width: 142px;
+  height: clamp(100px, 22svh, 156px);
+  object-fit: contain;
+  margin: 20px auto 14px;
+  image-rendering: auto;
+}
+
+.poll-weeks {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  font-size: 11px;
+  color: #222;
+}
+
+.poll-week {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #ece8ce;
+  color: #222;
+  border: 2px solid transparent;
+  padding: 0;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* Valgt uke har blå kant. Teksten er svart på alle tilgjengelige uker. */
+.poll-week[aria-pressed="true"] {
+  background: var(--poll-pale);
+  border-color: var(--poll-blue);
+}
+
+.poll-week:hover:not(:disabled) {
+  border-color: var(--poll-blue);
+}
+
+/* Fremtidige spill kan ikke velges med mus eller tastatur. */
+.poll-week:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* 4. FELLES KNAPPER OG TASTATURFOKUS */
+.poll-card :focus-visible, .poll-reopen:focus-visible {
+  outline: 3px solid var(--color-primary-light);
+  outline-offset: 4px;
+}
+
+/* 5. AVSTEMNING – svaralternativer og valgt tilstand */
+.poll-options {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.poll-options legend {
+  padding: 0;
+  margin-bottom: 20px;
+  color: #778b83;
+  font-size: 16px;
+}
+
+.poll-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 58px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  border: 1px solid #81958d;
+  border-radius: 14px;
+  background: var(--color-surface);
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Radioknappen er usynlig, men fungerer fortsatt med tastatur og skjermleser. */
+.poll-option input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.poll-checkbox {
+  display: grid;
+  place-items: center;
+  flex: 0 0 34px;
+  height: 34px;
+  border: 2px solid var(--color-blue-light);
+  border-radius: 12px;
+}
+
+/* :has velger svarraden som inneholder den avkryssede radioknappen. */
+.poll-option:has(input:checked) {
+  border-color: #003d5d;
+  box-shadow: 0 2px 3px #0003;
+}
+
+.poll-option input:checked + .poll-checkbox {
+  background: var(--color-blue);
+  border-color: var(--color-blue);
+}
+
+/* Haken tegnes med to streker i CSS og blir lik på alle operativsystemer. */
+.poll-option input:checked + .poll-checkbox::after {
+  content: '';
+  width: 8px;
+  height: 15px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.poll-option:has(input:focus-visible) {
+  outline: 3px solid var(--color-primary-light);
+  outline-offset: 3px;
+}
+
+/* 6. RESULTATER – bekreftelse, faner og søyler */
+.poll-note {
+  text-align: center;
+  font-size: 13px;
+  color: #8b968f;
+  margin: 16px 0;
+}
+
+.poll-confirmation {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  margin: 0 0 12px;
+  border-radius: 17px;
+  background: var(--poll-pale);
+  color: #646b69;
+  font-size: 14px;
+}
+
+.poll-check {
+  display: grid;
+  place-items: center;
+  flex: 0 0 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--color-blue);
+  color: white;
+  font-size: 22px;
+}
+
+.poll-tabs {
+  display: flex;
+  padding: 4px;
+  border-radius: 16px;
+  background: var(--poll-pale);
+}
+
+.poll-tabs button {
+  flex: 1;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  padding: 8px 12px;
+  color: #777;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.poll-tabs button[aria-selected="true"] {
+  background: white;
+  color: var(--poll-ink);
+  box-shadow: 0 2px 5px #0001;
+}
+
+.poll-meta {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0 14px;
+  color: #8b968f;
+  font-size: 12px;
+}
+
+.poll-result {
+  margin-bottom: 12px;
+}
+
+.poll-result-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.poll-result-label > strong {
+  margin-left: auto;
+}
+
+.poll-result.is-answer .poll-result-name {
+  font-weight: 700;
+}
+
+.poll-answer-tag {
+  padding: 3px 6px;
+  border-radius: 5px;
+  background: var(--color-blue);
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.poll-track {
+  height: 10px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--poll-pale);
+}
+
+.poll-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-blue);
+}
+
+
+
+.poll-finish {
+  margin-top: 16px;
+}
+
+.poll-reopen {
+  width: min(400px, calc(100% - 32px));
+  margin: 40px auto;
+}
+
+/* 7. SMÅ SKJERMER – mindre dekorasjon, fortsatt lesbar tekst. */
+@media (max-width: 600px) {
+  .poll-brand { font-size: 16px; gap: 7px; }
+  .poll-logo { width: 28px; height: 28px; flex-basis: 28px; font-size: 18px; }
+  .poll-card h1, .poll-question-title { font-size: 24px; }
+  .poll-intro-copy { font-size: 17px; }
+  .poll-option { font-size: 15px; gap: 10px; }
+  .poll-options legend { font-size: 15px; }
+  .poll-result-label { font-size: 12px; gap: 6px; }
+  .poll-note { font-size: 12px; margin: 12px 0; }
+}
+
+/* På lave vinduer kuttes luft og dekorasjon før tekststørrelsen reduseres. */
+@media (max-height: 740px) {
+  .poll-mascot { height: 100px; margin: 10px auto; }
+  .poll-card h1, .poll-question-title { font-size: 25px; margin-bottom: 12px; }
+  .poll-result { margin-bottom: 10px; }
+  .poll-meta { margin: 8px 0 10px; }
+  .poll-note { margin: 10px 0; }
+  .poll-finish { margin-top: 10px; }
+}
+
+
+/* 8. STØRRE STARTKORT
+   Bare introduksjonen får ekstra høyde. De neste stegene beholder sin
+   innholdsstyrte størrelse. :not([hidden]) lar skjulte steg forbli skjult. */
+.poll-card[open]:has(.poll-intro:not([hidden])) {
+  display: flex;
+  flex-direction: column;
+  min-height: min(640px, calc(100svh - 32px));
+}
+
+.poll-intro:not([hidden]) {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.poll-intro > .poll-primary {
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+/* Ingen ramme rundt krysset. Understreking viser tastaturfokus i stedet. */
+.poll-card .poll-close:focus-visible {
+  outline: none;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
