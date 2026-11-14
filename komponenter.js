@@ -74,7 +74,7 @@ function lagHeader() {
       </div>
       <label class="sokefelt">
         <img src="bilder/ikoner/sok.svg" width="16" height="16" alt="">
-        <input type="search" placeholder="Søk i Fagløp">
+        <input type="search" placeholder="Søk">
       </label>
     </header>`;
 }

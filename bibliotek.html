@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#39113D">
-  <title>Fagløpets bibliotek</title>
+  <title>Velkommen til biblioteket!</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="components.css">
   <style>
@@ -31,8 +31,8 @@
     .hero { min-height: 270px; padding: 22px 0 20px; display: grid; grid-template-columns: 150px minmax(310px, 1fr) minmax(245px, 300px); align-items: center; gap: clamp(24px, 3.2vw, 42px); }
     .shelf { width: 132px; height: 226px; justify-self: center; display: block; object-fit: contain; filter: drop-shadow(3px 3px 0 rgb(57 17 61 / 10%)); }
     .hero-copy { min-width: 0; padding: 2px 0 0; }
-    .hero-copy h1 { margin: 0 0 12px; color: var(--ink); font: 700 clamp(30px, 3.15vw, 38px)/1.1 var(--font-heading); letter-spacing: -.7px; white-space: nowrap; }
-    .hero-copy p { max-width: 410px; margin: 0 0 20px; color: var(--color-text-secondary); font-size: 13px; line-height: 1.55; }
+    .hero-copy h1 { margin: 0 0 14px; color: var(--ink); font: 700 clamp(34px, 3.6vw, 43px)/1.1 var(--font-heading); letter-spacing: -.7px; white-space: nowrap; }
+    .hero-copy p { max-width: 430px; margin: 0 0 22px; color: var(--color-text-secondary); font-size: 15px; line-height: 1.55; }
     .share-button { width: 171px; height: 38px; padding: 0 11px; display: inline-flex; align-items: center; justify-content: center; flex-direction: row; gap: 5px; border: 0; border-radius: 13px; color: white; background: var(--purple); font-weight: 400; font-size: 11px; cursor: pointer; box-shadow: none; }
     .share-button:hover { transform: translateY(-1px); }
     .share-button .points { padding: 0; border-radius: 0; color: #ffed59; background: transparent; font-size: 11px; white-space: nowrap; }
@@ -53,7 +53,8 @@
 
     .articles { display: grid; gap: 15px; }
     .article-card { min-height: 190px; padding: 14px; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 21px; border: var(--line); border-radius: var(--round); background: var(--white); box-shadow: 3px 4px 0 rgb(57 17 61 / 9%); }
-    .article-art { min-height: 158px; width: 100%; height: 100%; display: block; object-fit: cover; border-right: 2px solid var(--plum); }
+    .article-card[hidden] { display: none; }
+    .article-art { width: 100%; height: 158px; min-height: 158px; display: block; align-self: center; object-fit: cover; border-right: 2px solid var(--plum); }
     .article-info { min-width: 0; padding: 1px 1px 0 0; display: flex; flex-direction: column; align-items: flex-start; }
     .article-info h2 { margin: 0 0 5px; color: var(--plum); font: 700 23px/1.2 var(--heading); }
     .description { margin: 0 0 9px; color: #39342e; font-size: 13px; line-height: 1.45; }
@@ -122,14 +123,14 @@
       main { margin: 0 7px 7px; padding: 24px 17px 42px; border-width: 3px; border-top: 0; }
       .hero { padding: 22px 0 20px; grid-template-columns: 86px minmax(0, 1fr); gap: 15px; }
       .shelf { width: 78px; height: 145px; }
-      .hero-copy h1 { margin-bottom: 9px; font-size: clamp(25px, 7vw, 34px); line-height: 1.1; white-space: normal; letter-spacing: -.5px; }
-      .hero-copy p { max-width: 36ch; margin-bottom: 15px; font-size: 12px; line-height: 1.5; }
+      .hero-copy h1 { margin-bottom: 10px; font-size: clamp(28px, 7.5vw, 37px); line-height: 1.1; white-space: normal; letter-spacing: -.5px; }
+      .hero-copy p { max-width: 36ch; margin-bottom: 17px; font-size: 14px; line-height: 1.5; }
       .duck-note { grid-column: 2; justify-content: flex-end; min-height: 120px; margin-top: 1px; }
       .duck-note img { width: 105px; height: 126px; }
       .bubble { top: -18px; left: auto; right: 80px; width: 118px; min-height: 72px; padding: 12px; font-size: 10px; }
       .bubble small { font-size: 11px; }
       .article-card { grid-template-columns: 1fr; gap: 13px; }
-      .article-art { min-height: 150px; }
+      .article-art { height: 190px; min-height: 190px; border-right: 0; border-bottom: 2px solid var(--plum); }
       .article-info h2 { font-size: 21px; }
       .share-button { width: 171px; height: 38px; max-width: 100%; }
       .search-filters { grid-template-columns: 1fr; gap: 14px; }
@@ -158,7 +159,7 @@
         <section class="hero" aria-labelledby="page-title">
           <img class="shelf" src="bilder/bokhylle.png" alt="Bokhylle full av fargerike bøker">
           <div class="hero-copy">
-            <h1 id="page-title">Fagløpets bibliotek</h1>
+            <h1 id="page-title">Velkommen til biblioteket!</h1>
             <p>Gode ideer er til for å deles. Finn inspirasjon fra kolleger, eller legg til en artikkel du tror andre vil like.</p>
             <button class="share-button" type="button" id="open-share-modal"><span>+ Del en artikkel</span><span class="points">5 poeng</span></button>
           </div>
@@ -169,7 +170,7 @@
         </section>
 
         <div class="search-filters">
-          <label class="library-search"><span aria-hidden="true">⌕</span><input id="article-search" type="search" placeholder="Søk etter artikler, tema eller kanal..." aria-label="Søk etter artikler, tema eller kanal"></label>
+          <label class="library-search"><span aria-hidden="true">⌕</span><input id="article-search" type="search" placeholder="Søk" aria-label="Søk"></label>
           <div class="filters" role="group" aria-label="Filtrer artikler etter tema">
           <button class="filter selected" type="button" aria-pressed="true" data-filter="alle">Alle</button>
           <button class="filter" type="button" aria-pressed="false" data-filter="lest">Lest</button>
@@ -182,7 +183,7 @@
         </div>
 
         <section class="articles" aria-label="Artikler">
-          <article class="article-card" data-tags="ux-norge ux-bergen nylig" data-title="UX-design i utvikling fra innsikt til løsning">
+          <article class="article-card" data-article-id="ux-design-innsikt" data-tags="ux-norge nylig" data-title="UX-design i utvikling fra innsikt til løsning">
             <img class="article-art" src="bilder/artikkel-ux.png" alt="Illustrasjon av UX-design med blå bakgrunn">
             <div class="article-info">
               <h2>UX-design i utvikling: fra innsikt til løsning</h2>
@@ -191,13 +192,43 @@
               <div class="card-bottom"><a class="open-link" href="#artikkel-ux">Åpne →</a><label class="read-toggle"><input class="read-check" type="checkbox"><span>Lest</span></label></div>
             </div>
           </article>
-          <article class="article-card" data-tags="ux-norge ux-bergen nylig" data-title="UX-design i utvikling fra innsikt til løsning">
+          <article class="article-card" data-article-id="ux-design-skisser" data-tags="ux-bergen" data-title="Fra skisse til prototype slik tester vi ideer tidlig">
             <img class="article-art" src="bilder/artikkel-skisser.png" alt="Skisser av mobilskjermer og brukerflyt">
             <div class="article-info">
-              <h2>UX-design i utvikling: fra innsikt til løsning</h2>
-              <p class="description">En praktisk guide til å gjøre brukerinnsikt om til gode valg i et produktteam.</p>
-              <p class="meta">Delt av Anne&nbsp; «Denne var bra!»</p>
+              <h2>Fra skisse til prototype: slik tester vi ideer tidlig</h2>
+              <p class="description">Se hvordan enkle skisser gjør det lettere å få tilbakemeldinger før vi bygger ferdig en løsning.</p>
+              <p class="meta">Delt av <strong>Jonas</strong> · #ux-Bergen</p>
               <div class="card-bottom"><a class="open-link" href="#artikkel-skisser">Åpne →</a><label class="read-toggle"><input class="read-check" type="checkbox"><span>Lest</span></label></div>
+            </div>
+          </article>
+          <article class="article-card" data-article-id="brukertest-pa-budsjett" data-tags="ux-norge" data-title="Brukertesting på budsjett få nyttig innsikt med små grep">
+            <!-- Foto: Unsplash, UX Indonesia. -->
+            <img class="article-art" src="bilder/artikkel-brukertest.jpg" alt="To personer gjennomfører en brukertest med mobil og laptop" loading="lazy">
+            <div class="article-info">
+              <h2>Brukertesting på budsjett: få nyttig innsikt med små grep</h2>
+              <p class="description">Du trenger ikke et stort testoppsett for å lære av brukerne. Start med korte samtaler og konkrete oppgaver.</p>
+              <p class="meta">Delt av <strong>Ingrid</strong> · #UX-Norge</p>
+              <div class="card-bottom"><a class="open-link" href="#artikkel-brukertest">Åpne →</a><label class="read-toggle"><input class="read-check" type="checkbox"><span>Lest</span></label></div>
+            </div>
+          </article>
+          <article class="article-card" data-article-id="mikrotekst-i-produkter" data-tags="ux-norge nylig" data-title="Mikrotekst som hjelper små ord stor forskjell">
+            <!-- Foto: Julio Lopez via Unsplash. -->
+            <img class="article-art" src="bilder/artikkel-mikrotekst.jpg" alt="UX-designer skriver notater mens hun ser på en nettside på laptop" loading="lazy">
+            <div class="article-info">
+              <h2>Mikrotekst som hjelper: små ord, stor forskjell</h2>
+              <p class="description">Gode knappe- og feilmeldinger gjør digitale tjenester enklere å forstå. Her er en praktisk sjekkliste.</p>
+              <p class="meta">Delt av <strong>Oda</strong> · #UX-Norge</p>
+              <div class="card-bottom"><a class="open-link" href="#artikkel-mikrotekst">Åpne →</a><label class="read-toggle"><input class="read-check" type="checkbox"><span>Lest</span></label></div>
+            </div>
+          </article>
+          <article class="article-card" data-article-id="tilgjengelighet-fra-start" data-tags="ux-norge" data-title="Tilgjengelighet fra første skisse">
+            <!-- Foto: Kelly Sikkema via Unsplash, vist i Molly Durham sin Mobility Wayfinding-app-case. -->
+            <img class="article-art" src="bilder/artikkel-tilgjengelighet.webp" alt="Mobil med kartapp som viser informasjon om tilgjengelighet" loading="lazy">
+            <div class="article-info">
+              <h2>Tilgjengelighet fra første skisse</h2>
+              <p class="description">Noen tidlige designvalg gjør en løsning bedre for flere. Se hva teamet kan sjekke allerede i skissefasen.</p>
+              <p class="meta">Delt av <strong>Emil</strong> · #UX-Norge</p>
+              <div class="card-bottom"><a class="open-link" href="#artikkel-tilgjengelighet">Åpne →</a><label class="read-toggle"><input class="read-check" type="checkbox"><span>Lest</span></label></div>
             </div>
           </article>
         </section>
@@ -249,7 +280,34 @@
     const closeModalButton = document.querySelector('#close-share-modal');
     const comment = document.querySelector('#share-comment');
     const commentCount = document.querySelector('#comment-count');
-    let activeFilter = 'alle';
+    const readStorageKey = 'faglopet-bibliotek-lesestatus';
+    let readStatus = {};
+    let activeCategory = 'alle';
+    let activeReadFilter = 'alle';
+
+    // Gjenopprett lest-status separat for hvert artikkelkort.
+    try {
+      readStatus = JSON.parse(localStorage.getItem(readStorageKey) || '{}');
+      if (!readStatus || typeof readStatus !== 'object' || Array.isArray(readStatus)) readStatus = {};
+    } catch {
+      readStatus = {};
+    }
+    cards.forEach((card) => {
+      card.querySelector('.read-check').checked = Boolean(readStatus[card.dataset.articleId]);
+    });
+
+    function updateFilterButtons() {
+      filters.forEach((button) => {
+        const filter = button.dataset.filter;
+        const selected = filter === 'alle'
+          ? activeCategory === 'alle' && activeReadFilter === 'alle'
+          : filter === 'lest'
+            ? activeReadFilter === filter
+            : activeCategory === filter;
+        button.classList.toggle('selected', selected);
+        button.setAttribute('aria-pressed', String(selected));
+      });
+    }
 
     function updateArticles() {
       const query = searchInput.value.trim().toLocaleLowerCase('nb');
@@ -257,9 +315,10 @@
       cards.forEach((card) => {
         const text = `${card.dataset.title} ${card.textContent} ${card.dataset.tags}`.toLocaleLowerCase('nb');
         const matchesQuery = !query || text.includes(query);
-        const matchesFilter = activeFilter === 'alle' ||
-          (activeFilter === 'lest' ? card.querySelector('.read-check').checked : card.dataset.tags.split(' ').includes(activeFilter));
-        const visible = matchesQuery && matchesFilter;
+        const isRead = card.querySelector('.read-check').checked;
+        const matchesCategory = activeCategory === 'alle' || card.dataset.tags.split(' ').includes(activeCategory);
+        const matchesRead = activeReadFilter === 'alle' || isRead;
+        const visible = matchesQuery && matchesCategory && matchesRead;
         card.hidden = !visible;
         if (visible) visibleCount++;
       });
@@ -267,16 +326,29 @@
     }
 
     filters.forEach((button) => button.addEventListener('click', () => {
-      activeFilter = button.dataset.filter;
-      filters.forEach((item) => {
-        const selected = item === button;
-        item.classList.toggle('selected', selected);
-        item.setAttribute('aria-pressed', String(selected));
-      });
+      const filter = button.dataset.filter;
+      if (filter === 'alle') {
+        activeCategory = 'alle';
+        activeReadFilter = 'alle';
+      } else if (filter === 'lest') {
+        activeReadFilter = filter;
+      } else {
+        activeCategory = filter;
+      }
+      updateFilterButtons();
       updateArticles();
     }));
     searchInput.addEventListener('input', updateArticles);
-    document.querySelectorAll('.read-check').forEach((checkbox) => checkbox.addEventListener('change', updateArticles));
+    document.querySelectorAll('.read-check').forEach((checkbox) => checkbox.addEventListener('change', () => {
+      const card = checkbox.closest('.article-card');
+      readStatus[card.dataset.articleId] = checkbox.checked;
+      try {
+        localStorage.setItem(readStorageKey, JSON.stringify(readStatus));
+      } catch {
+        // Lese-filteret fungerer også hvis nettleseren blokkerer lokal lagring.
+      }
+      updateArticles();
+    }));
 
     function closeModal() {
       modal.hidden = true;
