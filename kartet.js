@@ -1,8 +1,9 @@
 // Fagløpet – kartet kan dras litt rundt med musen/fingeren eller flyttes med piltastene.
-// Sidemenyen og headeren står fast; bare bildet inne i .kart-visning flytter seg.
+// Sidemenyen og headeren står fast; bare laget inne i .kart-visning (bildet + stoppene) flytter seg.
 
 const visning = document.querySelector('.kart-visning');
 const bilde = document.querySelector('.kart-bilde');
+const lag = document.querySelector('.kart-lag'); // bildet + stoppene, flyttes sammen
 
 // Hvor mye større enn visningen kartet er – bestemmer hvor langt man kan dra (1.25 = 25 % ekstra)
 const EKSTRA_PLASS = 1.25;
@@ -19,7 +20,11 @@ function tegn() {
   // Hold kartet innenfor kantene, så det aldri blir tomrom
   kart.x = begrens(kart.x, visning.clientWidth - bredde, 0);
   kart.y = begrens(kart.y, visning.clientHeight - hoyde, 0);
-  bilde.style.transform = `translate(${kart.x}px, ${kart.y}px) scale(${kart.skala})`;
+  // Laget får kartets størrelse, så stoppene (i prosent) havner på riktig sted,
+  // men selve knappene beholder sin størrelse
+  lag.style.width = `${bredde}px`;
+  lag.style.height = `${hoyde}px`;
+  lag.style.transform = `translate(${kart.x}px, ${kart.y}px)`;
 }
 
 // Skaler kartet så det dekker visningen med litt ekstra, sentrert sideveis og med toppen synlig
@@ -36,6 +41,8 @@ function sentrer() {
 let forrige = null;
 
 visning.addEventListener('pointerdown', hendelse => {
+  // Klikk på en knapp på kartet skal ikke starte dra-bevegelsen
+  if (hendelse.target.closest('a, button, .kort')) return;
   forrige = { x: hendelse.clientX, y: hendelse.clientY };
   visning.setPointerCapture(hendelse.pointerId);
   visning.classList.add('drar');
@@ -66,6 +73,26 @@ visning.addEventListener('keydown', hendelse => {
   kart.x += flytt[0];
   kart.y += flytt[1];
   tegn();
+});
+
+// ---------- Infoboks ved GameStop ----------
+// Krysset skjuler boksen. Den kan vises igjen når musen har forlatt stoppet.
+
+document.querySelectorAll('.gamestop-stopp').forEach(stopp => {
+  // Boksen vises til høyre, men flyttes til venstre hvis den ville gått utenfor kartet
+  function velgSide() {
+    const kortBredde = stopp.querySelector('.gamestop-kort').offsetWidth;
+    const plassTilHoyre = visning.getBoundingClientRect().right - stopp.getBoundingClientRect().right;
+    stopp.classList.toggle('til-venstre', plassTilHoyre < kortBredde);
+  }
+  stopp.addEventListener('mouseenter', velgSide);
+  stopp.addEventListener('focusin', velgSide);
+
+  stopp.querySelector('.kort-lukk').addEventListener('click', () => {
+    stopp.classList.add('lukket');
+    document.activeElement.blur();
+  });
+  stopp.addEventListener('mouseleave', () => stopp.classList.remove('lukket'));
 });
 
 // ---------- Start ----------
