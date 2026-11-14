@@ -11,7 +11,7 @@
 
 .app {
     display: grid;
-    grid-template-columns: 92px 1fr;
+    grid-template-columns: 65px 1fr;
     grid-template-rows: 45px 1fr;
     grid-template-areas:
         "meny topp"
@@ -34,8 +34,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
-    padding: 53px 3px 12px;
+    gap: 18px;
+    padding: 37px 0 12px;
     background-color: var(--color-primary);
     border-right: 1px solid rgb(255 255 255 / 0.08);
     overflow-y: auto;
@@ -45,34 +45,43 @@
     display: grid;
     place-items: center;
     flex-shrink: 0;
-    width: 48px;
-    height: 48px;
-    border-radius: 13px;
+    width: 36px;
+    height: 36px;
+    margin-bottom: 12px;
+    border-radius: 8px;
     background-color: #F8F5EB;
     color: #24102A;
     font-family: var(--font-heading);
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 700;
     text-decoration: none;
 }
 
+/* Mål fra Figma: ikon 20x20, knapp 36x36, gap 18 */
 .sidemeny-knapp {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     gap: 4px;
     flex-shrink: 0;
-    width: 66px;
-    height: 66px;
-    border-radius: 9px;
+    width: 100%;
     color: #FBF8FC;
-    font-size: 10px;
-    line-height: 15px;
+    font-size: 11px; /* xs, samme som .text-xs i style.css */
+    font-weight: 700;
+    line-height: 1.4;
+    text-align: center;
     text-decoration: none;
 }
 
-.sidemeny-knapp:hover {
+.sidemeny-ikon-boks {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+}
+
+.sidemeny-knapp:hover .sidemeny-ikon-boks {
     background-color: rgb(255 255 255 / 0.13);
 }
 
@@ -82,8 +91,8 @@
 
 .avatar {
     flex-shrink: 0;
-    width: 63px;
-    height: 63px;
+    width: 48px;
+    height: 48px;
     padding: 0;
     border: 4px solid rgb(255 255 255 / 0.76);
     border-radius: 50%;
@@ -95,10 +104,71 @@
 
 .avatar img {
     display: block;
-    width: 43px;
-    height: 47px;
-    margin: 2px 0 0 6px;
+    width: 33px;
+    height: 36px;
+    margin: 2px 0 0 4px;
     object-fit: cover;
+}
+
+/* Knappene nederst: pluss, måne og profil */
+.sidemeny-bunn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    margin-top: auto; /* skyver gruppen helt ned */
+}
+
+.sidemeny-rund {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: rgb(255 255 255 / 0.2);
+    cursor: pointer;
+}
+
+.sidemeny-rund:hover {
+    background-color: rgb(255 255 255 / 0.3);
+}
+
+.profil {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    background-color: #ffffff;
+    overflow: visible;
+    cursor: pointer;
+}
+
+.profil img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+.profil-status {
+    position: absolute;
+    right: -5px;
+    bottom: -5px;
+    display: grid;
+    place-items: center;
+    width: 15px;
+    height: 15px;
+    border: 2px solid var(--color-primary);
+    border-radius: 50%;
+    background-color: #2BAC76;
+    color: #ffffff;
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1;
 }
 
 
@@ -204,20 +274,6 @@
    ========================= */
 
 @media (max-width: 700px) {
-    .app {
-        grid-template-columns: 72px 1fr;
-    }
-
-    .sidemeny-knapp {
-        width: 60px;
-        height: 60px;
-    }
-
-    .avatar {
-        width: 54px;
-        height: 54px;
-    }
-
     .topplinje {
         grid-template-columns: minmax(0, 1fr);
         padding: 0 12px;
