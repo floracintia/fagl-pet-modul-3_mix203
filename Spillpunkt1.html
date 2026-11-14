@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <!-- 1. SIDEOPPSETT: felles designsystem og komponenter lastes før spillets CSS. -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kvakk! Quiz – Fagløpet</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="components.css">
+  <link rel="stylesheet" href="spillpunkt1.css">
+  <script src="spillpunkt1.js" defer></script>
+</head>
+<body class="quiz-preview">
+  <!-- Kun overlayet. Kartet kan senere åpne denne dialogen med showModal(). -->
+  <dialog class="game-card quiz-card" aria-labelledby="quiz-brand">
+    <header class="game-card-header">
+      <span class="quiz-brand" id="quiz-brand"><span class="quiz-logo" aria-hidden="true">K</span> KVAKK! QUIZ</span>
+      <button class="game-card-close" type="button" aria-label="Lukk quizen">×</button>
+    </header>
+
+    <!-- 2. INTRODUKSJON: fire ukespill, samme eksempelquiz foreløpig. -->
+    <section id="quiz-intro" class="game-card-content" aria-labelledby="quiz-intro-title">
+      <h1 id="quiz-intro-title">Hvor godt kjenner du UX og design?</h1>
+      <p class="quiz-intro-copy">Test kunnskapen din om visuell kommunikasjon, brukervennlighet og designprosesser. Klokken måler tiden, mens anden heier deg frem.</p>
+      <img class="quiz-mascot" src="bilder/anden.png" alt="Fagløpet-anden med sekk og nettbrett">
+      <div class="quiz-weeks" role="group" aria-label="Velg ukens quiz">
+        <span>Uke:</span>
+        <button type="button" data-week="34" aria-pressed="false">34</button>
+        <button type="button" data-week="35" aria-pressed="false">35</button>
+        <button type="button" data-week="36" aria-pressed="true">36</button>
+        <button type="button" data-week="37" aria-pressed="false" disabled title="Ikke tilgjengelig ennå">37</button>
+      </div>
+      <button class="game-card-button game-card-action" id="quiz-start" type="button">Start spillet <span aria-hidden="true">→</span></button>
+    </section>
+
+    <!-- 3. SPØRSMÅL: svaralternativene kopieres fra malen nederst. -->
+    <section id="quiz-play" hidden aria-labelledby="quiz-question">
+      <div class="quiz-meta"><span id="quiz-counter"></span><span id="quiz-timer" aria-label="Tid brukt">00:00</span></div>
+      <h2 id="quiz-question" tabindex="-1"></h2>
+      <form id="quiz-form">
+        <fieldset class="quiz-options">
+          <legend class="quiz-sr-only">Velg ett svar</legend>
+          <div id="quiz-answers"></div>
+        </fieldset>
+      </form>
+      <p class="quiz-feedback" id="quiz-feedback" role="status"></p>
+    </section>
+
+    <!-- 4. SLUTTRESULTAT: løypen under beholdes på skjermen. -->
+    <section id="quiz-result" hidden aria-labelledby="quiz-result-title">
+      <h2 id="quiz-result-title" tabindex="-1">Godt jobba!</h2>
+      <p id="quiz-result-message"></p>
+      <div class="quiz-score"><span aria-hidden="true">★</span><strong id="quiz-score-text"></strong><span id="quiz-final-time"></span></div>
+    </section>
+
+    <!-- 5. LØYPEN: CSS tegner banen. JavaScript flytter anden etter antall riktige. -->
+    <div class="quiz-course" id="quiz-course" hidden aria-label="Anden står på steg 0 av 4">
+      <ol class="quiz-markers" aria-hidden="true">
+        <li class="is-current">0<small>START</small></li><li>1</li><li>2</li><li>3</li><li>4<small>MÅL</small></li>
+      </ol>
+      <div class="quiz-track">
+        <div class="quiz-runner" id="quiz-runner"><img id="quiz-duck" src="bilder/anden.png" alt=""></div>
+      </div>
+    </div>
+    <button class="game-card-button game-card-action" id="quiz-action" type="submit" form="quiz-form" hidden disabled><span id="quiz-action-label">Sjekk svaret</span><span id="quiz-action-icon" aria-hidden="true">→</span></button>
+  </dialog>
+  <button class="game-card-button quiz-reopen" id="quiz-reopen" type="button" hidden>Åpne quizen <span aria-hidden="true">→</span></button>
+
+  <!-- 6. SVARMAL: innhold i HTML, tilstander i CSS, data og klikk i JavaScript. -->
+  <template id="quiz-answer-template">
+    <label class="quiz-answer">
+      <input type="radio" name="quiz-answer" required>
+      <span class="quiz-letter" aria-hidden="true"></span>
+      <span class="quiz-answer-text"></span>
+      <span class="quiz-answer-status"></span>
+    </label>
+  </template>
+</body>
+</html>

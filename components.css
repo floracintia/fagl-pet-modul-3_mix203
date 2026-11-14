@@ -718,3 +718,30 @@
         margin-bottom: 12px;
     }
 }
+
+
+/* FELLES PLASSERING AV NESTE-KNAPPEN
+   Kortet fordeler ledig høyde over knappen, med samme luft til bunnen.
+   :not([hidden]) er viktig: skjulte spillsteg skal aldri få display: flex. */
+.game-card[open] {
+    display: flex;
+    flex-direction: column;
+    min-height: min(var(--game-card-height, 620px), calc(100svh - 32px));
+}
+
+.game-card-content:not([hidden]) {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+}
+
+/* Innhold får beholde høyden sin ved små vinduer og sterk zoom. */
+.game-card > *,
+.game-card-content > * {
+    flex-shrink: 0;
+}
+
+.game-card .game-card-action {
+    margin-top: auto;
+    flex-shrink: 0;
+}

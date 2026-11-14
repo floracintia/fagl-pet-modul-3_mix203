@@ -1,0 +1,84 @@
+/* KVAKK! QUIZ – SPILLETS UTSEENDE
+   Kortramme og blå knapper gjenbrukes fra components.css.
+   Skrifter og grunnfarger kommer fra style.css. */
+
+/* 1. RAMME OG TOPP */
+.quiz-preview { background: transparent; min-height: 100svh; }
+.quiz-card { color: #22281f; }
+.quiz-brand { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; }
+.quiz-logo { display: grid; place-items: center; width: 32px; height: 32px; border: 2px solid #222; border-radius: 50%; background: var(--color-yellow); transform: rotate(-10deg); }
+.quiz-card .game-card-close:focus-visible { outline: none; text-decoration: underline; text-underline-offset: 4px; }
+.quiz-card h1, .quiz-card h2 { font-size: 28px; line-height: 1.2; margin-bottom: 18px; }
+.quiz-card [hidden], .quiz-preview > [hidden] { display: none; }
+
+/* 2. INTRODUKSJON OG UKEVALG */
+#quiz-intro h1 { text-align: center; }
+.quiz-intro-copy { font-size: 20px; font-weight: 600; line-height: 1.3; }
+.quiz-mascot { display: block; width: 145px; height: clamp(100px, 21svh, 156px); object-fit: contain; margin: 18px auto; }
+.quiz-weeks { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 18px 0; font-size: 11px; }
+.quiz-weeks button { width: 36px; height: 36px; padding: 0; border: 2px solid transparent; border-radius: 10px; background: #ece8ce; color: #222; font-weight: 700; cursor: pointer; }
+.quiz-weeks button[aria-pressed="true"] { background: #e5f5ff; border-color: #0079b8; }
+.quiz-weeks button:disabled { opacity: .4; cursor: not-allowed; }
+
+/* 3. SPØRSMÅL OG SVAR. Farge og tekst viser både riktig og feil svar. */
+.quiz-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 13px; }
+#quiz-counter { padding: 6px 12px; border: 1px solid #164052; border-radius: 20px; background: var(--color-blue-light); }
+#quiz-timer { font-variant-numeric: tabular-nums; color: var(--color-text-secondary); }
+.quiz-options { margin: 0; padding: 0; border: 0; min-width: 0; }
+.quiz-answer { position: relative; display: flex; align-items: center; gap: 12px; min-height: 58px; padding: 9px 12px; margin-bottom: 12px; border: 1px solid #6c858a; border-radius: 15px; background: var(--color-surface); font-size: 18px; font-weight: 600; cursor: pointer; }
+.quiz-answer input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.quiz-letter { display: grid; place-items: center; flex: 0 0 36px; height: 36px; border-radius: 8px; background: #ece8ce; font-size: 14px; }
+.quiz-answer:has(input:checked) { outline: 2px solid #003d5d; outline-offset: -2px; background: #e5f5ff; }
+.quiz-answer:has(input:focus-visible) { box-shadow: 0 0 0 3px var(--color-blue-light); }
+.quiz-answer.is-correct { background: #e9fbdc; border-color: var(--color-success); outline: none; }
+.quiz-answer.is-wrong { background: #ffe3e3; border-color: var(--color-error); outline: none; }
+.quiz-answer-status { margin-left: auto; font-size: 11px; font-weight: 500; }
+.quiz-answer:has(input:disabled) { cursor: default; }
+.quiz-feedback { min-height: 24px; margin: 0; font-size: 14px; }
+.quiz-card .game-card-button:disabled { background: #d1d1d1; color: #5b5b5b; cursor: not-allowed; }
+#quiz-action-label { font-size: inherit; line-height: inherit; }
+.quiz-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* 4. LØYPE: hvite linjer over rød bane. Andens venstreposisjon styres av data. */
+.quiz-course { margin: 18px 0 22px; padding: 0 16px; }
+.quiz-markers { display: flex; justify-content: space-between; list-style: none; margin: 0 0 40px; padding: 0; }
+.quiz-markers li { position: relative; display: grid; place-items: center; width: 26px; height: 26px; border: 2px solid #003d5d; border-radius: 50%; color: #003d5d; font-size: 14px; font-weight: 700; }
+.quiz-markers .is-current { background: var(--color-yellow); box-shadow: 0 2px 0 #003d5d; }
+.quiz-markers small { position: absolute; top: 30px; font-size: 8px; letter-spacing: .5px; }
+.quiz-track { position: relative; height: 54px; border: 2px solid #753e32; border-radius: 40px; background: repeating-linear-gradient(to bottom, #b64d3e 0 10px, #ffefe1 10px 12px); box-shadow: 0 4px 0 #753e32, 0 9px 12px #39221526; }
+.quiz-track::before { content: ''; position: absolute; top: 0; bottom: 0; left: 24px; width: 5px; border-left: 2px solid white; border-right: 2px solid white; transform: skew(-8deg); }
+.quiz-runner { position: absolute; bottom: -3px; left: 0%; width: 64px; margin-left: -19px; transition: left .65s ease-in-out; }
+.quiz-runner img { display: block; width: 64px; height: 86px; object-fit: contain; }
+/* Banens markører og anden bruker samme tilgjengelige bredde. */
+.quiz-track { margin: 0 12px; }
+.quiz-duck-hop { animation: quiz-hop .65s ease-in-out; }
+.quiz-duck-shake { animation: quiz-shake .45s ease-in-out; }
+@keyframes quiz-hop { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-30px) rotate(-8deg); } }
+@keyframes quiz-shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-7px) rotate(-5deg); } 40%, 80% { transform: translateX(7px) rotate(5deg); } }
+
+/* 5. RESULTAT OG FORHÅNDSVISNING */
+#quiz-result { text-align: center; }
+#quiz-result h2 { font-size: 36px; margin-bottom: 4px; }
+#quiz-result-message { margin: 0 0 22px; }
+.quiz-score { display: flex; flex-direction: column; gap: 3px; width: min(300px, 100%); margin: 0 auto 30px; padding: 12px; border: 1px solid #e0dccb; border-radius: 14px; background: #f4f1e7; font-size: 13px; }
+.quiz-score > span:first-child { color: #f3b61f; font-size: 36px; line-height: 1.2; }
+.quiz-reopen { width: min(400px, calc(100% - 32px)); margin: 40px auto; }
+
+/* 6. TILPASNING: mindre luft på lave skjermer, bevegelse av ved behov. */
+@media (max-width: 600px) {
+  .quiz-card h1, .quiz-card h2 { font-size: 24px; }
+  .quiz-brand { font-size: 18px; }
+  .quiz-intro-copy { font-size: 17px; }
+  .quiz-answer { font-size: 16px; gap: 8px; }
+  .quiz-answer-status { font-size: 10px; }
+}
+@media (max-height: 740px) {
+  .quiz-card h1, .quiz-card h2 { font-size: 25px; margin-bottom: 12px; }
+  .quiz-course { margin-top: 12px; margin-bottom: 16px; }
+  .quiz-answer { min-height: 52px; margin-bottom: 8px; }
+  .quiz-mascot { height: 100px; margin: 12px auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .quiz-runner { transition: none; }
+  .quiz-duck-hop, .quiz-duck-shake { animation: none; }
+}
