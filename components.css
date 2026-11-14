@@ -293,6 +293,622 @@
 
 
 /* =========================
+    TOPPLISTE
+    Ligger fast i høyre hjørne av kartet, uansett hvor kartet dras.
+    Mål og farger fra Figma ("Dialog", 419 x 303).
+   ========================= */
+
+.toppliste {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 3;
+    width: 419px;
+    max-width: calc(100% - 32px);
+    padding: 18.56px 21.56px 21px;
+    border: 0.442px solid rgb(255 255 255 / 0.9);
+    border-radius: 18.583px;
+    background-color: var(--color-background); /* #FFFAE5 */
+    box-shadow:
+        inset 0 0.885px 0 rgb(255 255 255 / 0.8),
+        0 15.486px 35.396px rgb(44 19 50 / 0.28);
+    color: #25132E;
+    cursor: default;
+    /* Skalerer hele topplisten ned fra høyre hjørne. 1 = Figma-størrelse */
+    transform: scale(0.8);
+    transform-origin: top right;
+}
+
+.toppliste-topp {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 30px;
+    margin-bottom: 5px;
+    padding: 0 8px;
+}
+
+.toppliste-tittel {
+    display: flex;
+    align-items: center;
+    gap: 6.194px;
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.4793px;
+}
+
+.toppliste-trofe {
+    width: 22.123px;
+    height: 22.123px;
+    transform: rotate(-3deg);
+}
+
+.toppliste-knapp {
+    min-width: 48.35px;
+    height: 100%;
+    padding: 0 8px;
+    border: 0;
+    border-radius: 999px;
+    background-color: #7A3881; /* Lilla nyanser/80 */
+    filter: drop-shadow(0 2.015px 2.82px rgb(180 130 26 / 0.2));
+    color: #FFFEFC;
+    font-family: var(--font-heading);
+    font-size: 11.1px;
+    font-weight: 600;
+    letter-spacing: 0.4793px;
+    cursor: pointer;
+}
+
+.toppliste-knapp:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.toppliste-liste {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.toppliste-rad {
+    display: grid;
+    grid-template-columns: 28.32px 44.25px minmax(0, 1fr) 38.94px;
+    align-items: center;
+    column-gap: 7.964px;
+    height: 42.475px;
+    padding: 3.54px 10.619px;
+    border: 0.442px solid #E8DFD8;
+    border-radius: 10.619px;
+    background-color: hsla(0, 0%, 100%, 0.72);
+    box-shadow: 0 2.655px 6.637px rgb(69 46 67 / 0.04);
+}
+
+/* Førsteplass: gul rad */
+.toppliste-rad--forst {
+    border-color: #D5C91B;  /* Gul nyanser/50 */
+    background-color: #FFFAAD; /* Gul nyanser/20 */
+}
+
+/* Rundt merke med plasseringen */
+.toppliste-plass {
+    display: grid;
+    place-items: center;
+    width: 22.123px;
+    height: 22.123px;
+    border: 0.442px solid #DFD4CF;
+    border-radius: 50%;
+    background: #F1ECE8;
+    filter: drop-shadow(0 1.327px 0 #DED5D1);
+    color: #5D5254;
+    font-family: var(--font-heading);
+    font-size: 9.291px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.toppliste-plass--1 {
+    border-color: #DCA61B;
+    background: linear-gradient(145deg, #FFE771 6.17%, #EAB530 93.83%);
+    filter: drop-shadow(0 1.327px 0 #C78B13);
+    color: #4C3711;
+}
+
+.toppliste-plass--2 {
+    border-color: #B5BDC2;
+    background: linear-gradient(145deg, #F2F5F7 6.17%, #C5CCD1 93.83%);
+}
+
+.toppliste-plass--3 {
+    border-color: #BF7653;
+    background: linear-gradient(145deg, #F4D1BD 6.17%, #C88966 93.83%);
+    color: #69402C;
+}
+
+/* Andebildet: størrelse og plassering per and står i HTML (fra Figma) */
+.toppliste-and {
+    position: relative;
+    justify-self: center;
+    width: 26.106px;
+    height: 35.398px;
+}
+
+.toppliste-and img {
+    position: absolute;
+    max-width: none;
+    object-fit: cover;
+}
+
+.toppliste-navn {
+    overflow: hidden;
+    font-size: 13.33px;
+    letter-spacing: 0.4793px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.toppliste-poeng {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-end;
+    padding-left: 9.734px;
+    border-left: 0.442px solid #E2D8D0;
+}
+
+.toppliste-poeng b {
+    font-family: var(--font-heading);
+    font-size: 12.389px;
+    font-weight: 800;
+    line-height: 12.389px;
+}
+
+.toppliste-poeng small {
+    padding-left: 0.442px;
+    font-size: 7.079px;
+    font-weight: 700;
+}
+
+
+/* =========================
+    STOR TOPPLISTE (statistikk-dialog)
+    Mål og farger fra Figma ("overlay", 1060 x 720).
+    Åpnes med «Se statistikk». Tre faner: Månedens, Ditt team, Årsoversikt.
+   ========================= */
+
+.toppliste-dialog {
+    position: fixed;
+    width: 1060px;
+    max-width: calc(100% - 32px);
+    height: 720px;
+    max-height: calc(100svh - 32px);
+    margin: auto;
+    padding: 42px 48px 24px;
+    overflow-y: auto;
+    border: 1px solid rgb(255 255 255 / 0.9);
+    border-radius: 42px;
+    background-color: var(--color-background); /* #FFFAE5 */
+    box-shadow:
+        inset 0 2px 0 rgb(255 255 255 / 0.8),
+        0 35px 80px rgb(44 19 50 / 0.28);
+    color: #25132E;
+    font-family: var(--font-body);
+}
+
+/* Kartet, menyen og headeren bak blir uskarpe */
+.toppliste-dialog::backdrop {
+    background: rgb(57 17 61 / 0.25);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+}
+
+.toppliste-dialog [hidden] {
+    display: none;
+}
+
+/* ---------- Topp: tittel og faner ---------- */
+
+.stor-topp {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    width: 962px;
+    max-width: 100%;
+    padding-right: 52px;
+}
+
+.stor-tittel {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 42px;
+    letter-spacing: -1.68px;
+    white-space: nowrap;
+}
+
+.stor-trofe {
+    width: 54px;
+    height: 54px;
+    padding: 2px;
+    transform: rotate(-3deg);
+}
+
+.stor-faner {
+    display: flex;
+    flex-shrink: 0;
+    padding: 3px;
+    border: 1px solid #D9D0CA;
+    border-radius: 999px;
+    background-color: rgb(255 255 255 / 0.65);
+    box-shadow: inset 0 2px 6px rgb(65 45 67 / 0.05);
+}
+
+.stor-fane {
+    min-width: 120px;
+    padding: 12px 19px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #392C3C;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 21px;
+    cursor: pointer;
+}
+
+.stor-fane:hover {
+    background-color: rgb(122 56 129 / 0.08);
+}
+
+/* Valgt fane (klassen «aktiv» settes i toppliste.js) og mens man trykker */
+.stor-fane.aktiv,
+.stor-fane:active {
+    background-color: #7A3881; /* Lilla nyanser/80 */
+    filter: drop-shadow(0 5px 7px rgb(180 130 26 / 0.2));
+    color: #FFFEFC;
+}
+
+.stor-lukk {
+    position: absolute;
+    top: 22px;
+    right: 26px;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+}
+
+.stor-lukk:hover {
+    background-color: rgb(0 0 0 / 0.06);
+}
+
+.stor-panel {
+    width: 962px;
+    max-width: 100%;
+    margin-top: 26px;
+}
+
+/* Felles: andebilde i en 59 x 80-boks (størrelse per and står i HTML) */
+.stor-and {
+    position: relative;
+    justify-self: center;
+    width: 59px;
+    height: 80px;
+}
+
+.stor-and img {
+    position: absolute;
+    max-width: none;
+    object-fit: cover;
+}
+
+/* ---------- 1. Månedens ---------- */
+
+.stor-liste {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.stor-rad {
+    display: grid;
+    grid-template-columns: 64px 100px minmax(0, 483px) 88px;
+    align-items: center;
+    column-gap: 18px;
+    min-height: 96px;
+    padding: 8px 24px;
+    border: 1px solid #E8DFD8;
+    border-radius: 24px;
+    background-color: rgb(255 255 255 / 0.72);
+    box-shadow: 0 6px 15px rgb(69 46 67 / 0.04);
+}
+
+.stor-rad--forst {
+    border-color: #D5C91B;
+    background-color: #FFFAAD;
+}
+
+/* Plassmerket gjenbruker fargene fra den lille topplisten, men er større */
+.stor-plass {
+    width: 50px;
+    height: 50px;
+    border-width: 1px;
+    filter: drop-shadow(0 3px 0 #DED5D1);
+    font-size: 21px;
+}
+
+.stor-plass.toppliste-plass--1 {
+    filter: drop-shadow(0 3px 0 #C78B13);
+}
+
+.stor-navn {
+    overflow: hidden;
+    font-family: var(--font-heading);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 36px;
+    letter-spacing: -0.6px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.stor-poeng {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-end;
+    padding-left: 22px;
+    border-left: 1px solid #E2D8D0;
+}
+
+.stor-poeng b {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 28px;
+}
+
+.stor-poeng small {
+    padding-left: 1px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* ---------- 2. Ditt team ---------- */
+
+.team-banner {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr) 190px;
+    align-items: center;
+    column-gap: 20px;
+    height: 190px;
+    padding: 18px 34px;
+    border: 1px solid #D0CBB2; /* Beige nyanser/40 */
+    border-radius: 28px;
+    background: linear-gradient(to right, #FFFAAD, #FFFAE5);
+}
+
+/* Tre ender i julegenser som står litt over hverandre */
+.team-ender {
+    position: relative;
+    width: 185.6px;
+    height: 89.6px;
+}
+
+.team-and {
+    position: absolute;
+    max-width: none;
+    object-fit: cover;
+}
+
+.team-and--bak   { left: 97.6px; top: 11.4px; width: 57px; height: 69px; }
+.team-and--midt  { left: 46.2px; top: 3.6px;  width: 67px; height: 82px; z-index: 1; }
+.team-and--foran { left: 13.7px; top: 19.4px; width: 50px; height: 61px; }
+
+.team-info p,
+.team-total p {
+    margin: 0;
+}
+
+.team-etikett {
+    color: #756278;
+    font-size: 13.33px;
+    font-weight: 500;
+    letter-spacing: 0.4793px;
+}
+
+.team-navn {
+    margin-top: 6px !important;
+    font-family: var(--font-heading);
+    font-size: 39.81px;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.4793px;
+    white-space: nowrap;
+}
+
+.team-knapp {
+    margin-top: 10px;
+    padding: 10px 17px;
+    border: 1.5px solid #4F2659;
+    border-radius: 999px;
+    background-color: #ffffff;
+    color: #3C1747;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.4793px;
+    cursor: pointer;
+}
+
+.team-knapp:hover {
+    background-color: #F7F1F8;
+}
+
+.team-total {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    height: 100px;
+    padding-left: 30px;
+    border-left: 1px solid #DFD1C2;
+}
+
+.team-sum {
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 999px;
+    background-color: rgb(254 241 49 / 0.5);
+    box-shadow: 0 4px 4px rgb(0 0 0 / 0.25);
+    font-family: var(--font-heading);
+    font-size: 39.81px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.4793px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.team-maaneder {
+    margin-top: 18px;
+    padding: 24px 34px;
+    border: 1px solid #E3DADE;
+    border-radius: 28px;
+    background-color: rgb(255 255 255 / 0.8);
+}
+
+.team-maaneder-tittel {
+    margin: 0;
+    color: #896E8D;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 18px;
+    letter-spacing: 1.56px;
+}
+
+.team-kolonner {
+    display: flex;
+    justify-content: space-between;
+    width: 740px;
+    max-width: 100%;
+    margin: 18px auto 0;
+}
+
+.team-kolonne {
+    width: 260px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.team-kolonne li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 47px;
+    border-bottom: 1px solid #ECE5DF;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 22.5px;
+}
+
+.team-kolonne li:last-child {
+    border-bottom: 0;
+}
+
+/* ---------- 3. Årsoversikt ---------- */
+
+.aar-intro {
+    height: 24px;
+    margin: -9px 0 0;
+    padding: 0 3px;
+    color: #625764;
+    font-size: 13.33px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.4793px;
+}
+
+.aar-liste {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 22px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.aar-rad {
+    display: grid;
+    grid-template-columns: 210px 110px minmax(0, 440px) 120px;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 8px;
+    min-height: 92px;
+    padding: 6px 28px;
+    border: 1px solid #E4DCDF;
+    border-radius: 22px;
+    background-color: rgb(255 255 255 / 0.78);
+}
+
+.aar-rad--forst {
+    border-color: #E8C356;
+    background: linear-gradient(to right, #FFFAAD, #FFFAE5);
+}
+
+.aar-maaned {
+    font-family: var(--font-heading);
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 31.5px;
+}
+
+.aar-lag {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 33px;
+}
+
+.aar-poeng {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background-color: #F4EDE4;
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 20px;
+    white-space: nowrap;
+}
+
+.aar-rad--forst .aar-poeng {
+    border: 1px solid #D5C91B;
+    background-color: rgb(254 241 49 / 0.5);
+}
+
+
+/* =========================
     KONTORBYGG PÅ KARTET
     Mål fra Figma: 276 x 199, og 308 x 223 ved hover (Variant2).
     Midten av bygget ligger på --x / --y, så det vokser likt til alle sider.

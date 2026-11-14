@@ -42,7 +42,7 @@ let forrige = null;
 
 visning.addEventListener('pointerdown', hendelse => {
   // Klikk på en knapp på kartet skal ikke starte dra-bevegelsen
-  if (hendelse.target.closest('a, button, .kort')) return;
+  if (hendelse.target.closest('a, button, .kort, .toppliste')) return;
   forrige = { x: hendelse.clientX, y: hendelse.clientY };
   visning.setPointerCapture(hendelse.pointerId);
   visning.classList.add('drar');
@@ -62,6 +62,32 @@ function slipp() {
 }
 visning.addEventListener('pointerup', slipp);
 visning.addEventListener('pointercancel', slipp);
+
+// ---------- To fingre på styreflaten / musehjul ----------
+// Dra med to fingre på styreflaten for å flytte kartet i alle retninger.
+// Med vanlig musehjul: rull = opp/ned, Shift + rull = til sidene.
+
+visning.addEventListener('wheel', hendelse => {
+  hendelse.preventDefault(); // hindrer at siden selv scroller eller zoomer
+
+  // Klyp (pinch) på styreflaten kommer som ctrlKey + wheel. Kartet zoomer ikke, så vi ignorerer det.
+  if (hendelse.ctrlKey) return;
+
+  // Noen mus oppgir avstand i linjer i stedet for piksler
+  const faktor = hendelse.deltaMode === 1 ? 16 : 1;
+  let dx = hendelse.deltaX * faktor;
+  let dy = hendelse.deltaY * faktor;
+
+  // Shift + musehjul = flytt sideveis
+  if (hendelse.shiftKey && dx === 0) {
+    dx = dy;
+    dy = 0;
+  }
+
+  kart.x -= dx;
+  kart.y -= dy;
+  tegn();
+}, { passive: false });
 
 // ---------- Piltaster ----------
 

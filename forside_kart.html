@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="components.css">
   <link rel="stylesheet" href="spillpunkt2.css">
+  <link rel="stylesheet" href="spillpunkt1.css">
+  <script src="spillpunkt1.js" defer></script>
   <script src="spillpunkt2.js" defer></script>
 </head>
 <body class="side-app">
@@ -76,7 +78,7 @@
 
         <!-- GameStop: Quiz (lilla). I gresset ytterst ved svingen nederst på stien -->
         <div class="gamestop-stopp" style="--x: 36.85%; --y: 84.7%;">
-          <a class="gamestop gamestop--quiz" href="#" aria-label="Quiz" draggable="false">
+          <a class="gamestop gamestop--quiz" href="#quiz-game" aria-label="Quiz" draggable="false">
             <span class="gamestop-ring"></span>
             <span class="gamestop-skygge"></span>
             <span class="gamestop-knapp">
@@ -95,10 +97,10 @@
               <p class="kort-etikett">Test dine ferdigheter</p>
               <h2 class="kort-tittel">Ukens quiz</h2>
               <p class="kort-tekst">Fire kjappe spørsmål.</p>
-              <a class="kort-knapp" href="#" draggable="false">
+              <button class="kort-knapp" id="quiz-open" type="button">
                 Spill nå
                 <img src="bilder/ikoner/pil-hoyre.svg" width="20" height="20" alt="">
-              </a>
+              </button>
               <button class="kort-lukk" type="button" aria-label="Lukk">
                 <img src="bilder/ikoner/lukk.svg" width="18" height="18" alt="">
               </button>
@@ -106,6 +108,49 @@
           </div>
         </div>
       </div>
+
+      <!-- TOPPLISTE: ligger fast i høyre hjørne av kartet (flytter seg ikke når kartet dras) -->
+      <section class="toppliste" aria-labelledby="toppliste-tittel">
+        <header class="toppliste-topp">
+          <h2 class="toppliste-tittel" id="toppliste-tittel">
+            <img class="toppliste-trofe" src="bilder/ikoner/trofe.svg" width="22" height="22" alt="">
+            Novembers toppliste
+          </h2>
+          <button class="toppliste-knapp" id="toppliste-apne" type="button" aria-haspopup="dialog">Se statistikk</button>
+        </header>
+        <ol class="toppliste-liste">
+          <li class="toppliste-rad toppliste-rad--forst">
+            <span class="toppliste-plass toppliste-plass--1">1</span>
+            <span class="toppliste-and"><img src="bilder/toppliste/and-nisse.png" style="width: 29.645px; height: 36.282px; left: -1.77px; top: -0.88px;" alt=""></span>
+            <span class="toppliste-navn">Team Hufflepuffs</span>
+            <span class="toppliste-poeng"><b>82</b><small>p</small></span>
+          </li>
+          <li class="toppliste-rad">
+            <span class="toppliste-plass toppliste-plass--2">2</span>
+            <span class="toppliste-and"><img src="bilder/toppliste/and-safari.png" style="width: 27.876px; height: 30.973px; left: -0.88px; top: 3.1px;" alt=""></span>
+            <span class="toppliste-navn">AlphaOmega</span>
+            <span class="toppliste-poeng"><b>74</b><small>p</small></span>
+          </li>
+          <li class="toppliste-rad">
+            <span class="toppliste-plass toppliste-plass--3">3</span>
+            <span class="toppliste-and"><img src="bilder/toppliste/and-rocker.png" style="width: 31.686px; height: 37.61px; left: -3.1px; top: -3.1px;" alt=""></span>
+            <span class="toppliste-navn">Diamond</span>
+            <span class="toppliste-poeng"><b>69</b><small>p</small></span>
+          </li>
+          <li class="toppliste-rad">
+            <span class="toppliste-plass toppliste-plass--4">4</span>
+            <span class="toppliste-and"><img src="bilder/toppliste/and-afterski.png" style="width: 26.39px; height: 34.07px; left: -0.44px; top: 1.33px;" alt=""></span>
+            <span class="toppliste-navn">Bezzerwizzers</span>
+            <span class="toppliste-poeng"><b>61</b><small>p</small></span>
+          </li>
+          <li class="toppliste-rad">
+            <span class="toppliste-plass toppliste-plass--5">5</span>
+            <span class="toppliste-and"><img src="bilder/toppliste/and-hawaii.png" style="width: 27.984px; height: 30.973px; left: 0px; top: 0px;" alt=""></span>
+            <span class="toppliste-navn">Flowerpower</span>
+            <span class="toppliste-poeng"><b>57</b><small>p</small></span>
+          </li>
+        </ol>
+      </section>
     </main>
 
   </div>
@@ -234,7 +279,218 @@
     </div>
   </template>
 
+  <!-- =========================================================
+       QUIZ – «Kvakk! Quiz»
+       Åpnes som en dialog når man trykker «Spill nå» i infoboksen
+       til den lilla knappen (eller selve knappen). Kartet bak blir
+       uskarpt (.game-card::backdrop i components.css). Oppførsel: spillpunkt1.js
+       ========================================================= -->
+  <dialog id="quiz-game" class="game-card quiz-card" aria-labelledby="quiz-brand">
+    <header class="game-card-header">
+      <span class="quiz-brand" id="quiz-brand"><span class="quiz-logo" aria-hidden="true">K</span> KVAKK! QUIZ</span>
+      <button class="game-card-close" type="button" aria-label="Lukk quizen">×</button>
+    </header>
+
+    <!-- 2. INTRODUKSJON: fire ukespill, samme eksempelquiz foreløpig. -->
+    <section id="quiz-intro" class="game-card-content" aria-labelledby="quiz-intro-title">
+      <h1 id="quiz-intro-title">Hvor godt kjenner du UX og design?</h1>
+      <p class="quiz-intro-copy">Test kunnskapen din om visuell kommunikasjon, brukervennlighet og designprosesser. Klokken måler tiden, mens anden heier deg frem.</p>
+      <img class="quiz-mascot" src="bilder/anden.png" alt="Fagløpet-anden med sekk og nettbrett">
+      <div class="quiz-weeks" role="group" aria-label="Velg ukens quiz">
+        <span>Uke:</span>
+        <button type="button" data-week="34" aria-pressed="false">34</button>
+        <button type="button" data-week="35" aria-pressed="false">35</button>
+        <button type="button" data-week="36" aria-pressed="true">36</button>
+        <button type="button" data-week="37" aria-pressed="false" disabled title="Ikke tilgjengelig ennå">37</button>
+      </div>
+      <button class="game-card-button game-card-action" id="quiz-start" type="button">Start spillet <span aria-hidden="true">→</span></button>
+    </section>
+
+    <!-- 3. SPØRSMÅL: svaralternativene kopieres fra malen nederst. -->
+    <section id="quiz-play" hidden aria-labelledby="quiz-question">
+      <div class="quiz-meta"><span id="quiz-counter"></span><span id="quiz-timer" aria-label="Tid brukt">00:00</span></div>
+      <h2 id="quiz-question" tabindex="-1"></h2>
+      <form id="quiz-form">
+        <fieldset class="quiz-options">
+          <legend class="quiz-sr-only">Velg ett svar</legend>
+          <div id="quiz-answers"></div>
+        </fieldset>
+      </form>
+      <p class="quiz-feedback" id="quiz-feedback" role="status"></p>
+    </section>
+
+    <!-- 4. SLUTTRESULTAT: løypen under beholdes på skjermen. -->
+    <section id="quiz-result" hidden aria-labelledby="quiz-result-title">
+      <h2 id="quiz-result-title" tabindex="-1">Godt jobba!</h2>
+      <p id="quiz-result-message"></p>
+      <div class="quiz-score"><span aria-hidden="true">★</span><strong id="quiz-score-text"></strong><span id="quiz-final-time"></span></div>
+    </section>
+
+    <!-- 5. LØYPEN: CSS tegner banen. JavaScript flytter anden etter antall riktige. -->
+    <div class="quiz-course" id="quiz-course" hidden aria-label="Anden står på steg 0 av 4">
+      <ol class="quiz-markers" aria-hidden="true">
+        <li class="is-current">0<small>START</small></li><li>1</li><li>2</li><li>3</li><li>4<small>MÅL</small></li>
+      </ol>
+      <div class="quiz-track">
+        <div class="quiz-runner" id="quiz-runner"><img id="quiz-duck" src="bilder/anden.png" alt=""></div>
+      </div>
+    </div>
+    <button class="game-card-button game-card-action" id="quiz-action" type="submit" form="quiz-form" hidden disabled><span id="quiz-action-label">Sjekk svaret</span><span id="quiz-action-icon" aria-hidden="true">→</span></button>
+  </dialog>
+
+  <!-- SVARMAL FOR QUIZEN: innhold i HTML, tilstander i CSS, data og klikk i JavaScript -->
+  <template id="quiz-answer-template">
+    <label class="quiz-answer">
+      <input type="radio" name="quiz-answer" required>
+      <span class="quiz-letter" aria-hidden="true"></span>
+      <span class="quiz-answer-text"></span>
+      <span class="quiz-answer-status"></span>
+    </label>
+  </template>
+
+  <!-- =========================================================
+       STOR TOPPLISTE (statistikk)
+       Åpnes med «Se statistikk» i topplisten. Tre faner: Månedens,
+       Ditt team og Årsoversikt. Kartet bak blir uskarpt.
+       Oppførsel: toppliste.js
+       ========================================================= -->
+  <dialog class="toppliste-dialog" id="toppliste-stor" aria-labelledby="stor-tittel">
+
+    <header class="stor-topp">
+      <h2 class="stor-tittel">
+        <img class="stor-trofe" src="bilder/ikoner/trofe-stor.svg" width="50" height="50" alt="">
+        <span id="stor-tittel">Novembers toppliste</span>
+      </h2>
+      <div class="stor-faner" role="tablist" aria-label="Velg visning">
+        <button class="stor-fane aktiv" id="fane-maaned" type="button" role="tab" aria-selected="true" aria-controls="panel-maaned" data-tittel="Novembers toppliste">Månedens</button>
+        <button class="stor-fane" id="fane-team" type="button" role="tab" aria-selected="false" aria-controls="panel-team" tabindex="-1" data-tittel="Ditt teams prestasjoner">Ditt team</button>
+        <button class="stor-fane" id="fane-aar" type="button" role="tab" aria-selected="false" aria-controls="panel-aar" tabindex="-1" data-tittel="Vinnere 2026">Årsoversikt</button>
+      </div>
+    </header>
+
+    <button class="stor-lukk" type="button" aria-label="Lukk topplisten">
+      <img src="bilder/ikoner/lukk-toppliste.svg" width="19" height="19" alt="">
+    </button>
+
+    <!-- 1. MÅNEDENS: de fem beste lagene denne måneden -->
+    <section class="stor-panel" id="panel-maaned" role="tabpanel" aria-labelledby="fane-maaned">
+      <ol class="stor-liste">
+          <li class="stor-rad stor-rad--forst">
+            <span class="toppliste-plass toppliste-plass--1 stor-plass">1</span>
+            <span class="stor-and"><img src="bilder/toppliste/and-nisse.png" style="width: 67px; height: 82px; left: -4px; top: -2px;" alt=""></span>
+            <span class="stor-navn">Team Hufflepuffs</span>
+            <span class="stor-poeng"><b>82</b><small>p</small></span>
+          </li>
+          <li class="stor-rad">
+            <span class="toppliste-plass toppliste-plass--2 stor-plass">2</span>
+            <span class="stor-and"><img src="bilder/toppliste/and-safari.png" style="width: 63px; height: 70px; left: -2px; top: 7px;" alt=""></span>
+            <span class="stor-navn">AlphaOmega</span>
+            <span class="stor-poeng"><b>74</b><small>p</small></span>
+          </li>
+          <li class="stor-rad">
+            <span class="toppliste-plass toppliste-plass--3 stor-plass">3</span>
+            <span class="stor-and"><img src="bilder/toppliste/and-rocker.png" style="width: 72px; height: 85px; left: -7px; top: -7px;" alt=""></span>
+            <span class="stor-navn">Diamond</span>
+            <span class="stor-poeng"><b>69</b><small>p</small></span>
+          </li>
+          <li class="stor-rad">
+            <span class="toppliste-plass toppliste-plass--4 stor-plass">4</span>
+            <span class="stor-and"><img src="bilder/toppliste/and-afterski.png" style="width: 60px; height: 77px; left: -1px; top: 3px;" alt=""></span>
+            <span class="stor-navn">Bezzerwizzers</span>
+            <span class="stor-poeng"><b>61</b><small>p</small></span>
+          </li>
+          <li class="stor-rad">
+            <span class="toppliste-plass toppliste-plass--5 stor-plass">5</span>
+            <span class="stor-and"><img src="bilder/toppliste/and-hawaii.png" style="width: 64px; height: 70px; left: 0px; top: 0px;" alt=""></span>
+            <span class="stor-navn">Flowerpower</span>
+            <span class="stor-poeng"><b>57</b><small>p</small></span>
+          </li>
+      </ol>
+    </section>
+
+    <!-- 2. DITT TEAM: lagets poeng i år og per måned -->
+    <section class="stor-panel" id="panel-team" role="tabpanel" aria-labelledby="fane-team" hidden>
+      <div class="team-banner">
+        <div class="team-ender" aria-hidden="true">
+          <img class="team-and team-and--bak" src="bilder/toppliste/and-nisse.png" alt="">
+          <img class="team-and team-and--midt" src="bilder/toppliste/and-nisse.png" alt="">
+          <img class="team-and team-and--foran" src="bilder/toppliste/and-nisse.png" alt="">
+        </div>
+        <div class="team-info">
+          <p class="team-etikett">DITT TEAM</p>
+          <p class="team-navn">Team Hufflepuffs</p>
+          <button class="team-knapp" type="button">Se ditt bidrag</button>
+        </div>
+        <div class="team-total">
+          <p class="team-etikett">TOTALT I ÅR</p>
+          <p class="team-sum">324 p</p>
+        </div>
+      </div>
+
+      <div class="team-maaneder">
+        <p class="team-maaneder-tittel">LAGETS POENG PER MÅNED</p>
+        <div class="team-kolonner">
+          <ul class="team-kolonne">
+              <li><span>Januar</span><span>60 p</span></li>
+              <li><span>Februar</span><span>30 p</span></li>
+              <li><span>Mars</span><span>40 p</span></li>
+              <li><span>April</span><span>50 p</span></li>
+              <li><span>Mai</span><span>70 p</span></li>
+              <li><span>Juni</span><span>74 p</span></li>
+          </ul>
+          <ul class="team-kolonne">
+              <li><span>Juli</span><span>60 p</span></li>
+              <li><span>August</span><span>30 p</span></li>
+              <li><span>September</span><span>40 p</span></li>
+              <li><span>Oktober</span><span>50 p</span></li>
+              <li><span>November</span><span>70 p</span></li>
+              <li><span>Desember</span><span>74 p</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. ÅRSOVERSIKT: vinnerlaget hver måned -->
+    <section class="stor-panel" id="panel-aar" role="tabpanel" aria-labelledby="fane-aar" hidden>
+      <p class="aar-intro">Se hvilke lag som vant hver måned i år.</p>
+      <ol class="aar-liste">
+          <li class="aar-rad aar-rad--forst">
+            <span class="aar-maaned">November</span>
+            <span class="stor-and"><img src="bilder/toppliste/and-nisse.png" style="width: 67px; height: 82px; left: -4px; top: -2px;" alt=""></span>
+            <span class="aar-lag">Hufflepuffs</span>
+            <span class="aar-poeng"><img src="bilder/ikoner/trofe-liten.svg" width="26" height="26" alt="">82 p</span>
+          </li>
+          <li class="aar-rad">
+            <span class="aar-maaned">Oktober</span>
+            <span class="stor-and"><img src="bilder/toppliste/and-safari.png" style="width: 63px; height: 70px; left: -2px; top: 7px;" alt=""></span>
+            <span class="aar-lag">AlphaOmega</span>
+            <span class="aar-poeng"><img src="bilder/ikoner/trofe-liten.svg" width="26" height="26" alt="">79 p</span>
+          </li>
+          <li class="aar-rad">
+            <span class="aar-maaned">September</span>
+            <span class="stor-and"><img src="bilder/toppliste/and-rocker.png" style="width: 72px; height: 85px; left: -7px; top: -7px;" alt=""></span>
+            <span class="aar-lag">Diamond</span>
+            <span class="aar-poeng"><img src="bilder/ikoner/trofe-liten.svg" width="26" height="26" alt="">76 p</span>
+          </li>
+          <li class="aar-rad">
+            <span class="aar-maaned">August</span>
+            <span class="stor-and"><img src="bilder/toppliste/and-afterski.png" style="width: 60px; height: 77px; left: -1px; top: 3px;" alt=""></span>
+            <span class="aar-lag">Bezzerwizzers</span>
+            <span class="aar-poeng"><img src="bilder/ikoner/trofe-liten.svg" width="26" height="26" alt="">72 p</span>
+          </li>
+          <li class="aar-rad">
+            <span class="aar-maaned">Juli</span>
+            <span class="stor-and"><img src="bilder/toppliste/and-hawaii.png" style="width: 64px; height: 70px; left: 0px; top: 0px;" alt=""></span>
+            <span class="aar-lag">Flowerpower</span>
+            <span class="aar-poeng"><img src="bilder/ikoner/trofe-liten.svg" width="26" height="26" alt="">70 p</span>
+          </li>
+      </ol>
+    </section>
+
+  </dialog>
+
   <script src="komponenter.js"></script>
   <script src="kartet.js"></script>
+  <script src="toppliste.js"></script>
 </body>
 </html>
