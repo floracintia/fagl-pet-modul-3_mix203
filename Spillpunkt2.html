@@ -15,7 +15,7 @@
     <body class="poll-preview">
 
         <!-- Kortet åpnes som en dialog av JavaScript. Kart og bakgrunn hører til vertssiden. -->
-        <dialog class="game-card poll-card" aria-labelledby="poll-brand">
+        <dialog class="game-card poll-card" id="poll-game" aria-labelledby="poll-brand">
 
         <!-- 2. FELLES TOPP: vises i alle stegene. -->
         <header class="game-card-header poll-header">
@@ -29,7 +29,7 @@
         </header>
 
         <!-- 3. INTRODUKSJON: tekst, andefigur, uker og startknapp. -->
-        <section id="poll-intro" class="poll-intro" aria-labelledby="intro-title">
+        <section id="poll-intro" class="poll-intro game-card-content" aria-labelledby="intro-title">
             <h1 id="intro-title">Ukens avstemning: Hvilke meninger finst på kontoret ditt?</h1>
             <p class="poll-intro-copy">
             Delta i meningsmålingen og se ulike meninger blant dine kollegaer!
@@ -45,18 +45,18 @@
               <button class="poll-week" type="button" data-week="36" aria-pressed="true">36</button>
               <button class="poll-week" type="button" data-week="37" aria-pressed="false" disabled title="Ikke tilgjengelig ennå">37</button>
             </div>
-            <button class="game-card-button poll-primary" id="poll-start" type="button">
+            <button class="game-card-button game-card-action poll-primary" id="poll-start" type="button">
             Gå til ukens avstemming
             <span aria-hidden="true">→</span>
             </button>
         </section>
 
         <!-- 4. AVSTEMNING: hidden skjuler steget til startknappen trykkes. -->
-        <section id="poll-question" hidden aria-labelledby="question-title">
+        <section id="poll-question" class="game-card-content" hidden aria-labelledby="question-title">
             <h2 id="question-title" class="poll-question-title" tabindex="-1">Hva er viktigst for godt samarbeid mellom designere og utviklere?</h2>
 
             <!-- Samme name på radioknappene gjør at bare ett svar kan velges. required krever et valg. -->
-            <form id="poll-form">
+            <form id="poll-form" class="game-card-content">
             <fieldset class="poll-options">
                 <legend>Velg det alternativet som betyr mest for deg.</legend>
                 <label class="poll-option">
@@ -83,14 +83,14 @@
             <p class="poll-note">
                 Ingen riktige eller gale svar. Stemmen din er anonym.
             </p>
-            <button class="game-card-button poll-primary" type="submit">
+            <button class="game-card-button game-card-action poll-primary" type="submit">
                 Se resultater
                 <span aria-hidden="true">→</span>
             </button>
             </form>
 
             <!-- 5. RESULTATER: JavaScript skjuler skjemaet og viser denne delen etter innsending. -->
-            <div id="poll-results" hidden>
+            <div id="poll-results" class="game-card-content" hidden>
             <p class="poll-confirmation">
                 <span class="poll-check" aria-hidden="true">✓</span>
                 <span>
@@ -100,7 +100,7 @@
             </p>
             <div class="poll-tabs" role="tablist" aria-label="Vis resultater for">
                 <button id="tab-all" type="button" role="tab" aria-selected="true" aria-controls="poll-result-panel">
-                Hele Bouvet
+                Hele kontoret
                 </button>
                 <button id="tab-team" type="button" role="tab" aria-selected="false" aria-controls="poll-result-panel" tabindex="-1">
                 Mitt team
@@ -114,18 +114,11 @@
 
                 <!-- Resultatrader kopieres fra malen nederst og fylles med demodata. -->
                 <div id="poll-bars"></div>
-                <p class="poll-insight" id="poll-insight" hidden>
-                <span aria-hidden="true">!</span>
-                <span>
-                    <strong>Interessant!</strong>
-                    Teamet ditt mener noe annet enn flertallet i Bouvet.
-                </span>
-                </p>
             </div>
             <p class="poll-note">
                 Teamresultater vises bare når minst 8 personer har svart.
             </p>
-            <button class="game-card-button poll-primary poll-finish" type="button">
+            <button class="game-card-button game-card-action poll-primary poll-finish" type="button">
                 Tilbake til kartet
                 <span aria-hidden="true">→</span>
             </button>

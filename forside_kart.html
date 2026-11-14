@@ -6,6 +6,8 @@
   <title>Fagløpet – kart</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="components.css">
+  <link rel="stylesheet" href="spillpunkt2.css">
+  <script src="spillpunkt2.js" defer></script>
 </head>
 <body class="side-app">
 
@@ -17,10 +19,220 @@
 
     <!-- Kartet (kan dras rundt) -->
     <main class="kart-visning" tabindex="0" aria-label="Kart over Fagløpet. Dra med musen eller bruk piltastene for å se deg rundt.">
-      <img class="kart-bilde" src="bilder/kart.png" alt="Fargerikt kart over Bergen med en svingete sti opp til huset på toppen av fjellet" draggable="false">
+      <div class="kart-lag">
+        <img class="kart-bilde" src="bilder/kart.png" alt="Fargerikt kart over Bergen med en svingete sti opp til huset på toppen av fjellet" draggable="false">
+
+        <!-- Kontorbygg på den store sirkelen der stien slutter (nederst til høyre).
+             --x/--y = midten av bygget i prosent av kartbildet. Blir større ved hover. -->
+        <div class="kart-bygg" style="--x: 85.3%; --y: 76.1%;">
+          <a class="kart-bygg-lenke" href="bibliotek.html" aria-label="Fagbiblioteket – les og del artikler" draggable="false">
+            <img src="bilder/kontorbygg.png" alt="" draggable="false">
+          </a>
+
+          <!-- Infoboks som vises til venstre for bygget ved hover -->
+          <div class="bygg-kort">
+            <div class="kort kort--bygg">
+              <img class="kort-and" src="bilder/anden.png" width="92" height="101" alt="">
+              <p class="kort-etikett">Les og del artikler i</p>
+              <h2 class="kort-tittel">Fagbiblioteket</h2>
+              <p class="kort-tekst">Her kan du oppdatere deg på faglig innhold</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- GameStop: Del artikkel i arkivet. --x/--y = plassering i prosent av kartbildet (i gresset ved Fløyen) -->
+        <div class="gamestop-stopp" style="--x: 72.2%; --y: 32.1%;">
+        <a class="gamestop" href="#poll-game" aria-label="meningsmåling spill" draggable="false">
+          <span class="gamestop-ring"></span>
+          <span class="gamestop-skygge"></span>
+          <span class="gamestop-knapp">
+            <span class="gamestop-indre">
+              <img class="gamestop-ikon-liten" src="bilder/ikoner/poll.svg" width="31" height="31" alt="">
+              <img class="gamestop-ikon-stor" src="bilder/ikoner/poll-stor.svg" width="31" height="31" alt="">
+            </span>
+          </span>
+        </a>
+
+        <!-- Infoboks som vises til høyre ved hover -->
+        <div class="gamestop-kort">
+          <div class="kort">
+            <span class="kort-ikon">
+              <img src="bilder/ikoner/poll-kort.svg" width="36" height="36" alt="">
+            </span>
+            <p class="kort-etikett">Nytt spill</p>
+            <h2 class="kort-tittel">Hva mener du?</h2>
+            <p class="kort-tekst">Stem på ukens spørsmål og se hva resten av kontoret mener.</p>
+            <button class="kort-knapp" id="poll-open" type="button">
+              Spill nå
+              <img src="bilder/ikoner/pil-hoyre.svg" width="20" height="20" alt="">
+            </button>
+            <button class="kort-lukk" type="button" aria-label="Lukk">
+              <img src="bilder/ikoner/lukk.svg" width="18" height="18" alt="">
+            </button>
+          </div>
+        </div>
+        </div>
+
+
+        <!-- GameStop: Quiz (lilla). I gresset ytterst ved svingen nederst på stien -->
+        <div class="gamestop-stopp" style="--x: 36.85%; --y: 84.7%;">
+          <a class="gamestop gamestop--quiz" href="#" aria-label="Quiz" draggable="false">
+            <span class="gamestop-ring"></span>
+            <span class="gamestop-skygge"></span>
+            <span class="gamestop-knapp">
+              <span class="gamestop-indre">
+                <span class="gamestop-tegn" aria-hidden="true">?</span>
+              </span>
+            </span>
+          </a>
+
+          <!-- Infoboks som vises ved hover -->
+          <div class="gamestop-kort">
+            <div class="kort kort--quiz">
+              <span class="kort-ikon">
+                <span class="kort-ikon-tegn" aria-hidden="true">?</span>
+              </span>
+              <p class="kort-etikett">Test dine ferdigheter</p>
+              <h2 class="kort-tittel">Ukens quiz</h2>
+              <p class="kort-tekst">Fire kjappe spørsmål.</p>
+              <a class="kort-knapp" href="#" draggable="false">
+                Spill nå
+                <img src="bilder/ikoner/pil-hoyre.svg" width="20" height="20" alt="">
+              </a>
+              <button class="kort-lukk" type="button" aria-label="Lukk">
+                <img src="bilder/ikoner/lukk.svg" width="18" height="18" alt="">
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
 
   </div>
+
+  <!-- =========================================================
+       MENINGSMÅLING – «Kvakk! Din mening»
+       Åpnes som en dialog når man trykker «Spill nå» i infoboksen
+       til den røde knappen. Kartet bak blir uskarpt
+       (.game-card::backdrop i components.css). Oppførsel: spillpunkt2.js
+       ========================================================= -->
+  <dialog class="game-card poll-card" id="poll-game" aria-labelledby="poll-brand">
+
+    <!-- 1. FELLES TOPP: vises i alle stegene -->
+    <header class="game-card-header poll-header">
+      <span class="poll-brand" id="poll-brand">
+        <span class="poll-logo" aria-hidden="true">K</span>
+        KVAKK! DIN MENING
+      </span>
+      <button class="game-card-close poll-close" type="button" aria-label="Lukk meningsmålingen">×</button>
+    </header>
+
+    <!-- 2. INTRODUKSJON: tekst, andefigur, uker og startknapp -->
+    <section id="poll-intro" class="poll-intro" aria-labelledby="intro-title">
+      <h1 id="intro-title">Ukens avstemning: Hvilke meninger finst på kontoret ditt?</h1>
+      <p class="poll-intro-copy">
+        Delta i meningsmålingen og se ulike meninger blant dine kollegaer!
+        <br>
+        Hvor samstemte er dere?
+      </p>
+      <img class="poll-mascot" src="bilder/anden.png" alt="En gul Fagløpet-and">
+
+      <!-- Fire spill i måneden. Tilgjengelighet og valgt uke styres i JavaScript -->
+      <div class="poll-weeks" role="group" aria-label="Velg ukens spill">
+        <span>Uke:</span>
+        <button class="poll-week" type="button" data-week="34" aria-pressed="false">34</button>
+        <button class="poll-week" type="button" data-week="35" aria-pressed="false">35</button>
+        <button class="poll-week" type="button" data-week="36" aria-pressed="true">36</button>
+        <button class="poll-week" type="button" data-week="37" aria-pressed="false" disabled title="Ikke tilgjengelig ennå">37</button>
+      </div>
+
+      <button class="game-card-button poll-primary" id="poll-start" type="button">
+        Gå til ukens avstemming
+        <span aria-hidden="true">→</span>
+      </button>
+    </section>
+
+    <!-- 3. AVSTEMNING: skjult (hidden) til startknappen trykkes -->
+    <section id="poll-question" hidden aria-labelledby="question-title">
+      <h2 id="question-title" class="poll-question-title" tabindex="-1">Hva er viktigst for godt samarbeid mellom designere og utviklere?</h2>
+
+      <!-- 3a. SKJEMA: samme name på radioknappene gjør at bare ett svar kan velges. required krever et valg -->
+      <form id="poll-form">
+        <fieldset class="poll-options">
+          <legend>Velg det alternativet som betyr mest for deg.</legend>
+          <label class="poll-option">
+            <input type="radio" name="answer" value="0" required>
+            <span class="poll-checkbox" aria-hidden="true"></span>
+            <span>Felles forståelse</span>
+          </label>
+          <label class="poll-option">
+            <input type="radio" name="answer" value="1">
+            <span class="poll-checkbox" aria-hidden="true"></span>
+            <span>Tidlig involvering</span>
+          </label>
+          <label class="poll-option">
+            <input type="radio" name="answer" value="2">
+            <span class="poll-checkbox" aria-hidden="true"></span>
+            <span>Raske tilbakemeldinger</span>
+          </label>
+          <label class="poll-option">
+            <input type="radio" name="answer" value="3">
+            <span class="poll-checkbox" aria-hidden="true"></span>
+            <span>Tydelige avklaringer</span>
+          </label>
+        </fieldset>
+        <p class="poll-note">Ingen riktige eller gale svar. Stemmen din er anonym.</p>
+        <button class="game-card-button poll-primary" type="submit">
+          Se resultater
+          <span aria-hidden="true">→</span>
+        </button>
+      </form>
+
+      <!-- 3b. RESULTATER: JavaScript skjuler skjemaet og viser denne delen etter innsending -->
+      <div id="poll-results" hidden>
+        <p class="poll-confirmation">
+          <span class="poll-check" aria-hidden="true">✓</span>
+          <span>Takk! Du stemte på <strong id="poll-answer"></strong></span>
+        </p>
+
+        <div class="poll-tabs" role="tablist" aria-label="Vis resultater for">
+          <button id="tab-all" type="button" role="tab" aria-selected="true" aria-controls="poll-result-panel">Hele kontoret</button>
+          <button id="tab-team" type="button" role="tab" aria-selected="false" aria-controls="poll-result-panel" tabindex="-1">Mitt team</button>
+        </div>
+
+        <div id="poll-result-panel" role="tabpanel" aria-labelledby="tab-all" tabindex="0">
+          <div class="poll-meta">
+            <span id="poll-count"></span>
+            <span>Eksempeldata</span>
+          </div>
+          <!-- Resultatrader kopieres fra malen under og fylles med demodata -->
+          <div id="poll-bars"></div>
+        </div>
+
+        <p class="poll-note">Teamresultater vises bare når minst 8 personer har svart.</p>
+        <button class="game-card-button poll-primary poll-finish" type="button">
+          Tilbake til kartet
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
+    </section>
+
+  </dialog>
+
+  <!-- MAL FOR EN RESULTATRAD: vises ikke før JavaScript kopierer den.
+       Tekst og elementer ligger her; tall og valgt svar settes i JavaScript. -->
+  <template id="poll-result-template">
+    <div class="poll-result">
+      <div class="poll-result-label">
+        <span class="poll-result-name"></span>
+        <span class="poll-answer-tag" hidden>DITT SVAR</span>
+        <strong class="poll-result-percent"></strong>
+      </div>
+      <div class="poll-track" role="meter" aria-valuemin="0" aria-valuemax="100">
+        <span></span>
+      </div>
+    </div>
+  </template>
 
   <script src="komponenter.js"></script>
   <script src="kartet.js"></script>
