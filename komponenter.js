@@ -9,17 +9,30 @@ const menyvalg = [
   { tekst: 'Hjem',      ikon: 'hjem',      lenke: '#' },
   { tekst: 'Meldinger', ikon: 'meldinger', lenke: '#' },
   { tekst: 'Aktivitet', ikon: 'aktivitet', lenke: '#' },
-  { tekst: 'Filer',     ikon: 'filer',     lenke: 'bibliotek.html' },
+  { tekst: 'Filer',     ikon: 'filer',     lenke: './bibliotek.html', side: 'bibliotek.html' },
   { tekst: 'Verktøy',   ikon: 'verktoy',   lenke: '#' },
   { tekst: 'Admin',     ikon: 'admin',     lenke: '#' },
 ];
 
-// Filnavnet til siden vi står på, f.eks. "forside_kart.html"
-const gjeldendeSide = location.pathname.split('/').pop() || 'forside_kart.html';
+// Normaliser URL-en slik rutevalg også virker med undermapper og avsluttende /.
+function normaliserSide(sti) {
+  const filnavn = decodeURIComponent(sti).replace(/\/+$/, '').split('/').pop();
+  return !filnavn || filnavn === 'index.html' ? 'forside_kart.html' : filnavn;
+}
+
+const gjeldendeSide = normaliserSide(location.pathname);
+// Alle disse sidene tilhører Anden-universet og deler samme aktive markering.
+const andenSider = new Set([
+  'forside_kart.html',
+  'bibliotek.html',
+  'Spillpunkt1.html',
+  'Spillpunkt2.html',
+]);
+const erAndenSide = andenSider.has(gjeldendeSide);
 
 function lagSidemeny() {
   const knapper = menyvalg.map(valg => {
-    const erAktiv = valg.lenke === gjeldendeSide;
+    const erAktiv = valg.side === gjeldendeSide;
     return `
       <a class="sidemeny-knapp${erAktiv ? ' er-aktiv' : ''}" href="${valg.lenke}"${erAktiv ? ' aria-current="page"' : ''}>
         <span class="sidemeny-ikon-boks">
@@ -33,7 +46,7 @@ function lagSidemeny() {
     <nav class="sidemeny" aria-label="Hovedmeny">
       <a class="arbeidsomraade" href="#" aria-label="Fagløp arbeidsområde">0</a>
       ${knapper}
-      <a class="avatar" href="forside_kart.html" aria-label="Til kartet"${gjeldendeSide === 'forside_kart.html' ? ' aria-current="page"' : ''}>
+      <a class="avatar" href="forside_kart.html" aria-label="Til kartet"${erAndenSide ? ' aria-current="page"' : ''}>
         <img src="bilder/anden.png" alt="">
       </a>
       <div class="sidemeny-bunn">
