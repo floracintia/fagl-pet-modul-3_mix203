@@ -1,6 +1,6 @@
 /* =========================
     APP-OPPSETT
-    Sidemeny og header står fast, kartet fyller resten
+    Sidemeny og header står fast. Bare innholdet (main) kan scrolle.
    ========================= */
 
 .side-app {
@@ -10,13 +10,21 @@
 }
 
 .app {
+    position: fixed; /* hele rammen ligger låst til vinduet */
+    inset: 0;
     display: grid;
-    grid-template-columns: 65px 1fr;
-    grid-template-rows: 45px 1fr;
+    grid-template-columns: 65px minmax(0, 1fr);
+    grid-template-rows: 45px minmax(0, 1fr);
     grid-template-areas:
         "meny topp"
-        "meny kart";
-    height: 100vh;
+        "meny innhold";
+}
+
+/* Innholdet på hver side scroller inni sin egen boks, ikke hele siden */
+.app > main {
+    grid-area: innhold;
+    min-height: 0;
+    overflow-y: auto;
 }
 
 :focus-visible {
@@ -34,8 +42,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 18px;
-    padding: 37px 0 12px;
+    /* Avstandene krymper når vinduet er lavt, så hele menyen får plass.
+       clamp(minst, ønsket etter vindushøyde, størst).
+       Full størrelse fra ca. 780px vindushøyde, krymper gradvis under det. */
+    gap: clamp(6px, calc((100vh - 600px) / 10), 18px);
+    padding: clamp(12px, calc((100vh - 600px) / 2), 37px) 0 12px;
     background-color: var(--color-primary);
     border-right: 1px solid rgb(255 255 255 / 0.08);
     overflow-y: auto;
@@ -47,7 +58,7 @@
     flex-shrink: 0;
     width: 36px;
     height: 36px;
-    margin-bottom: 12px;
+    margin-bottom: clamp(0px, calc((100vh - 660px) / 10), 12px);
     border-radius: 8px;
     background-color: #F8F5EB;
     color: #24102A;
@@ -115,7 +126,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
+    gap: clamp(6px, calc((100vh - 600px) / 12), 14px);
     margin-top: auto; /* skyver gruppen helt ned */
 }
 
@@ -245,10 +256,9 @@
     KART
    ========================= */
 
-.kart-visning {
-    grid-area: kart;
+.app > .kart-visning {
     position: relative;
-    overflow: hidden;
+    overflow: hidden; /* kartet dras, det scrolles ikke */
     background-color: var(--color-blue-light);
     cursor: grab;
     touch-action: none;
@@ -272,6 +282,17 @@
 /* =========================
     SMÅ SKJERMER
    ========================= */
+
+/* Veldig lave vinduer: skjul teksten under ikonene så alt fortsatt får plass */
+@media (max-height: 660px) {
+    .sidemeny-tekst {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+    }
+}
 
 @media (max-width: 700px) {
     .topplinje {

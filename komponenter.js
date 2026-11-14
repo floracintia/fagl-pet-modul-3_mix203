@@ -25,7 +25,7 @@ function lagSidemeny() {
         <span class="sidemeny-ikon-boks">
           <img class="sidemeny-ikon" src="bilder/ikoner/${valg.ikon}.svg" width="20" height="20" alt="">
         </span>
-        <span>${valg.tekst}</span>
+        <span class="sidemeny-tekst">${valg.tekst}</span>
       </a>`;
   }).join('');
 
