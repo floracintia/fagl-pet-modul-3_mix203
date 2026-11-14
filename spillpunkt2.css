@@ -302,27 +302,7 @@
   background: var(--color-blue);
 }
 
-.poll-insight {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px 12px;
-  border-radius: 17px;
-  background: var(--poll-pale);
-  font-size: 13px;
-  color: #68502a;
-}
 
-.poll-insight > span:first-child {
-  display: grid;
-  place-items: center;
-  flex: 0 0 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: #bd74cb;
-  color: #39113d;
-  font-weight: 700;
-}
 
 .poll-finish {
   margin-top: 16px;
@@ -353,5 +333,32 @@
   .poll-meta { margin: 8px 0 10px; }
   .poll-note { margin: 10px 0; }
   .poll-finish { margin-top: 10px; }
-  .poll-insight { margin: 8px 0; }
+}
+
+
+/* 8. STØRRE STARTKORT
+   Bare introduksjonen får ekstra høyde. De neste stegene beholder sin
+   innholdsstyrte størrelse. :not([hidden]) lar skjulte steg forbli skjult. */
+.poll-card[open]:has(.poll-intro:not([hidden])) {
+  display: flex;
+  flex-direction: column;
+  min-height: min(640px, calc(100svh - 32px));
+}
+
+.poll-intro:not([hidden]) {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.poll-intro > .poll-primary {
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+/* Ingen ramme rundt krysset. Understreking viser tastaturfokus i stedet. */
+.poll-card .poll-close:focus-visible {
+  outline: none;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
