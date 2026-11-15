@@ -5,6 +5,24 @@
   const storageKey = 'faglopet-team-activity-v1';
   const rewards = { read: 1, play: 2, share: 3 };
   const thresholds = [0, 10, 25, 45, 70, 100, 140];
+  // Samme eksempelmotstandere brukes på kartet og i topplisten.
+  const demoTeams = [
+    { name: 'AlphaOmega', points: 18, image: 'and-safari.png' },
+    { name: 'Diamond', points: 12, image: 'and-rocker.png' },
+    { name: 'Bezzerwizzers', points: 8, image: 'and-afterski.png' },
+    { name: 'Flowerpower', points: 4, image: 'and-hawaii.png' },
+  ];
+  const avatarFiles = ['Property 1=Default level 1 klovn.svg', 'Property 1=level2.svg', 'Property 1=level3.svg', 'Property 1=level4.svg', 'Property 1=level5.svg', 'Property 1=level6.svg', 'Property 1=level7.svg'];
+  const getAvatar = level => `assets/${avatarFiles[level - 1]}`;
+
+  // Hvert nivå er en sjettedel av ruten. Poeng mellom nivåene gir små skritt.
+  // Ved 140 poeng (nivå 7) er laget i mål; videre poeng endrer bare rangeringen.
+  function getJourney(points) {
+    points = Math.max(0, Number(points) || 0);
+    const level = thresholds.filter(start => points >= start).length;
+    const fraction = level === 7 ? 0 : (points - thresholds[level - 1]) / (thresholds[level] - thresholds[level - 1]);
+    return { level, progress: Math.min(1, (level - 1 + fraction) / 6) };
+  }
   let activities = {};
 
   // 1. LAGRING – behold aktivitet mellom besøk. Siden fungerer også uten lagring.
@@ -41,7 +59,7 @@
     window.dispatchEvent(new CustomEvent('team:updated'));
     return true;
   }
-  window.TeamPoints = { award, getStats, has: (type, id) => Object.hasOwn(activities, `${type}:${id}`) };
+  window.TeamPoints = { award, getStats, getJourney, getAvatar, demoTeams, has: (type, id) => Object.hasOwn(activities, `${type}:${id}`) };
 
   // 2. KOMPONENTEN – markup ligger i HTML, stilene i lagpoeng.css.
   function render() {
@@ -60,8 +78,7 @@
       document.querySelectorAll(`[data-team-count="${type}"]`).forEach(el => { el.textContent = count; });
     });
     document.querySelectorAll('[data-team-avatar]').forEach(el => {
-      const files = ['Property 1=Default level 1 klovn.png', 'Property 1=level2.png', 'Property 1=level3.png', 'Property 1=level4.png', 'Property 1=level5.png', 'Property 1=level6.png', 'Property 1=level7.png'];
-      el.src = `assets/${files[stats.level - 1]}`;
+      el.src = getAvatar(stats.level);
     });
     const trigger = document.querySelector('#team-level-button');
     if (trigger) trigger.setAttribute('aria-label', `Lagets statistikk. Nivå ${stats.level}, ${stats.points} poeng`);

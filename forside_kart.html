@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="components.css">
   <link rel="stylesheet" href="lagpoeng.css">
   <script src="lagpoeng.js" defer></script>
+  <link rel="stylesheet" href="kartfigurer.css">
+  <script src="kartfigurer.js" defer></script>
   <link rel="stylesheet" href="spillpunkt2.css">
   <link rel="stylesheet" href="spillpunkt1.css">
   <script src="spillpunkt1.js" defer></script>
@@ -25,6 +27,9 @@
     <main class="kart-visning" tabindex="0" aria-label="Kart over Fagløpet. Dra med musen eller bruk piltastene for å se deg rundt.">
       <div class="kart-lag">
         <img class="kart-bilde" src="bilder/kart.png" alt="Fargerikt kart over Bergen med en svingete sti opp til huset på toppen av fjellet" draggable="false">
+
+        <!-- Figurer følger kartlaget når kartet dras. Plassering styres av kartfigurer.js. -->
+        <div class="kart-figurer" role="group" aria-label="Lagenes fremdrift fra Fløyen til biblioteket"></div>
 
         <!-- Kontorbygg på den store sirkelen der stien slutter (nederst til høyre).
              --x/--y = midten av bygget i prosent av kartbildet. Blir større ved hover. -->
@@ -495,7 +500,7 @@
 
   <!-- LAGKOMPONENT: ligger utenfor kartflaten, så den ikke flyttes når kartet dras. -->
   <button class="team-level" id="team-level-button" type="button" aria-haspopup="dialog" aria-controls="team-stats">
-    <span class="team-level-heading"><img data-team-avatar src="assets/Property%201=Default%20level%201%20klovn.png" alt="Lagets nivåfigur"><strong data-team-level>Nivå 1</strong></span>
+    <span class="team-level-heading"><img data-team-avatar src="assets/Property%201=Default%20level%201%20klovn.svg" alt="Lagets nivåfigur"><strong data-team-level>Nivå 1</strong></span>
     <progress class="team-progress" data-team-progress max="100" value="0" aria-label="Fremdrift i lagets nivå"></progress>
     <span class="team-level-meta"><span><span data-team-points>0</span>/<span data-team-target>10</span> poeng</span><span data-team-remaining>10 poeng igjen</span></span>
   </button>
@@ -503,7 +508,7 @@
   <dialog class="team-stats" id="team-stats" aria-labelledby="team-name">
     <button class="team-stats-close" id="team-stats-close" type="button" aria-label="Lukk lagstatistikk">×</button>
     <header class="team-heading">
-      <img data-team-avatar src="assets/Property%201=Default%20level%201%20klovn.png" alt="Lagets nivåfigur">
+      <img data-team-avatar src="assets/Property%201=Default%20level%201%20klovn.svg" alt="Lagets nivåfigur">
       <div><p>Ditt lag</p><h2 id="team-name">Team Hufflepuffs</h2><span class="team-badge" data-team-level>Nivå 1</span></div>
     </header>
     <section class="team-points-section" aria-label="Lagets poeng og nivå">

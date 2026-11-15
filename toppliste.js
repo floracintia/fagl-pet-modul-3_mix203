@@ -59,7 +59,7 @@ topplisteDialog.addEventListener('click', hendelse => {
 // Poengmodellen lastes med defer. Vent til den er klar før første visning.
 // Motstanderne er faste eksempler; eget lag bruker samme lagring som levelhjørnet.
 document.addEventListener('DOMContentLoaded', () => {
-  const demoPoints = [0, 18, 12, 8, 4];
+  const demoPoints = [0, ...window.TeamPoints.demoTeams.map(team => team.points)];
   const lists = [
     { element: document.querySelector('.toppliste-liste'), prefix: 'toppliste' },
     { element: document.querySelector('.stor-liste'), prefix: 'stor' },
