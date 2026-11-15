@@ -7,144 +7,8 @@
   <title>Velkommen til biblioteket!</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="components.css">
-  <style>
-    :root {
-      --plum: var(--color-primary);
-      --purple: var(--color-primary-light);
-      --cream: var(--color-background);
-      --ink: #111111;
-      --white: var(--color-surface);
-      --muted: var(--color-text-secondary);
-      --line: 2px solid var(--plum);
-      --round: var(--radius-medium);
-      --heading: var(--font-heading);
-      --body: var(--font-body);
-    }
-
-    * { box-sizing: border-box; }
-    body { margin: 0; color: var(--ink); background: var(--plum); font-family: var(--body); }
-    button, input { font: inherit; }
-    button { color: inherit; }
-    main { min-width: 0; margin: 0 12px 12px 0; padding: clamp(24px, 4vw, 52px) clamp(22px, 5vw, 72px) 64px; background: var(--cream); border: 4px solid var(--plum); border-top: 0; border-radius: 0 0 22px 22px; }
-    .content { width: min(1060px, 100%); margin: auto; }
-    .back-link { color: var(--plum); font-size: 14px; font-weight: 700; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-    .hero { min-height: 270px; padding: 22px 0 20px; display: grid; grid-template-columns: 150px minmax(310px, 1fr) minmax(245px, 300px); align-items: center; gap: clamp(24px, 3.2vw, 42px); }
-    .shelf { width: 132px; height: 226px; justify-self: center; display: block; object-fit: contain; filter: drop-shadow(3px 3px 0 rgb(57 17 61 / 10%)); }
-    .hero-copy { min-width: 0; padding: 2px 0 0; }
-    .hero-copy h1 { margin: 0 0 14px; color: var(--ink); font: 700 clamp(34px, 3.6vw, 43px)/1.1 var(--font-heading); letter-spacing: -.7px; white-space: nowrap; }
-    .hero-copy p { max-width: 430px; margin: 0 0 22px; color: var(--color-text-secondary); font-size: 15px; line-height: 1.55; }
-    .share-button { width: 171px; height: 38px; padding: 0 11px; display: inline-flex; align-items: center; justify-content: center; flex-direction: row; gap: 5px; border: 0; border-radius: 13px; color: white; background: var(--purple); font-weight: 400; font-size: 11px; cursor: pointer; box-shadow: none; }
-    .share-button:hover { transform: translateY(-1px); }
-    .share-button .points { padding: 0; border-radius: 0; color: #ffed59; background: transparent; font-size: 11px; white-space: nowrap; }
-    .duck-note { min-height: 205px; position: relative; display: flex; align-items: end; justify-content: center; gap: 0; }
-    .duck-note img { width: 142px; height: 178px; object-fit: contain; object-position: center bottom; }
-    .bubble { position: absolute; z-index: 2; top: -30px; left: -4px; width: 145px; min-height: 86px; padding: 16px 17px; display: grid; align-content: center; border: 1.5px solid var(--ink); border-radius: 55% 48% 50% 45%; background: #fff; font-weight: 500; font-size: 11px; line-height: 1.3; text-align: center; transform: rotate(-10deg); }
-    .bubble::before { content: ''; position: absolute; right: 28px; bottom: -8px; width: 15px; height: 15px; background: #fff; border-right: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); transform: rotate(28deg) skew(10deg, 10deg); }
-    .bubble small { display: block; margin-top: 1px; color: var(--ink); font-size: 11px; font-weight: 700; }
-
-    .search-filters { display: grid; grid-template-columns: minmax(280px, 413px) minmax(0, 1fr); align-items: start; gap: 29px; }
-    .library-search { height: 45px; padding: 0 17px; display: flex; align-items: center; gap: 11px; border: var(--line); border-radius: 999px; background: var(--white); }
-    .library-search span { color: var(--plum); font-size: 20px; }
-    .library-search input { min-width: 0; width: 100%; border: 0; outline: 0; background: transparent; font-size: 14px; }
-    .filters { margin: 0 0 22px; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 8px; }
-    .filter { min-height: 38px; padding: 6px 19px; border: var(--line); border-radius: 999px; background: transparent; color: var(--ink); font-size: 14px; font-weight: 600; white-space: nowrap; cursor: pointer; transition: background .15s, color .15s; }
-    .filter:hover { background: #f1e5ef; }
-    .filter.selected { color: white; background: var(--purple); }
-
-    .articles { display: grid; gap: 15px; }
-    .article-card { min-height: 190px; padding: 14px; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 21px; border: var(--line); border-radius: var(--round); background: var(--white); box-shadow: 3px 4px 0 rgb(57 17 61 / 9%); }
-    .article-card[hidden] { display: none; }
-    .article-art { width: 100%; height: 158px; min-height: 158px; display: block; align-self: center; object-fit: cover; border-right: 2px solid var(--plum); }
-    .article-info { min-width: 0; padding: 1px 1px 0 0; display: flex; flex-direction: column; align-items: flex-start; }
-    .article-info h2 { margin: 0 0 5px; color: var(--plum); font: 700 23px/1.2 var(--heading); }
-    .description { margin: 0 0 9px; color: #39342e; font-size: 13px; line-height: 1.45; }
-    .meta { margin: 0 0 10px; color: var(--muted); font-size: 12px; }
-    .meta strong { color: var(--plum); }
-    .card-bottom { width: 100%; margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .open-link { color: var(--purple); font-size: 13px; font-weight: 700; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-    .read-toggle { min-height: 44px; padding: 8px 13px; display: inline-flex; align-items: center; gap: 10px; border: 0; border-radius: 0; color: #39342e; background: transparent; font-size: 15px; font-weight: 600; cursor: pointer; }
-    .read-toggle input { width: 21px; height: 21px; margin: 0; accent-color: var(--purple); cursor: pointer; }
-    .empty-state { display: none; padding: 25px; border: var(--line); border-radius: var(--round); background: var(--white); text-align: center; }
-    .empty-state.visible { display: block; }
-
-    .modal-open { overflow: hidden; }
-    .modal-backdrop { position: fixed; z-index: 30; inset: 0; padding: 24px; display: grid; place-items: center; background: rgb(20 17 20 / 40%); backdrop-filter: blur(5px); }
-    .modal-backdrop[hidden] { display: none; }
-    .share-modal { width: min(572px, 100%); max-height: min(640px, calc(100vh - 40px)); overflow: auto; border-radius: 28px; background: var(--white); color: #252521; box-shadow: 0 24px 70px rgb(0 0 0 / 23%); }
-    .modal-header { padding: 20px 27px 19px; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; border-bottom: 1px solid #eeece8; }
-    .modal-header h2 { margin: 0 0 3px; font: 700 27px/1.2 var(--heading); letter-spacing: -.35px; }
-    .modal-header p { margin: 0; color: #7b7c75; font-size: 13px; }
-    .modal-close { width: 36px; height: 36px; flex: 0 0 36px; border: 0; border-radius: 50%; background: #f1f0eb; color: #696b66; font-size: 23px; line-height: 1; cursor: pointer; }
-    .modal-content { padding: 20px 27px 0; }
-    .field-label { display: block; margin-bottom: 6px; font-size: 15px; font-weight: 600; }
-    .url-field { height: 49px; padding: 0 13px; display: flex; align-items: center; gap: 9px; border: 1px solid #d5d4ce; border-radius: 12px; background: #fff; box-shadow: 0 1px 2px rgb(0 0 0 / 10%); }
-    .url-field > span { color: #85877f; font-size: 18px; }
-    .url-field input { width: 100%; min-width: 0; border: 0; outline: 0; background: transparent; font-size: 13px; }
-    .link-preview { min-height: 105px; margin-top: 22px; padding: 13px 15px; display: grid; grid-template-columns: 82px minmax(0, 1fr); align-items: center; gap: 15px; border: 1px solid #e5e0d6; border-radius: 17px; background: #f6f3eb; }
-    .preview-thumb { width: 82px; height: 74px; border-radius: 12px; background: #d8e4df; }
-    .link-preview > div:last-child { display: grid; gap: 3px; }
-    .preview-source { color: #75827a; font-size: 9px; font-weight: 700; letter-spacing: 1.2px; }
-    .link-preview strong { font: 600 14px/1.3 Georgia, serif; }
-    .link-preview small { color: #86877f; font-size: 11px; }
-    .comment-heading { margin-top: 22px; display: flex; justify-content: space-between; align-items: center; }
-    .comment-heading .field-label { margin: 0 0 6px; }
-    .comment-heading > span { padding-bottom: 6px; color: #9a9c94; font-size: 11px; }
-    .modal-content textarea { width: 100%; min-height: 93px; padding: 12px 13px; resize: vertical; border: 1px solid #d5d4ce; border-radius: 12px; outline-color: var(--purple); background: #fff; box-shadow: 0 1px 2px rgb(0 0 0 / 10%); font-size: 13px; }
-    .modal-content textarea::placeholder { color: #a2a39c; }
-    .field-help { margin: 8px 0 20px; color: #777a72; font-size: 11px; }
-    .channel-picker { margin: 0; padding: 0; border: 1px solid #e9e7e1; border-radius: 16px; overflow: hidden; }
-    .channel-heading { min-height: 68px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #efede8; }
-    .slack-mark { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 12px; color: #159b91; background: #f5f4f0; font-size: 23px; }
-    .channel-heading strong, .channel-heading small { display: block; }
-    .channel-heading strong { font-size: 13px; }
-    .channel-heading small { margin-top: 3px; color: #777a72; font-size: 11px; }
-    .channel-options { padding: 12px 14px; display: flex; flex-wrap: wrap; gap: 7px; }
-    .channel-options label { cursor: pointer; }
-    .channel-options input { position: absolute; opacity: 0; pointer-events: none; }
-    .channel-options label span { padding: 7px 10px; display: inline-flex; align-items: center; gap: 7px; border: 1px solid #dfddd6; border-radius: 12px; color: #555850; background: #faf9f6; font-size: 12px; }
-    .channel-options label b { width: 18px; height: 18px; display: grid; place-items: center; border-radius: 6px; color: white; background: #6654c8; font-size: 12px; }
-    .channel-options label:nth-child(2) b { background: #148778; }
-    .channel-options label:nth-child(3) b { background: #c96849; }
-    .channel-options input:checked + span { border-color: var(--purple); background: #f5edf5; }
-    .modal-footer { min-height: 67px; padding: 12px 27px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border-top: 1px solid #eeece8; }
-    .modal-footer > span { color: #74766f; font-size: 12px; }
-    .modal-footer > span strong { color: var(--purple); }
-    .modal-footer button { min-height: 40px; padding: 0 15px; display: inline-flex; align-items: center; gap: 10px; border: 0; border-radius: 11px; color: #fff; background: var(--purple); font-size: 12px; font-weight: 700; cursor: pointer; }
-    .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-
-    @media (max-width: 900px) {
-      .hero { grid-template-columns: 120px minmax(230px, 1fr) 190px; gap: 18px; }
-      .shelf { width: 110px; height: 190px; }
-      .duck-note img { width: 120px; height: 155px; }
-      .bubble { width: 125px; min-height: 76px; }
-      .article-card { grid-template-columns: 180px minmax(0, 1fr); gap: 16px; }
-    }
-    @media (max-width: 680px) {
-      main { margin: 0 7px 7px; padding: 24px 17px 42px; border-width: 3px; border-top: 0; }
-      .hero { padding: 22px 0 20px; grid-template-columns: 86px minmax(0, 1fr); gap: 15px; }
-      .shelf { width: 78px; height: 145px; }
-      .hero-copy h1 { margin-bottom: 10px; font-size: clamp(28px, 7.5vw, 37px); line-height: 1.1; white-space: normal; letter-spacing: -.5px; }
-      .hero-copy p { max-width: 36ch; margin-bottom: 17px; font-size: 14px; line-height: 1.5; }
-      .duck-note { grid-column: 2; justify-content: flex-end; min-height: 120px; margin-top: 1px; }
-      .duck-note img { width: 105px; height: 126px; }
-      .bubble { top: -18px; left: auto; right: 80px; width: 118px; min-height: 72px; padding: 12px; font-size: 10px; }
-      .bubble small { font-size: 11px; }
-      .article-card { grid-template-columns: 1fr; gap: 13px; }
-      .article-art { height: 190px; min-height: 190px; border-right: 0; border-bottom: 2px solid var(--plum); }
-      .article-info h2 { font-size: 21px; }
-      .share-button { width: 171px; height: 38px; max-width: 100%; }
-      .search-filters { grid-template-columns: 1fr; gap: 14px; }
-      .filters { gap: 7px; }
-      .modal-backdrop { padding: 12px; }
-      .share-modal { max-height: calc(100vh - 24px); border-radius: 22px; }
-      .modal-header, .modal-content { padding-left: 19px; padding-right: 19px; }
-      .modal-header h2 { font-size: 23px; }
-      .link-preview { grid-template-columns: 60px minmax(0, 1fr); gap: 11px; padding: 10px; }
-      .preview-thumb { width: 60px; height: 60px; }
-      .modal-footer { padding: 11px 19px; align-items: flex-start; flex-direction: column; }
-    }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
-  </style>
+  <!-- Felles design først, deretter bibliotekets egne tilpasninger. -->
+  <link rel="stylesheet" href="bibliotek.css">
 </head>
 <body class="side-app">
   <div class="app">
@@ -156,6 +20,7 @@
       <div class="content">
         <a class="back-link" href="forside_kart.html">← Tilbake til kartet</a>
 
+        <!-- 1. Introduksjon og knapp som åpner delingsvinduet. -->
         <section class="hero" aria-labelledby="page-title">
           <img class="shelf" src="bilder/bokhylle.png" alt="Bokhylle full av fargerike bøker">
           <div class="hero-copy">
@@ -169,19 +34,22 @@
           </div>
         </section>
 
+        <!-- 2. Søk og filtre. data-filter kobler knappene til bibliotek.js. -->
         <div class="search-filters">
           <label class="library-search"><span aria-hidden="true">⌕</span><input id="article-search" type="search" placeholder="Søk" aria-label="Søk"></label>
           <div class="filters" role="group" aria-label="Filtrer artikler etter tema">
-          <button class="filter selected" type="button" aria-pressed="true" data-filter="alle">Alle</button>
-          <button class="filter" type="button" aria-pressed="false" data-filter="lest">Lest</button>
-          <button class="filter" type="button" aria-pressed="false" data-filter="ux-norge">#UX-Norge</button>
-          <button class="filter" type="button" aria-pressed="false" data-filter="ux-bergen">#ux-Bergen</button>
-          <button class="filter" type="button" aria-pressed="false" data-filter="it">#IT</button>
-          <button class="filter" type="button" aria-pressed="false" data-filter="nylig">#Nylig</button>
-          <button class="filter" type="button" aria-pressed="false" data-filter="annet">Annet</button>
+            <button class="filter selected" type="button" aria-pressed="true" data-filter="alle">Alle</button>
+            <button class="filter" type="button" aria-pressed="false" data-filter="lest">Lest</button>
+            <button class="filter" type="button" aria-pressed="false" data-filter="ux-norge">#UX-Norge</button>
+            <button class="filter" type="button" aria-pressed="false" data-filter="ux-bergen">#ux-Bergen</button>
+            <button class="filter" type="button" aria-pressed="false" data-filter="it">#IT</button>
+            <button class="filter" type="button" aria-pressed="false" data-filter="nylig">#Nylig</button>
+            <button class="filter" type="button" aria-pressed="false" data-filter="annet">Annet</button>
           </div>
         </div>
 
+        <!-- 3. Artikkelliste. data-article-id brukes til lagret lesestatus, -->
+        <!-- data-tags og data-title brukes til filtrering og søk. -->
         <section class="articles" aria-label="Artikler">
           <article class="article-card" data-article-id="ux-design-innsikt" data-tags="ux-norge nylig" data-title="UX-design i utvikling fra innsikt til løsning">
             <img class="article-art" src="bilder/artikkel-ux.png" alt="Illustrasjon av UX-design med blå bakgrunn">
@@ -189,7 +57,10 @@
               <h2>UX-design i utvikling: fra innsikt til løsning</h2>
               <p class="description">En praktisk guide til å gjøre brukerinnsikt om til gode valg i et produktteam.</p>
               <p class="meta">Delt av <strong>Anne</strong> · «Denne var bra!»</p>
-              <div class="card-bottom"><a class="open-link" href="#artikkel-ux">Åpne →</a><label class="read-toggle"><input class="read-check" type="checkbox"><span>Lest</span></label></div>
+              <div class="card-bottom">
+                <a class="open-link" href="#artikkel-ux">Åpne →</a>
+                <label class="read-toggle"><input class="read-check" type="checkbox"><span>Lest</span></label>
+              </div>
             </div>
           </article>
           <article class="article-card" data-article-id="ux-design-skisser" data-tags="ux-bergen" data-title="Fra skisse til prototype slik tester vi ideer tidlig">
@@ -198,7 +69,10 @@
               <h2>Fra skisse til prototype: slik tester vi ideer tidlig</h2>
               <p class="description">Se hvordan enkle skisser gjør det lettere å få tilbakemeldinger før vi bygger ferdig en løsning.</p>
               <p class="meta">Delt av <strong>Jonas</strong> · #ux-Bergen</p>
-              <div class="card-bottom"><a class="open-link" href="#artikkel-skisser">Åpne →</a><label class="read-toggle"><input class="read-check" type="checkbox"><span>Lest</span></label></div>
+              <div class="card-bottom">
+                <a class="open-link" href="#artikkel-skisser">Åpne →</a>
+                <label class="read-toggle"><input class="read-check" type="checkbox"><span>Lest</span></label>
+              </div>
             </div>
           </article>
           <article class="article-card" data-article-id="brukertest-pa-budsjett" data-tags="ux-norge" data-title="Brukertesting på budsjett få nyttig innsikt med små grep">
@@ -208,7 +82,10 @@
               <h2>Brukertesting på budsjett: få nyttig innsikt med små grep</h2>
               <p class="description">Du trenger ikke et stort testoppsett for å lære av brukerne. Start med korte samtaler og konkrete oppgaver.</p>
               <p class="meta">Delt av <strong>Ingrid</strong> · #UX-Norge</p>
-              <div class="card-bottom"><a class="open-link" href="#artikkel-brukertest">Åpne →</a><label class="read-toggle"><input class="read-check" type="checkbox"><span>Lest</span></label></div>
+              <div class="card-bottom">
+                <a class="open-link" href="#artikkel-brukertest">Åpne →</a>
+                <label class="read-toggle"><input class="read-check" type="checkbox"><span>Lest</span></label>
+              </div>
             </div>
           </article>
           <article class="article-card" data-article-id="mikrotekst-i-produkter" data-tags="ux-norge nylig" data-title="Mikrotekst som hjelper små ord stor forskjell">
@@ -218,7 +95,10 @@
               <h2>Mikrotekst som hjelper: små ord, stor forskjell</h2>
               <p class="description">Gode knappe- og feilmeldinger gjør digitale tjenester enklere å forstå. Her er en praktisk sjekkliste.</p>
               <p class="meta">Delt av <strong>Oda</strong> · #UX-Norge</p>
-              <div class="card-bottom"><a class="open-link" href="#artikkel-mikrotekst">Åpne →</a><label class="read-toggle"><input class="read-check" type="checkbox"><span>Lest</span></label></div>
+              <div class="card-bottom">
+                <a class="open-link" href="#artikkel-mikrotekst">Åpne →</a>
+                <label class="read-toggle"><input class="read-check" type="checkbox"><span>Lest</span></label>
+              </div>
             </div>
           </article>
           <article class="article-card" data-article-id="tilgjengelighet-fra-start" data-tags="ux-norge" data-title="Tilgjengelighet fra første skisse">
@@ -228,7 +108,10 @@
               <h2>Tilgjengelighet fra første skisse</h2>
               <p class="description">Noen tidlige designvalg gjør en løsning bedre for flere. Se hva teamet kan sjekke allerede i skissefasen.</p>
               <p class="meta">Delt av <strong>Emil</strong> · #UX-Norge</p>
-              <div class="card-bottom"><a class="open-link" href="#artikkel-tilgjengelighet">Åpne →</a><label class="read-toggle"><input class="read-check" type="checkbox"><span>Lest</span></label></div>
+              <div class="card-bottom">
+                <a class="open-link" href="#artikkel-tilgjengelighet">Åpne →</a>
+                <label class="read-toggle"><input class="read-check" type="checkbox"><span>Lest</span></label>
+              </div>
             </div>
           </article>
         </section>
@@ -237,6 +120,7 @@
     </main>
   </div>
 
+  <!-- 4. Delingsvindu. Skjult til brukeren trykker «Del en artikkel». -->
   <div class="modal-backdrop" id="share-modal" hidden>
     <section class="share-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
       <header class="modal-header">
@@ -269,110 +153,9 @@
     </section>
   </div>
 
+  <!-- 5. Rekkefølgen er viktig: felles poengmodell før bibliotekets hendelser. -->
   <script src="lagpoeng.js"></script>
   <script src="komponenter.js"></script>
-  <script>
-    const searchInput = document.querySelector('#article-search');
-    const filters = [...document.querySelectorAll('.filter')];
-    const cards = [...document.querySelectorAll('.article-card')];
-    const emptyState = document.querySelector('#empty-state');
-    const modal = document.querySelector('#share-modal');
-    const openModalButton = document.querySelector('#open-share-modal');
-    const closeModalButton = document.querySelector('#close-share-modal');
-    const comment = document.querySelector('#share-comment');
-    const commentCount = document.querySelector('#comment-count');
-    const readStorageKey = 'faglopet-bibliotek-lesestatus';
-    let readStatus = {};
-    let activeCategory = 'alle';
-    let activeReadFilter = 'alle';
-
-    // Gjenopprett lest-status separat for hvert artikkelkort.
-    try {
-      readStatus = JSON.parse(localStorage.getItem(readStorageKey) || '{}');
-      if (!readStatus || typeof readStatus !== 'object' || Array.isArray(readStatus)) readStatus = {};
-    } catch {
-      readStatus = {};
-    }
-    cards.forEach((card) => {
-      card.querySelector('.read-check').checked = Boolean(readStatus[card.dataset.articleId]);
-    });
-
-    function updateFilterButtons() {
-      filters.forEach((button) => {
-        const filter = button.dataset.filter;
-        const selected = filter === 'alle'
-          ? activeCategory === 'alle' && activeReadFilter === 'alle'
-          : filter === 'lest'
-            ? activeReadFilter === filter
-            : activeCategory === filter;
-        button.classList.toggle('selected', selected);
-        button.setAttribute('aria-pressed', String(selected));
-      });
-    }
-
-    function updateArticles() {
-      const query = searchInput.value.trim().toLocaleLowerCase('nb');
-      let visibleCount = 0;
-      cards.forEach((card) => {
-        const text = `${card.dataset.title} ${card.textContent} ${card.dataset.tags}`.toLocaleLowerCase('nb');
-        const matchesQuery = !query || text.includes(query);
-        const isRead = card.querySelector('.read-check').checked;
-        const matchesCategory = activeCategory === 'alle' || card.dataset.tags.split(' ').includes(activeCategory);
-        const matchesRead = activeReadFilter === 'alle' || isRead;
-        const visible = matchesQuery && matchesCategory && matchesRead;
-        card.hidden = !visible;
-        if (visible) visibleCount++;
-      });
-      emptyState.classList.toggle('visible', visibleCount === 0);
-    }
-
-    filters.forEach((button) => button.addEventListener('click', () => {
-      const filter = button.dataset.filter;
-      if (filter === 'alle') {
-        activeCategory = 'alle';
-        activeReadFilter = 'alle';
-      } else if (filter === 'lest') {
-        activeReadFilter = filter;
-      } else {
-        activeCategory = filter;
-      }
-      updateFilterButtons();
-      updateArticles();
-    }));
-    searchInput.addEventListener('input', updateArticles);
-    document.querySelectorAll('.read-check').forEach((checkbox) => checkbox.addEventListener('change', () => {
-      const card = checkbox.closest('.article-card');
-      readStatus[card.dataset.articleId] = checkbox.checked;
-      try {
-        localStorage.setItem(readStorageKey, JSON.stringify(readStatus));
-      } catch {
-        // Lese-filteret fungerer også hvis nettleseren blokkerer lokal lagring.
-      }
-      updateArticles();
-    }));
-
-    function closeModal() {
-      modal.hidden = true;
-      document.body.classList.remove('modal-open');
-      openModalButton.focus();
-    }
-    openModalButton.addEventListener('click', () => {
-      modal.hidden = false;
-      document.body.classList.add('modal-open');
-      document.querySelector('#article-url').focus();
-    });
-    closeModalButton.addEventListener('click', closeModal);
-    modal.addEventListener('click', (event) => { if (event.target === modal) closeModal(); });
-    document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !modal.hidden) closeModal(); });
-    comment.addEventListener('input', () => { commentCount.textContent = `${comment.value.length}/240`; });
-    document.querySelector('#share-form').addEventListener('submit', (event) => {
-      event.preventDefault();
-      // Samme artikkellenke gir bare poeng én gang, også etter et nytt besøk.
-      const articleUrl = new URL(document.querySelector('#article-url').value.trim());
-      articleUrl.hash = '';
-      window.TeamPoints.award('share', articleUrl.href);
-      closeModal();
-    });
-  </script>
+  <script src="bibliotek.js"></script>
 </body>
 </html>
