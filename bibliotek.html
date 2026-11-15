@@ -367,6 +367,10 @@
     comment.addEventListener('input', () => { commentCount.textContent = `${comment.value.length}/240`; });
     document.querySelector('#share-form').addEventListener('submit', (event) => {
       event.preventDefault();
+      // Samme artikkellenke gir bare poeng én gang, også etter et nytt besøk.
+      const articleUrl = new URL(document.querySelector('#article-url').value.trim());
+      articleUrl.hash = '';
+      window.TeamPoints.award('share', articleUrl.href);
       closeModal();
     });
   </script>

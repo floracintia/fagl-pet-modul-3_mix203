@@ -38,7 +38,7 @@ const labels = [
 
 // all = hele Bouvet, team = mitt team. values inneholder prosentene.
 const demoResults = {
-  all: { count: 428, values: [38, 29, 21, 12] },
+  all: { count: 32, values: [38, 29, 21, 12] },
   team: { count: 21, values: [20, 52, 18, 10] },
 };
 
