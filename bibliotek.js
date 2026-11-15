@@ -13,8 +13,8 @@
   const commentCount = document.querySelector('#comment-count');
   const readStorageKey = 'faglopet-bibliotek-lesestatus';
   let readStatus = {};
-  let activeCategory = 'alle';
-  let activeReadFilter = 'alle';
+  // Filterknappene er gjensidig utelukkende; søk kan kombineres med valgt filter.
+  let activeFilter = 'alle';
 
   // 2. Gjenopprett lest-status separat for hvert artikkelkort.
   try {
@@ -31,17 +31,13 @@
   function updateFilterButtons() {
     filters.forEach((button) => {
       const filter = button.dataset.filter;
-      const selected = filter === 'alle'
-        ? activeCategory === 'alle' && activeReadFilter === 'alle'
-        : filter === 'lest'
-          ? activeReadFilter === filter
-          : activeCategory === filter;
+      const selected = filter === activeFilter;
       button.classList.toggle('selected', selected);
       button.setAttribute('aria-pressed', String(selected));
     });
   }
 
-  // 4. Et kort vises bare når det matcher søk, kategori og lest-filter samtidig.
+  // 4. Kombiner søket med ett valgt filter: alle, lest eller en kategori.
   function updateArticles() {
     const query = searchInput.value.trim().toLocaleLowerCase('nb');
     let visibleCount = 0;
@@ -49,9 +45,11 @@
       const text = `${card.dataset.title} ${card.textContent} ${card.dataset.tags}`.toLocaleLowerCase('nb');
       const matchesQuery = !query || text.includes(query);
       const isRead = card.querySelector('.read-check').checked;
-      const matchesCategory = activeCategory === 'alle' || card.dataset.tags.split(' ').includes(activeCategory);
-      const matchesRead = activeReadFilter === 'alle' || isRead;
-      const visible = matchesQuery && matchesCategory && matchesRead;
+      const matchesFilter = activeFilter === 'alle'
+        || (activeFilter === 'lest'
+          ? isRead
+          : card.dataset.tags.split(/\s+/).includes(activeFilter));
+      const visible = matchesQuery && matchesFilter;
       card.hidden = !visible;
       if (visible) visibleCount++;
     });
@@ -61,18 +59,14 @@
   // 5. Brukerhandlinger: filtrering, søk og lagring av lest-status.
   // lagpoeng.js registrerer lesepoengene; her lagres selve avhukingen.
   filters.forEach((button) => button.addEventListener('click', () => {
-    const filter = button.dataset.filter;
-    if (filter === 'alle') {
-      activeCategory = 'alle';
-      activeReadFilter = 'alle';
-    } else if (filter === 'lest') {
-      activeReadFilter = filter;
-    } else {
-      activeCategory = filter;
-    }
+    // Et nytt valg erstatter også «Lest», så et skjult restfilter aldri blir hengende.
+    activeFilter = button.dataset.filter;
     updateFilterButtons();
     updateArticles();
   }));
+  // Oppdater også ved oppstart hvis nettleseren gjenoppretter tekst i søkefeltet.
+  updateFilterButtons();
+  updateArticles();
   searchInput.addEventListener('input', updateArticles);
   document.querySelectorAll('.read-check').forEach((checkbox) => checkbox.addEventListener('change', () => {
     const card = checkbox.closest('.article-card');
