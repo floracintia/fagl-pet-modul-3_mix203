@@ -6,7 +6,7 @@
 // Plassholderne byttes ut med ferdig HTML når skriptet kjører.
 
 const menyvalg = [
-  { tekst: 'Hjem',      ikon: 'hjem',      lenke: '#' },
+  { tekst: 'Hjem',      ikon: 'hjem',      lenke: './hjem.html', side: 'hjem.html' },
   { tekst: 'Meldinger', ikon: 'meldinger', lenke: '#' },
   { tekst: 'Aktivitet', ikon: 'aktivitet', lenke: '#' },
   { tekst: 'Filer',     ikon: 'filer',     lenke: './bibliotek.html', side: 'bibliotek.html' },

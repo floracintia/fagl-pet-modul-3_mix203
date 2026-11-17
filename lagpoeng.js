@@ -3,7 +3,7 @@
    synkronisering mellom kolleger må senere kobles til en server. */
 (() => {
   const storageKey = 'faglopet-team-activity-v1';
-  const rewards = { read: 1, play: 2, share: 3 };
+  const rewards = { read: 1, play: 2, share: 3, chatShare: 5 };
   const thresholds = [0, 10, 25, 45, 70, 100, 140];
   // Samme eksempelmotstandere brukes på kartet og i topplisten.
   const demoTeams = [
@@ -35,11 +35,12 @@
   readStorage();
 
   function getStats() {
-    const counts = { read: 0, play: 0, share: 0 };
+    const counts = { read: 0, play: 0, share: 0, chatShare: 0 };
     Object.values(activities).forEach(type => {
       if (Object.hasOwn(rewards, type)) counts[type] += 1;
     });
-    const points = counts.read + counts.play * 2 + counts.share * 3;
+    const points = counts.read + counts.play * 2 + counts.share * 3 + counts.chatShare * 5;
+    counts.share += counts.chatShare;
     const level = thresholds.filter(start => points >= start).length;
     const start = thresholds[level - 1];
     // Siste nivå fylles fra 140 til 199. Det finnes ikke noe nivå 8.
@@ -59,7 +60,17 @@
     window.dispatchEvent(new CustomEvent('team:updated'));
     return true;
   }
-  window.TeamPoints = { award, getStats, getJourney, getAvatar, demoTeams, has: (type, id) => Object.hasOwn(activities, `${type}:${id}`) };
+  // Angre bare den aktuelle chatdelingen; andre aktiviteter beholdes.
+  function undoChatShare(id) {
+    readStorage();
+    const key = `chatShare:${id}`;
+    if (!Object.hasOwn(activities, key)) return false;
+    delete activities[key];
+    try { localStorage.setItem(storageKey, JSON.stringify(activities)); } catch { /* Kun minne. */ }
+    window.dispatchEvent(new CustomEvent('team:updated'));
+    return true;
+  }
+  window.TeamPoints = { award, undoChatShare, getStats, getJourney, getAvatar, demoTeams, has: (type, id) => Object.hasOwn(activities, `${type}:${id}`) };
 
   // 2. KOMPONENTEN – markup ligger i HTML, stilene i lagpoeng.css.
   function render() {

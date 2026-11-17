@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hjem – Faglig påfyll</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="components.css">
+  <link rel="stylesheet" href="hjem.css">
+  <script src="komponenter.js" defer></script>
+  <script src="lagpoeng.js" defer></script>
+  <script src="hjem.js" defer></script>
+</head>
+<body class="side-app side-hjem">
+  <svg xmlns="http://www.w3.org/2000/svg" class="ikondefinisjoner" aria-hidden="true"><defs><symbol id="ikon-headphones" viewBox="0 0 24 24"><path d="M4 14v-3a8 8 0 0 1 16 0v3M4 13H3v7h5v-7H4Zm16 0h1v7h-5v-7h4Z"/></symbol><symbol id="ikon-send" viewBox="0 0 24 24"><path d="m3 3 19 9-19 9V3Zm0 0 12 9-12 9M3 12h12"/></symbol><symbol id="ikon-book" viewBox="0 0 24 24"><rect x="6" y="3" width="15" height="18" rx="2"/><path d="M3 7h5M3 12h5M3 17h5M12 16h5M12 8h5"/><circle cx="14.5" cy="11" r="2"/></symbol><symbol id="ikon-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></symbol><symbol id="ikon-hash" viewBox="0 0 24 24"><path d="m9 3-3 18M18 3l-3 18M3 9h18M2 15h18"/></symbol><symbol id="ikon-channels" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="m10 6-2 12M16 6l-2 12M6 10h12M5 15h12"/></symbol><symbol id="ikon-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol><symbol id="ikon-chat" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-14 5l-2 5 6-2a8 8 0 0 0 10-8Z"/><path d="M15 3a7 7 0 0 1 6 11l1 5-4-1"/></symbol><symbol id="ikon-bubble" viewBox="0 0 24 24"><path d="M21 11a9 9 0 1 0-5 8l5 2-1-6a9 9 0 0 0 1-4Z"/></symbol><symbol id="ikon-canvas" viewBox="0 0 24 24"><path d="M14 21H4V3h16v12l-6 6Zm0 0v-6h6M8 7h8M8 11h5"/></symbol><symbol id="ikon-files" viewBox="0 0 24 24"><rect x="7" y="7" width="14" height="14" rx="2"/><path d="M17 7V3H3v14h4"/></symbol><symbol id="ikon-chevron" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></symbol><symbol id="ikon-edit" viewBox="0 0 24 24"><path d="M12 4H4v16h16v-8M14 5l5-3 3 3-4 5-8 5 2-8 2-2Z"/></symbol><symbol id="ikon-search-lines" viewBox="0 0 24 24"><path d="M3 4h16M3 9h10M3 14h5"/><circle cx="14" cy="15" r="5"/><path d="m18 19 3 3"/></symbol><symbol id="ikon-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V6a4 4 0 0 1 8 0v4"/></symbol><symbol id="ikon-sparkles" viewBox="0 0 24 24"><path d="m10 3 2 6 6 2-6 2-2 6-2-6-6-2 6-2 2-6ZM19 2v6M16 5h6M19 17v5M16.5 19.5h5"/></symbol><symbol id="ikon-smile" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14a4 4 0 0 0 8 0M8 8h.01M16 8h.01"/></symbol><symbol id="ikon-video" viewBox="0 0 24 24"><rect x="3" y="6" width="12" height="13" rx="2"/><path d="m15 10 6-4v13l-6-4"/></symbol><symbol id="ikon-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M6 11v1a6 6 0 0 0 12 0v-1M12 18v4M8 22h8"/></symbol><symbol id="ikon-code" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></symbol><symbol id="ikon-link" viewBox="0 0 24 24"><path d="m10 14 4-4M8 16l-1 1a4 4 0 0 1-6-6l5-5a4 4 0 0 1 6 0M16 8l1-1a4 4 0 0 1 6 6l-5 5a4 4 0 0 1-6 0"/></symbol><symbol id="ikon-list" viewBox="0 0 24 24"><path d="M9 6h12M9 12h12M9 18h12M3 6h1M3 12h1M3 18h1"/></symbol><symbol id="ikon-indent" viewBox="0 0 24 24"><path d="M3 4h18M10 9h11M10 14h11M3 20h18M3 8l4 4-4 4"/></symbol><symbol id="ikon-quote" viewBox="0 0 24 24"><path d="M4 5h7v8H8v5H4V5ZM14 5h7v8h-3v5h-4V5Z"/></symbol><symbol id="ikon-shortcut" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="m14 6-4 12"/></symbol></defs></svg>
+  <div class="app">
+    <div data-komponent="sidemeny"></div>
+    <div data-komponent="header"></div>
+    <main class="hjem-visning">
+      <aside class="kanalmeny" aria-label="Arbeidsområde og kanaler">
+        <h1>ODA <svg class="slack-ikon" aria-hidden="true"><use href="#ikon-chevron"/></svg><span class="arbeidsrom-verktøy"><img src="bilder/ikoner/admin.svg" alt="Innstillinger"><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-edit"/></svg></span></h1>
+        <div class="samtalesok"><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-search-lines"/></svg>  Finn en samtale …</div>
+        <div class="kanalvalg"><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-headphones"/></svg> Hurtigsamtaler</div>
+        <div class="kanalvalg"><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-send"/></svg> Utkast og sendt <small>1</small></div>
+        <div class="kanalvalg"><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-book"/></svg> Kataloger</div>
+        <hr>
+        <div class="kanalvalg"><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-star"/></svg> Stjernemerkede</div>
+        <p class="kanalhint">Dra og slipp viktige ting her</p>
+        <div class="kanalgruppe">
+          <div class="kanalvalg"><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-channels"/></svg> Kanaler</div>
+          <div class="kanal"><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-hash"/></svg> generelt</div>
+          <a class="kanal valgt" href="hjem.html" aria-current="page"><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-hash"/></svg> Faglig-påfyll</a>
+          <div class="kanal"><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-hash"/></svg> Prosjektgruppe</div>
+          <div class="kanal"><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-hash"/></svg> Sosialt</div>
+          <div class="kanal"><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-plus"/></svg> Legg til kanaler</div>
+        </div>
+        <div class="kanalvalg"><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-chat"/></svg> Direktemeldinger</div>
+        <div class="kanal"><span class="mini-profil"><img src="bilder/ikoner/profil.svg" alt=""></span> Oda89 <span class="du">du</span></div>
+        <div class="kanal"><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-plus"/></svg> Inviter personer</div>
+      </aside>
+      <section class="chat" aria-labelledby="kanaltittel">
+        <header class="chat-topp">
+          <div class="kanaloverskrift"><h2 id="kanaltittel"><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-star"/></svg> # Faglig-påfyll</h2><p>Del artikler, perspektiver og ting vi bør få med oss.</p><span class="chat-medlemmer"><span class="medlemsbilder"><img src="bilder/toppliste/and-safari.png" alt=""><img src="bilder/toppliste/and-rocker.png" alt=""><b>A.</b></span>200 <svg class="slack-ikon" aria-hidden="true"><use href="#ikon-headphones"/></svg><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-chevron"/></svg><img class="slack-ikon" src="bilder/ikoner/aktivitet.svg" alt="Varsler"><img class="slack-ikon" src="bilder/ikoner/sok.svg" alt="Søk"><span class="flere-valg">⋮</span></span></div>
+          <div class="chat-faner"><span class="aktiv-fane"><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-bubble"/></svg> Meldinger</span><span><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-canvas"/></svg> Lerret</span><span><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-files"/></svg> Filer og lenker</span><span><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-plus"/></svg></span></div>
+        </header>
+        <div class="chat-meldinger">
+          <article class="melding tidligere">
+            <div class="melding-innhold">
+              <div class="artikkelkort"><div><small>MIT TECHNOLOGY REVIEW</small><h3>ux design</h3><p>Five practical ways teams can make continuous learning part of everyday work.</p></div><img src="bilder/artikkel-skisser.png" alt="Skisser fra en designprosess"></div>
+              <div class="reaksjoner"><span>🙌 4</span><span>💡 7</span><span><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-plus"/></svg></span></div>
+            </div>
+          </article>
+          <article class="melding">
+            <div class="melding-avatar">OH</div>
+            <div class="melding-innhold"><div class="avsender"><strong>Oda Høili</strong><time>09:42</time></div>
+              <p>Veldig god artikkel om hvordan produktteam kan jobbe mer systematisk med AI. Anbefales!</p>
+              <div class="artikkelkort"><div><small>MIT TECHNOLOGY REVIEW</small><h3>Building AI habits that actually stick</h3><p>Five practical ways teams can make continuous learning part of everyday work.</p></div><img src="bilder/artikkel-ux.png" alt="Illustrasjon til artikkelen om AI og design"></div>
+              <div class="reaksjoner"><span>🙌 4</span><span>💡 7</span><span><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-plus"/></svg></span></div>
+            </div>
+          </article>
+          <article class="melding bot-melding">
+            <div class="melding-avatar bot-avatar"><img src="bilder/anden.png" alt=""></div>
+            <div class="melding-innhold"><div class="avsender"><strong>KVAKKIT</strong><span class="app-merke">APP</span><time>09:42</time></div>
+              <p>Hei Oda! Vil du gjøre denne artikkelen tilgjengelig i Kvakkit så flere kollegaer kan se?</p>
+              <section class="delingskort" aria-labelledby="delingstittel">
+                <div class="deling-intro"><span class="deling-stjerne" aria-hidden="true"><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-sparkles"/></svg></span><div><h3 id="delingstittel">Del til Kvakkit – Hjelp laget fremover</h3><p>Ved å dele kan du bidra til lagpotten. Du får <strong>5 poeng</strong> for bidraget.</p></div></div>
+                <div class="delingsknapper"><button id="del-artikkel" type="button">Del til Kvakkit (5p🏅)</button><button id="avvis-deling" type="button">Nei, takk</button><button id="angre-deling" type="button" hidden>Angre deling</button></div>
+                <p class="deling-personvern"><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-lock"/></svg> Ingenting deles uten ditt samtykke</p>
+                <p id="deling-status" role="status"></p>
+              </section>
+            </div>
+          </article>
+        </div>
+        <div class="meldingsfelt" aria-label="Statisk eksempel på meldingsfelt">
+          <div class="formatering" aria-hidden="true">
+            <b>B</b><i>I</i><u>U</u><s>S</s><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-quote"/></svg><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-chevron"/></svg><span class="verktøyskille"></span><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-link"/></svg><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-list"/></svg><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-list"/></svg><span class="verktøyskille"></span><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-indent"/></svg><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-code"/></svg><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-canvas"/></svg>
+          </div>
+          <div class="melding-placeholder">Message #Faglig-påfyll</div>
+          <div class="melding-verktøy" aria-hidden="true">
+            <span class="legg-ved"><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-plus"/></svg></span><span class="tekstformat">Aa</span><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-smile"/></svg><span class="omtale">@</span><span class="verktøyskille"></span><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-video"/></svg><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-mic"/></svg><span class="verktøyskille"></span><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-shortcut"/></svg><span class="send-verktøy"><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-send"/></svg><span class="verktøyskille"></span><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-chevron"/></svg></span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
