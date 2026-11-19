@@ -4,9 +4,23 @@
 
 const topplisteDialog = document.querySelector('#toppliste-stor');
 const topplisteApne = document.querySelector('#toppliste-apne');
+const litenToppliste = document.querySelector('.toppliste');
 const topplisteLukk = topplisteDialog.querySelector('.stor-lukk');
 const topplisteTittel = topplisteDialog.querySelector('#stor-tittel');
 const topplisteFaner = [...topplisteDialog.querySelectorAll('[role="tab"]')];
+
+// Hele kortet åpner statistikken. «Se statistikk» bruker samme handling.
+litenToppliste.addEventListener('click', hendelse => {
+  if (hendelse.target.closest('#toppliste-apne')) return;
+  if (hendelse.target.closest('a, input, select, textarea')) return;
+  apneToppliste();
+});
+
+litenToppliste.addEventListener('keydown', hendelse => {
+  if (hendelse.target !== litenToppliste || !['Enter', ' '].includes(hendelse.key)) return;
+  hendelse.preventDefault();
+  apneToppliste();
+});
 
 // ---------- Bytt fane ----------
 
@@ -20,6 +34,11 @@ function velgFane(valgt) {
   });
   // Overskriften endres etter fanen (står i data-tittel i HTML)
   topplisteTittel.textContent = valgt.dataset.tittel;
+}
+
+function apneToppliste() {
+  velgFane(topplisteFaner[0]); // starter alltid på «Månedens»
+  topplisteDialog.showModal();
 }
 
 topplisteFaner.forEach((fane, indeks) => {
@@ -38,10 +57,7 @@ topplisteFaner.forEach((fane, indeks) => {
 
 // ---------- Åpne og lukke ----------
 
-topplisteApne.addEventListener('click', () => {
-  velgFane(topplisteFaner[0]); // starter alltid på «Månedens»
-  topplisteDialog.showModal();
-});
+topplisteApne.addEventListener('click', apneToppliste);
 
 topplisteLukk.addEventListener('click', () => topplisteDialog.close());
 

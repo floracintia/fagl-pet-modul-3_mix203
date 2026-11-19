@@ -5,8 +5,8 @@
   right: 24px;
   bottom: 24px;
   z-index: 5;
-  width: min(300px, calc(100vw - 120px));
-  padding: 12px 16px;
+  width: min(220px, calc(100vw - 120px));
+  padding: 8px 10px;
   border: 0;
   border-radius: 20px;
   background: rgb(255 250 229 / .94);
@@ -16,12 +16,12 @@
   text-align: left;
   cursor: pointer;
 }
-.team-level-heading { display: flex; align-items: end; gap: 12px; margin-bottom: 10px; }
-.team-level-heading img { width: 64px; height: 76px; object-fit: contain; }
-.team-level-heading strong { padding-bottom: 6px; font-family: var(--font-heading); font-size: 25px; }
-.team-level-meta, .team-progress-labels { display: flex; justify-content: space-between; gap: 10px; margin-top: 8px; font-size: 13px; }
+.team-level-heading { display: flex; align-items: end; gap: 6px; margin-bottom: 4px; }
+.team-level-heading img { width: 40px; height: 48px; object-fit: contain; }
+.team-level-heading strong { padding-bottom: 3px; font-family: var(--font-heading); font-size: 19px; }
+.team-level-meta, .team-progress-labels { display: flex; justify-content: space-between; gap: 6px; margin-top: 4px; font-size: 11px; }
 /* Native progress gir tilgjengelig verdi uten å blande layout inn i JavaScript. */
-.team-progress { display: block; appearance: none; width: 100%; height: 20px; border: 0; border-radius: 20px; overflow: hidden; background: #e6f1f4; }
+.team-progress { display: block; appearance: none; width: 100%; height: 12px; border: 0; border-radius: 20px; overflow: hidden; background: #e6f1f4; }
 .team-progress::-webkit-progress-bar { background: #e6f1f4; border-radius: 20px; }
 .team-progress::-webkit-progress-value { background: #36b5f5; border-radius: 20px; }
 .team-progress::-moz-progress-bar { background: #36b5f5; border-radius: 20px; }
@@ -53,10 +53,10 @@
 .team-played { background: #e8ddff; color: #6534cc; }
 .team-local-note { margin: 18px 0 0; text-align: center; color: #806b8a; font-size: 12px; }
 @media (max-width: 600px) {
-  .team-level { right: 12px; bottom: 12px; padding: 10px 12px; }
-  .team-level-heading img { width: 44px; height: 52px; }
-  .team-level-heading strong { font-size: 21px; }
-  .team-level-meta { font-size: 11px; }
+  .team-level { right: 12px; bottom: 12px; width: min(200px, calc(100vw - 90px)); padding: 7px 8px; }
+  .team-level-heading img { width: 32px; height: 38px; }
+  .team-level-heading strong { font-size: 16px; }
+  .team-level-meta { font-size: 9px; }
   .team-stats { padding: 24px 20px; }
   .team-heading { gap: 12px; }
   .team-heading img { width: 65px; height: 65px; }
