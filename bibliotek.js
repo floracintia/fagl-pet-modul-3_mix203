@@ -101,7 +101,12 @@
     // Samme artikkellenke gir bare poeng én gang, også etter et nytt besøk.
     const articleUrl = new URL(document.querySelector('#article-url').value.trim());
     articleUrl.hash = '';
-    window.TeamPoints.award('share', articleUrl.href);
+    const start = document.querySelector('#share-form button[type="submit"]').getBoundingClientRect();
+    const awarded = window.TeamPoints.award('share', articleUrl.href);
     closeModal();
+    if (awarded) {
+      const duck = document.querySelector('.sidemeny .avatar');
+      window.PointReward.play(start, duck.getBoundingClientRect());
+    }
   });
 })();

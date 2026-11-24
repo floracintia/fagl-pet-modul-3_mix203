@@ -6,9 +6,11 @@
   <title>Hjem – Faglig påfyll</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="components.css">
+  <link rel="stylesheet" href="poenganimasjon.css">
   <link rel="stylesheet" href="hjem.css">
   <script src="komponenter.js" defer></script>
   <script src="lagpoeng.js" defer></script>
+  <script src="poenganimasjon.js" defer></script>
   <script src="hjem.js" defer></script>
 </head>
 <body class="side-app side-hjem">
@@ -63,8 +65,8 @@
             <div class="melding-innhold"><div class="avsender"><strong>KVAKKIT</strong><span class="app-merke">APP</span><time>09:42</time></div>
               <p>Hei Oda! Vil du gjøre denne artikkelen tilgjengelig i Kvakkit så flere kollegaer kan se?</p>
               <section class="delingskort" aria-labelledby="delingstittel">
-                <div class="deling-intro"><span class="deling-stjerne" aria-hidden="true"><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-sparkles"/></svg></span><div><h3 id="delingstittel">Del til Kvakkit – Hjelp laget fremover</h3><p>Ved å dele kan du bidra til lagpotten. Du får <strong>5 poeng</strong> for bidraget.</p></div></div>
-                <div class="delingsknapper"><button id="del-artikkel" type="button">Del til Kvakkit (5p🏅)</button><button id="avvis-deling" type="button">Nei, takk</button><button id="angre-deling" type="button" hidden>Angre deling</button></div>
+                <div class="deling-intro"><span class="deling-stjerne" aria-hidden="true"><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-sparkles"/></svg></span><div><h3 id="delingstittel">Del til Kvakkit – Hjelp laget fremover</h3><p>Ved å dele kan du bidra til lagpotten. Du får <strong>3 poeng</strong> for bidraget.</p></div></div>
+                <div class="delingsknapper"><button id="del-artikkel" type="button">Del til Kvakkit (3p🏅)</button><button id="avvis-deling" type="button">Nei, takk</button><button id="angre-deling" type="button" hidden>Angre deling</button></div>
                 <p class="deling-personvern"><svg class="slack-ikon" aria-hidden="true"><use href="#ikon-lock"/></svg> Ingenting deles uten ditt samtykke</p>
                 <p id="deling-status" role="status"></p>
               </section>
