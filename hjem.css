@@ -68,20 +68,9 @@
 .verktøyskille { flex: 0 0 1px; height: 17px; background: #e8e8e8; }
 .send-verktøy { display: flex; align-items: center; gap: 10px; margin-left: auto; color: #bdbdbd; }
 .send-verktøy .slack-ikon:first-child { width: 17px; height: 17px; fill: currentColor; stroke-width: 0; }
-.flyvende-mynt { position: fixed; z-index: 100; pointer-events: none; display: grid; place-items: center; width: 36px; height: 36px; border: 2px solid #fff2b7; border-radius: 50%; background: linear-gradient(135deg, #fff19b 5%, #ffcb31 45%, #e99b08 100%); box-shadow: inset 0 0 0 3px #e9a51a, inset 0 0 0 5px #ffe789, 0 3px 0 #b97608, 0 5px 12px #613b0033; color: #b57507; }
-.flyvende-mynt span { font-size: 21px; text-shadow: 0 1px #fff3aa; }
-.mynt-teller { position: fixed; z-index: 101; pointer-events: none; display: flex; align-items: center; gap: 10px; padding: 9px 15px 9px 10px; border: 1px solid #e7bf55; border-radius: 14px; background: #fffbee; color: #502c0a; box-shadow: 0 5px 20px #39113d26; opacity: 0; transform: translateX(-5px); transition: opacity .2s, transform .2s, background .2s; }
-.mynt-teller.har-poeng { opacity: 1; transform: translateX(0); }
-.mynt-teller.ferdig { background: #fff2b3; }
-.teller-mynt { display: grid; place-items: center; width: 30px; height: 30px; border: 2px solid #ffe9a0; border-radius: 50%; background: linear-gradient(135deg, #ffdf63, #f1a80d); box-shadow: inset 0 0 0 2px #d89a12, 0 2px 0 #b77708; color: #a96b05; font-size: 18px; }
-.mynt-teller b { display: block; font: 800 27px/1 var(--font-body); font-variant-numeric: tabular-nums; }
-.mynt-teller small { display: block; margin-top: 4px; font-size: 9px; font-weight: 700; letter-spacing: .7px; }
-.mynt-teller.forsvinner { opacity: 0; transform: translateY(-8px); }
-.avatar.poeng-mottatt { animation: andepoeng .3s ease-out; }
-@keyframes andepoeng { 40% { transform: scale(1.18); background: #ffe783; box-shadow: 0 0 20px #ffdb68; } }
 @media (max-width: 1100px) { .hjem-visning { grid-template-columns: 245px minmax(0, 1fr); } .kanaloverskrift p, .chat-medlemmer { display: none; } .chat-meldinger { padding: 14px 24px; } }
 @media (max-width: 760px) { .hjem-visning { grid-template-columns: minmax(0, 1fr); } .kanalmeny { display: none; } .chat-topp { padding: 14px 16px 0; } .chat-faner { gap: 12px; font-size: 11px; } .chat-meldinger { padding: 14px 12px; } .melding { gap: 8px; } .tidligere { margin-left: 46px; } .artikkelkort img { width: 75px; } .meldingsfelt { margin: 6px 12px 12px; } }
-@media (prefers-reduced-motion: reduce) { .avatar.poeng-mottatt { animation: none; background: #fef131; } }
+
 
 /* Ensartede strekikoner, uavhengig av systemets emoji- og symbolfont. */
 .ikondefinisjoner { position: absolute; width: 0; height: 0; overflow: hidden; }
@@ -109,5 +98,3 @@
 @media (max-width: 1100px) { .chat-medlemmer { display: none; } }
 @media (max-width: 760px) { .formatering { gap: 11px; overflow: hidden; } .melding-verktøy { gap: 10px; } }
 @media (max-height: 740px) { .meldingsfelt { margin-bottom: 16px; } }
-
-@media (prefers-reduced-motion: reduce) { .mynt-teller { transition: none; } }

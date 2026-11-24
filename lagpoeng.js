@@ -3,7 +3,7 @@
    synkronisering mellom kolleger må senere kobles til en server. */
 (() => {
   const storageKey = 'faglopet-team-activity-v1';
-  const rewards = { read: 1, play: 2, share: 3, chatShare: 5 };
+  const rewards = { read: 1, play: 2, share: 3, chatShare: 3 };
   const thresholds = [0, 10, 25, 45, 70, 100, 140];
   // Samme eksempelmotstandere brukes på kartet og i topplisten.
   const demoTeams = [
@@ -39,7 +39,7 @@
     Object.values(activities).forEach(type => {
       if (Object.hasOwn(rewards, type)) counts[type] += 1;
     });
-    const points = counts.read + counts.play * 2 + counts.share * 3 + counts.chatShare * 5;
+    const points = counts.read + counts.play * 2 + counts.share * 3 + counts.chatShare * rewards.share;
     counts.share += counts.chatShare;
     const level = thresholds.filter(start => points >= start).length;
     const start = thresholds[level - 1];
