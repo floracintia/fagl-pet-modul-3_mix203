@@ -17,7 +17,9 @@ const menyvalg = [
 // Normaliser URL-en slik rutevalg også virker med undermapper og avsluttende /.
 function normaliserSide(sti) {
   const filnavn = decodeURIComponent(sti).replace(/\/+$/, '').split('/').pop();
-  return !filnavn ? 'index.html' : filnavn;
+  // GitHub Pages for prosjektrepoer serverer startsiden under /repo-navn/.
+  // En siste URL-del uten filendelse er derfor rotmappen, ikke en egen side.
+  return !filnavn || !filnavn.includes('.') ? 'index.html' : filnavn;
 }
 
 const gjeldendeSide = normaliserSide(location.pathname);
