@@ -60,6 +60,17 @@
     window.dispatchEvent(new CustomEvent('team:updated'));
     return true;
   }
+  // Fjern bare lesepoenget for den konkrete artikkelen når den hukes av igjen.
+  function revokeRead(id) {
+    if (typeof id !== 'string' || !id) return false;
+    readStorage();
+    const key = `read:${id}`;
+    if (!Object.hasOwn(activities, key)) return false;
+    delete activities[key];
+    try { localStorage.setItem(storageKey, JSON.stringify(activities)); } catch { /* Kun minne. */ }
+    window.dispatchEvent(new CustomEvent('team:updated'));
+    return true;
+  }
   // Angre bare den aktuelle chatdelingen; andre aktiviteter beholdes.
   function undoChatShare(id) {
     readStorage();
@@ -70,7 +81,7 @@
     window.dispatchEvent(new CustomEvent('team:updated'));
     return true;
   }
-  window.TeamPoints = { award, undoChatShare, getStats, getJourney, getAvatar, demoTeams, has: (type, id) => Object.hasOwn(activities, `${type}:${id}`) };
+  window.TeamPoints = { award, revokeRead, undoChatShare, getStats, getJourney, getAvatar, demoTeams, has: (type, id) => Object.hasOwn(activities, `${type}:${id}`) };
 
   // 2. KOMPONENTEN – markup ligger i HTML, stilene i lagpoeng.css.
   function render() {
@@ -102,7 +113,19 @@
     if (!checkbox || !id) return;
     checkbox.checked = window.TeamPoints.has('read', id);
     checkbox.addEventListener('change', () => {
-      if (checkbox.checked) award('read', id);
+      const duck = document.querySelector('.sidemeny .avatar');
+      if (!duck || !window.PointReward) {
+        if (checkbox.checked) award('read', id);
+        else revokeRead(id);
+        return;
+      }
+      if (checkbox.checked) {
+        const earnedPoint = award('read', id);
+        if (earnedPoint) window.PointReward.play(checkbox.getBoundingClientRect(), duck.getBoundingClientRect(), 1);
+      } else {
+        const removedPoint = revokeRead(id);
+        if (removedPoint) window.PointReward.play(duck.getBoundingClientRect(), checkbox.getBoundingClientRect(), 1, 'subtract');
+      }
     });
   });
 

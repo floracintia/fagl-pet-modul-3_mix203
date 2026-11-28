@@ -48,7 +48,10 @@
     clearTimeout(undoTimer);
     undoDeadline = 0;
     cancelReward();
+    const start = duck.getBoundingClientRect();
+    const end = undo.getBoundingClientRect();
     window.TeamPoints.undoChatShare(articleId);
+    window.PointReward.play(start, end, 3, 'subtract');
     undo.hidden = true;
     share.disabled = false;
     share.textContent = 'Del til Kvakkit (3p🏅)';

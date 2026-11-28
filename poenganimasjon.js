@@ -1,7 +1,7 @@
 // Felles visuell belønning for deling fra hjem og bibliotek.
 (() => {
-  // Tre mynter lander etter tur. Telleren står stille ved anden, så den er lesbar.
-  function animateReward(start, end) {
+  // Poengmyntene lander etter tur. Telleren står ved anden, så den er lesbar.
+  function animateReward(start, end, pointCount = 3, direction = 'add') {
     const duck = document.querySelector('.sidemeny .avatar');
     let cancelReward = () => {};
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -26,17 +26,19 @@
       duck.classList.remove('poeng-mottatt');
     };
     const counter = addElement('mynt-teller');
-    counter.style.left = `${end.right + 10}px`;
-    counter.style.top = `${Math.max(12, end.top + end.height / 2 - 27)}px`;
-    counter.innerHTML = '<span class="teller-mynt">★</span><span><b>+0</b><small>POENG TIL LAGET</small></span>';
-    const amount = counter.querySelector('b');
+    const sign = direction === 'subtract' ? '−' : '+';
+    const counterAnchor = direction === 'subtract' ? start : end;
+    counter.style.left = `${counterAnchor.right + 10}px`;
+    counter.style.top = `${Math.max(12, counterAnchor.top + counterAnchor.height / 2 - 27)}px`;
+    counter.innerHTML = `<span class="teller-mynt">★</span><span><b>${sign}0</b><small>POENG TIL LAGET</small></span>`;
+    const amountLabel = counter.querySelector('b');
     function land() {
       if (cancelled) return;
       received += 1;
-      amount.textContent = `+${received}`;
+      amountLabel.textContent = `${sign}${received}`;
       counter.classList.add('har-poeng');
       if (!reducedMotion) {
-        const tick = amount.animate([
+        const tick = amountLabel.animate([
           { transform: 'translateY(5px) scale(.85)', opacity: .5 },
           { transform: 'translateY(-2px) scale(1.18)', opacity: 1, offset: .6 },
           { transform: 'translateY(0) scale(1)', opacity: 1 }
@@ -47,7 +49,7 @@
         void duck.offsetWidth;
         duck.classList.add('poeng-mottatt');
       }
-      if (received === 3) {
+      if (received === pointCount) {
         counter.classList.add('ferdig');
         timers.push(setTimeout(() => {
           counter.classList.add('forsvinner');
@@ -56,7 +58,7 @@
       }
     }
     if (reducedMotion) {
-      received = 2;
+      received = pointCount - 1;
       land();
       return cancelReward;
     }
@@ -64,7 +66,7 @@
     const originY = start.top + start.height / 2;
     const dx = end.left + end.width / 2 - originX;
     const dy = end.top + end.height / 2 - originY;
-    for (let i = 0; i < 3; i += 1) {
+    for (let i = 0; i < pointCount; i += 1) {
       const coin = addElement('flyvende-mynt');
       coin.innerHTML = '<span>★</span>';
       coin.style.left = `${originX - 18}px`;
