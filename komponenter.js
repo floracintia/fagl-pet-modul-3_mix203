@@ -17,12 +17,14 @@ const menyvalg = [
 // Normaliser URL-en slik rutevalg også virker med undermapper og avsluttende /.
 function normaliserSide(sti) {
   const filnavn = decodeURIComponent(sti).replace(/\/+$/, '').split('/').pop();
-  return !filnavn || filnavn === 'index.html' ? 'forside_kart.html' : filnavn;
+  return !filnavn ? 'index.html' : filnavn;
 }
 
 const gjeldendeSide = normaliserSide(location.pathname);
 // Alle disse sidene tilhører Anden-universet og deler samme aktive markering.
 const andenSider = new Set([
+  'index.html',
+  // Behold støtte for den gamle kart-URL dersom den fortsatt er i bruk.
   'forside_kart.html',
   'bibliotek.html',
   'Spillpunkt1.html',
