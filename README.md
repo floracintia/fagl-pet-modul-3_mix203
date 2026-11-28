@@ -3,7 +3,7 @@ eksamen
 
 ## Lagets nivå og poeng
 
-Åpne `forside_kart.html` og trykk på nivåvisningen nederst til høyre.
+Åpne `index.html` og trykk på nivåvisningen nederst til høyre.
 HTML for komponenten ligger i kartfilen, utseendet i `lagpoeng.css`,
 og poengberegning og oppdatering i `lagpoeng.js`.
 

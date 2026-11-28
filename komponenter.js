@@ -46,7 +46,7 @@ function lagSidemeny() {
     <nav class="sidemeny" aria-label="Hovedmeny">
       <a class="arbeidsomraade" href="#" aria-label="Fagløp arbeidsområde">0</a>
       ${knapper}
-      <a class="avatar" href="forside_kart.html" aria-label="Til kartet"${erAndenSide ? ' aria-current="page"' : ''}>
+      <a class="avatar" href="index.html" aria-label="Til kartet"${erAndenSide ? ' aria-current="page"' : ''}>
         <img src="bilder/anden.png" alt="">
       </a>
       <div class="sidemeny-bunn">
